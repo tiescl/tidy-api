@@ -23,11 +23,24 @@ async def test_db_updates(service_client):
     assert response.text == 'Hi again, World!\n'
 
 
-@pytest.mark.pgsql('db_1', files=['initial_data.sql'])
-async def test_db_initial_data(service_client):
+def _get_users(pgsql):
+    cursor = pgsql['tidy_pg'].cursor()
+    cursor.execute("""
+        SELECT
+            name,
+            count
+        FROM hello_schema.users
+    """)
+
+    return list(cursor)
+
+
+@pytest.mark.pgsql('tidy_pg', files=['initial_data.sql'])
+async def test_db_initial_data(service_client, pgsql):
     response = await service_client.post(
         '/hello-postgres',
         params={'name': 'user-from-initial_data.sql'},
     )
     assert response.status == 200
     assert response.text == 'Hi again, user-from-initial_data.sql!\n'
+    assert _get_users(pgsql)[0][1] == 43

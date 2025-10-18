@@ -1,5 +1,4 @@
 DROP SCHEMA IF EXISTS hello_schema CASCADE;
-
 CREATE SCHEMA IF NOT EXISTS hello_schema;
 
 CREATE TABLE IF NOT EXISTS hello_schema.users (

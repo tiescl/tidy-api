@@ -24,7 +24,7 @@ jobs:
         run: |
           DEPS_FILE="https://raw.githubusercontent.com/userver-framework/userver/refs/heads/develop/scripts/docs/en/deps/$OS_VERSION.md"
           sudo apt update
-          sudo apt install --allow-downgrades -y libpq-dev=16.* libpq5=16.* $(wget -q -O - ${DEPS_FILE})
+          sudo apt install --allow-downgrades -y postgresql-16 libpq-dev=16.* libpq5=16.* $(wget -q -O - ${DEPS_FILE})
           python3 -m pip install -r requirements.txt
 
       - name: reuse ccache directory
@@ -57,7 +57,12 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
+          mkdir -p /tmp/stage/etc/tidy-api
+          echo '${{ secrets.ENV }}' > /tmp/stage/etc/tidy-api/secrets.env
+
           rsync -avz -e "ssh -i ~/.ssh/deploy_key" \
-                /tmp/stage/usr/local/ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/usr/local/
+            --rsync-path="sudo rsync" \
+            /tmp/stage/ \
+            ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/
 
           ssh -i ~/.ssh/deploy_key ${{ secrets.USERNAME }}@${{ secrets.HOST }} "sudo systemctl restart tidy-api"

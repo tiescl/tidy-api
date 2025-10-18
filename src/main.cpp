@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
                               .Append<userver::components::TestsuiteSupport>()
                               .Append<userver::congestion_control::Component>()
                               .Append<userver::server::handlers::TestsControl>()
-                              .Append<userver::components::Postgres>("postgres-db-1")
+                              .Append<userver::components::Postgres>("tidy_pg")
                               .AppendComponentList(GenerateServiceHandlersList());
 
     return userver::utils::DaemonMain(argc, argv, component_list);

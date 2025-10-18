@@ -1,4 +1,4 @@
-# tidy
+# tidy-api
 
 A C++ service build on top of a superior [userver framework](https://github.com/userver-framework/userver).
 

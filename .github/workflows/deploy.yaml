@@ -65,4 +65,9 @@ jobs:
             /tmp/stage/ \
             ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/
 
+          rsync -avz -e "ssh -i ~/.ssh/deploy_key" \
+            --rsync-path="sudo rsync" \
+            ./postgresql/ \
+            ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/opt/
+
           ssh -i ~/.ssh/deploy_key ${{ secrets.USERNAME }}@${{ secrets.HOST }} "sudo systemctl restart tidy-api"

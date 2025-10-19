@@ -1,1 +1,1 @@
-V001_initial.sql
+V001__initial.sql

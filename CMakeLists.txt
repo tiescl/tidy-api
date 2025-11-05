@@ -23,8 +23,7 @@ include_directories(src)
 add_library(
     ${PROJECT_NAME}_objs OBJECT
     src/utils/greeting.cpp #
-    src/views/hello/get/view.cpp #
-    src/views/hello-postgres/post/view.cpp
+    src/views/hello/get/view.cpp
 )
 target_link_libraries(
     ${PROJECT_NAME}_objs

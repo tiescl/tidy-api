@@ -58,11 +58,6 @@ components_manager:
       method: GET
       task_processor: main-task-processor
 
-    handler-hello_postgres-post:
-      path: /hello-postgres
-      method: POST
-      task_processor: main-task-processor
-
     tidy_pg:
       dbconnection: $pg-connection
       dbconnection#env: DB_CONNECTION

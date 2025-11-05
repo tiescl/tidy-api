@@ -5,5 +5,3 @@ logger-level: debug
 is-testing: true
 
 server-port: 8080
-
-pg-connection: postgresql://testsuite@localhost:15433/tidy-api_tidy_pg

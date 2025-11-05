@@ -1,1 +1,4 @@
-V001__initial.sql
+V01__create_users_table.sql
+V02__create_queues_table.sql
+V03__create_issues_table.sql
+V04__create_boards_table.sql

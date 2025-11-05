@@ -1,4 +1,5 @@
 PROJECT_NAME = tidy-api
+DB_NAME = tidy_pg
 NPROCS ?= $(shell nproc)
 CLANG_FORMAT ?= clang-format
 CMAKE_OPTS ?=
@@ -23,6 +24,11 @@ $(addprefix build-, $(PRESETS)): build-%: build-%/CMakeCache.txt
 # Test
 .PHONY: $(addprefix test-, $(PRESETS))
 $(addprefix test-, $(PRESETS)): test-%: build-%/CMakeCache.txt
+	find postgresql/$(DB_NAME)/migrations -type f -name '*.sql' \
+		| sort \
+		| xargs -I {} sh -c 'cat {} && echo ""' \
+		| sed 's/^\(DROP[^;]*\);/\1 CASCADE;/I' \
+		> tests/schemas/$(DB_NAME).sql
 	cmake --build build-$* -j $(NPROCS)
 	cd build-$* && ((test -t 1 && GTEST_COLOR=1 PYTEST_ADDOPTS="--color=yes" ctest -V) || ctest -V)
 

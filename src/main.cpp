@@ -12,15 +12,12 @@
 
 #include <userver/utils/daemon_run.hpp>
 
-#include <views/hello-postgres/post/view.hpp>
 #include <views/hello/get/view.hpp>
 
 namespace {
 
 userver::components::ComponentList GenerateServiceHandlersList() {
-    return userver::components::ComponentList()
-        .Append<handlers::hello::get::Handler>()
-        .Append<handlers::hello_postgres::post::Handler>();
+    return userver::components::ComponentList().Append<handlers::hello::get::Handler>();
 }
 
 }  // namespace

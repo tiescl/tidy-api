@@ -15,4 +15,5 @@ def pgsql_local(service_source_dir, pgsql_local_create):
         'tidy-api',
         [service_source_dir.joinpath('tests/schemas')],
     )
+
     return pgsql_local_create(list(databases.values()))

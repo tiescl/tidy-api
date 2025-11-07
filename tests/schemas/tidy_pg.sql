@@ -151,4 +151,3 @@ CREATE TABLE IF NOT EXISTS tidy.boards (
     increment BIGSERIAL UNIQUE NOT NULL
 );
 
-

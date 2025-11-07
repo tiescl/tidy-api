@@ -20,18 +20,32 @@ userver_setup_environment()
 # Common sources
 include_directories(src)
 
+userver_add_sql_library(
+    ${PROJECT_NAME}_sql
+    NAMESPACE
+    tidy_api
+    SOURCE_DIR
+    src/db/sql
+    OUTPUT_DIR
+    ${CMAKE_CURRENT_BINARY_DIR}
+    SQL_FILES
+    *.sql
+)
+
 add_library(
     ${PROJECT_NAME}_objs OBJECT
-    src/utils/greeting.cpp #
+    src/db/pg_ctx.cpp
+    src/db/api/time/queries.cpp
+    src/utils/greeting.cpp
     src/views/hello/get/view.cpp
 )
 target_link_libraries(
     ${PROJECT_NAME}_objs
-    PUBLIC userver::universal #
-           userver::core #
+    PUBLIC userver::universal
+           userver::core
            userver::postgresql
+           ${PROJECT_NAME}_sql
 )
-
 
 # The Service
 add_executable(${PROJECT_NAME} src/main.cpp)

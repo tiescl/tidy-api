@@ -2,7 +2,10 @@ PROJECT_NAME = tidy-api
 DB_NAME = tidy_pg
 NPROCS ?= $(shell nproc)
 CLANG_FORMAT ?= clang-format
-CMAKE_OPTS ?=
+CMAKE_OPTS ?= \
+	 -DUSERVER_NAMESPACE= \
+	 -DUSERVER_NAMESPACE_BEGIN= \
+	 -DUSERVER_NAMESPACE_END=
 PRESETS ?= debug release debug-custom release-custom
 
 .PHONY: all

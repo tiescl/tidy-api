@@ -3,18 +3,23 @@
 #include <string>
 #include <string_view>
 
+#include <userver/components/component.hpp>
 #include <userver/server/handlers/http_handler_base.hpp>
+
+#include <db/pg_ctx.hpp>
 
 namespace handlers::hello::get {
 
-class Handler final : public userver::server::handlers::HttpHandlerBase {
+class Handler final : public server::handlers::HttpHandlerBase {
 public:
     static constexpr std::string_view kName = "handler-hello-get";
 
-    using HttpHandlerBase::HttpHandlerBase;
+    Handler(const components::ComponentConfig& config, const components::ComponentContext& context);
 
-    std::string HandleRequest(userver::server::http::HttpRequest&, userver::server::request::RequestContext&)
-        const override;
+    std::string HandleRequest(server::http::HttpRequest&, server::request::RequestContext&) const override;
+
+private:
+    const db::PgCtx pg_;
 };
 
 }  // namespace handlers::hello::get

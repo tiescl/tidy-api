@@ -16,22 +16,22 @@
 
 namespace {
 
-userver::components::ComponentList GenerateServiceHandlersList() {
-    return userver::components::ComponentList().Append<handlers::hello::get::Handler>();
+components::ComponentList GenerateServiceHandlersList() {
+    return components::ComponentList().Append<handlers::hello::get::Handler>();
 }
 
 }  // namespace
 
 int main(int argc, char* argv[]) {
-    auto component_list = userver::components::MinimalServerComponentList()
-                              .Append<userver::server::handlers::Ping>()
-                              .Append<userver::components::HttpClient>()
-                              .Append<userver::clients::dns::Component>()
-                              .Append<userver::components::TestsuiteSupport>()
-                              .Append<userver::congestion_control::Component>()
-                              .Append<userver::server::handlers::TestsControl>()
-                              .Append<userver::components::Postgres>("tidy_pg")
+    auto component_list = components::MinimalServerComponentList()
+                              .Append<server::handlers::Ping>()
+                              .Append<components::HttpClient>()
+                              .Append<clients::dns::Component>()
+                              .Append<components::TestsuiteSupport>()
+                              .Append<congestion_control::Component>()
+                              .Append<server::handlers::TestsControl>()
+                              .Append<components::Postgres>("tidy_pg")
                               .AppendComponentList(GenerateServiceHandlersList());
 
-    return userver::utils::DaemonMain(argc, argv, component_list);
+    return utils::DaemonMain(argc, argv, component_list);
 }

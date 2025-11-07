@@ -1,14 +1,16 @@
 #include "view.hpp"
 
+#include <db/api/time/queries.hpp>
+
 #include <utils/greeting.hpp>
 
 namespace handlers::hello::get {
 
-std::string Handler::HandleRequest(
-    userver::server::http::HttpRequest& request,
-    [[maybe_unused]] userver::server::request::RequestContext& context
-) const {
-    return utils::SayHelloTo(request.GetArg("name"), utils::UserType::kFirstTime);
+Handler::Handler(const components::ComponentConfig& config, const components::ComponentContext& context)
+    : HttpHandlerBase(config, context), pg_(context) {}
+
+std::string Handler::HandleRequest(server::http::HttpRequest& request, server::request::RequestContext&) const {
+    return utils::SayHelloTo(request.GetArg("name"), utils::UserType::kFirstTime, db::api::SelectNow(pg_));
 }
 
 }  // namespace handlers::hello::get

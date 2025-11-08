@@ -2,7 +2,7 @@ worker-threads: 4
 worker-fs-threads: 2
 
 log-file-path: /var/log/tidy-api/server.log
-logger-format: tskv
+logger-format: json
 logger-level: info
 
 is-testing: false

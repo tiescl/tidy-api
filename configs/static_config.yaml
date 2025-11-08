@@ -18,7 +18,8 @@ components_manager:
       fs-task-processor: fs-task-processor
       loggers:
         default:
-          file_path: '@stderr'
+          file_path: $log-file-path
+          format: $logger-format
           level: $logger-level
           overflow_behavior: discard
 

@@ -1,5 +1,8 @@
 worker-threads: 2
 worker-fs-threads: 2
+
+log-file-path: '@stderr'
+logger-format: tskv
 logger-level: debug
 
 is-testing: true

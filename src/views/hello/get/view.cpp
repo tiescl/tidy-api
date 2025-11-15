@@ -22,10 +22,15 @@ Handler::Handler(const components::ComponentConfig& config, const components::Co
 std::string Handler::HandleRequest(server::http::HttpRequest& request, server::request::RequestContext&) const {
     unsigned char salt[16];
     RAND_bytes(salt, 16);
-    std::string salt_str(reinterpret_cast<const char*>(salt), 16);
-    LOG_INFO("tiescl(salt): {}", salt_str);
 
-    return utils::SayHelloTo(request.GetArg("name"), utils::UserType::kFirstTime, db::api::SelectNow(pg_));
+    unsigned char hash[32];
+    const auto& name = request.GetArg("name");
+    PKCS5_PBKDF2_HMAC(name.c_str(), name.length(), salt, 16, 10000, EVP_sha256(), 32, hash);
+
+    std::string hash_str(reinterpret_cast<const char*>(hash), 16);
+    LOG_INFO("tiescl(hash): {}", hash_str);
+
+    return utils::SayHelloTo(name, utils::UserType::kFirstTime, db::api::SelectNow(pg_));
 }
 
 }  // namespace handlers::hello::get

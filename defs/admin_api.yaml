@@ -1,0 +1,56 @@
+components:
+  schemas:
+    UserExV1:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - email
+        - full_name
+        - username
+        - password_hash
+        - role
+        - removed
+        - created_at
+        - updated_at
+        - increment
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: User unique identifier
+        email:
+          type: string
+          description: User email address
+        full_name:
+          type: string
+          description: User's full name
+        username:
+          type: string
+          description: Unique username
+        password_hash:
+          type: string
+          description: Hashed password
+        role:
+          type: string
+          description: User role
+          enum:
+            - admin
+            - manager
+            - recruiter
+            - developer
+        removed:
+          type: boolean
+          description: Soft delete flag
+        created_at:
+          type: string
+          format: date-time
+          description: Account creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        increment:
+          type: integer
+          format: int64
+          description: Sequential increment value

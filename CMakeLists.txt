@@ -6,8 +6,8 @@ include(DownloadUserver)
 
 find_package(
     userver
-    COMPONENTS universal #
-               core #
+    COMPONENTS universal
+               core
                postgresql
     QUIET
 )
@@ -32,6 +32,16 @@ userver_add_sql_library(
     *.sql
 )
 
+file(GLOB_RECURSE SCHEMAS ${CMAKE_CURRENT_SOURCE_DIR}/defs/*.yaml)
+userver_target_generate_chaotic(
+    ${PROJECT_NAME}_gen
+    GENERATE_SERIALIZERS
+    LAYOUT "/components/schemas/([^/]*)/=tidy_api::{0}"
+    OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/src
+    SCHEMAS ${SCHEMAS}
+    RELATIVE_TO ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
 add_library(
     ${PROJECT_NAME}_objs OBJECT
     src/db/pg_ctx.cpp
@@ -45,6 +55,7 @@ target_link_libraries(
            userver::core
            userver::postgresql
            ${PROJECT_NAME}_sql
+           ${PROJECT_NAME}_gen
 )
 
 # The Service

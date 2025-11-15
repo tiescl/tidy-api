@@ -1,7 +1,10 @@
 import datetime
 
 
-async def test_basic(service_client):
+from testsuite.daemons.service_client import Client
+
+
+async def test_basic(service_client: Client):
     response = await service_client.get('/hello', params={'name': 'Tester'})
     assert response.status == 200
 

@@ -27,6 +27,10 @@ jobs:
           sudo apt install --allow-downgrades -y postgresql-16 libpq-dev=16.* libpq5=16.* $(wget -q -O - ${DEPS_FILE})
           python3 -m pip install -r requirements.txt
 
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 19
+
       - name: reuse ccache directory
         uses: actions/cache@v4
         with:

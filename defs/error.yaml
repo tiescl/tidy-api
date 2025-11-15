@@ -1,0 +1,8 @@
+components:
+    schemas:
+        ErrorCode:
+            type: string
+            description: app-specific code
+            enum:
+              - EMAIL_ALREADY_EXISTS
+              - USERNAME_ALREADY_EXISTS

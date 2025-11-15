@@ -12,12 +12,12 @@
 
 #include <userver/utils/daemon_run.hpp>
 
-#include <views/hello/get/view.hpp>
+#include <views/v1/auth/register/post/view.hpp>
 
 namespace {
 
 components::ComponentList GenerateServiceHandlersList() {
-    return components::ComponentList().Append<handlers::hello::get::Handler>();
+    return components::ComponentList().Append<handlers::v1_auth_register::post::View>();
 }
 
 }  // namespace

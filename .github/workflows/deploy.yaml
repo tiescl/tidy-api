@@ -1,77 +1,77 @@
 name: CI/CD
 
 on:
-  schedule:
-    - cron: 30 5 * * 1  # Every Monday at 5:30
-  push:
-    branches:
-      - trunk
+    schedule:
+      - cron: 30 5 * * 1  # Every Monday at 5:30
+    push:
+        branches:
+          - trunk
 
 env:
-  OS_VERSION: ubuntu-24.04
-  UBSAN_OPTIONS: print_stacktrace=1
+    OS_VERSION: ubuntu-24.04
+    UBSAN_OPTIONS: print_stacktrace=1
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-24.04
+    build-and-deploy:
+        runs-on: ubuntu-24.04
 
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          submodules: true
+        steps:
+          - uses: actions/checkout@v5
+            with:
+                submodules: true
 
-      - name: install packages
-        run: |
-          DEPS_FILE="https://raw.githubusercontent.com/userver-framework/userver/refs/heads/develop/scripts/docs/en/deps/$OS_VERSION.md"
-          sudo apt update
-          sudo apt install --allow-downgrades -y postgresql-16 libpq-dev=16.* libpq5=16.* $(wget -q -O - ${DEPS_FILE})
-          python3 -m pip install -r requirements.txt
+          - name: install packages
+            run: |
+                DEPS_FILE="https://raw.githubusercontent.com/userver-framework/userver/refs/heads/develop/scripts/docs/en/deps/$OS_VERSION.md"
+                sudo apt update
+                sudo apt install --allow-downgrades -y postgresql-16 libpq-dev=16.* libpq5=16.* $(wget -q -O - ${DEPS_FILE})
+                python3 -m pip install -r requirements.txt
 
-          wget https://apt.llvm.org/llvm.sh
-          chmod +x llvm.sh
-          sudo ./llvm.sh 19
+                wget https://apt.llvm.org/llvm.sh
+                chmod +x llvm.sh
+                sudo ./llvm.sh 19
 
-      - name: reuse ccache directory
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ccache
-          key: $OS_VERSION-ccache-dir-${{github.ref}}-run-${{github.run_number}}
-          restore-keys: |
-            $OS_VERSION-ccache-dir-${{github.ref}}-run-
-            $OS_VERSION-ccache-dir-
+          - name: reuse ccache directory
+            uses: actions/cache@v4
+            with:
+                path: ~/.cache/ccache
+                key: $OS_VERSION-ccache-dir-${{github.ref}}-run-${{github.run_number}}
+                restore-keys: |
+                    $OS_VERSION-ccache-dir-${{github.ref}}-run-
+                    $OS_VERSION-ccache-dir-
 
-      - name: Setup ccache
-        run: |
-          ccache -M 2.0GB
-          ccache -s
+          - name: Setup ccache
+            run: |
+                ccache -M 2.0GB
+                ccache -s
 
-      - name: build release
-        run: make build-release
+          - name: build release
+            run: make build-release
 
-      - name: test release
-        run: make test-release
+          - name: test release
+            run: make test-release
 
-      - name: install release
-        run: make DESTDIR=/tmp/stage install-release
+          - name: install release
+            run: make DESTDIR=/tmp/stage install-release
 
-      - name: deploy release
-        run: |-
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+          - name: deploy release
+            run: |-
+                mkdir -p ~/.ssh
+                echo "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key
+                chmod 600 ~/.ssh/deploy_key
+                ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
-          mkdir -p /tmp/stage/etc/tidy-api
-          echo '${{ secrets.ENV }}' > /tmp/stage/etc/tidy-api/secrets.env
+                mkdir -p /tmp/stage/etc/tidy-api
+                echo '${{ secrets.ENV }}' > /tmp/stage/etc/tidy-api/secrets.env
 
-          rsync -avz -e "ssh -i ~/.ssh/deploy_key" \
-            --rsync-path="sudo rsync" \
-            /tmp/stage/ \
-            ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/
+                rsync -avz -e "ssh -i ~/.ssh/deploy_key" \
+                  --rsync-path="sudo rsync" \
+                  /tmp/stage/ \
+                  ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/
 
-          rsync -avz -e "ssh -i ~/.ssh/deploy_key" \
-            --rsync-path="sudo rsync" \
-            ./postgresql/ \
-            ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/opt/
+                rsync -avz -e "ssh -i ~/.ssh/deploy_key" \
+                  --rsync-path="sudo rsync" \
+                  ./postgresql/ \
+                  ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/opt/
 
-          ssh -i ~/.ssh/deploy_key ${{ secrets.USERNAME }}@${{ secrets.HOST }} "sudo systemctl restart tidy-api"
+                ssh -i ~/.ssh/deploy_key ${{ secrets.USERNAME }}@${{ secrets.HOST }} "sudo systemctl restart tidy-api"

@@ -36,7 +36,7 @@ file(GLOB_RECURSE SCHEMAS ${CMAKE_CURRENT_SOURCE_DIR}/defs/*.yaml)
 userver_target_generate_chaotic(
     ${PROJECT_NAME}_gen
     GENERATE_SERIALIZERS
-    LAYOUT "/components/schemas/([^/]*)/=tidy_api::{0}"
+    LAYOUT "/components/schemas/([^/]*)/=defs::{stem}::{0}"
     OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/src
     SCHEMAS ${SCHEMAS}
     RELATIVE_TO ${CMAKE_CURRENT_SOURCE_DIR}
@@ -45,9 +45,9 @@ userver_target_generate_chaotic(
 add_library(
     ${PROJECT_NAME}_objs OBJECT
     src/db/pg_ctx.cpp
-    src/db/api/time/queries.cpp
-    src/utils/greeting.cpp
-    src/views/hello/get/view.cpp
+    src/db/api/auth/queries.cpp
+    src/utils/password_hasher.cpp
+    src/views/v1/auth/register/post/view.cpp
 )
 target_link_libraries(
     ${PROJECT_NAME}_objs

@@ -9,6 +9,8 @@
 
 namespace db::api::auth {
 
-std::optional<boost::uuids::uuid> RegisterUser(const db::PgCtx& pg, const dto::auth::User user);
+std::optional<boost::uuids::uuid> RegisterUser(const db::PgCtx& pg, const dto::auth::User& user);
+
+void SaveUserToken(const db::PgCtx& pg, const dto::auth::UserToken& user_token);
 
 }  // namespace db::api::auth

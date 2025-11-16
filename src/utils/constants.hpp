@@ -2,9 +2,20 @@
 
 #include <string_view>
 
+#include <userver/http/predefined_header.hpp>
+
 namespace utils::constants {
+
+static constexpr std::string_view kUserId{"user_id"};
 
 static constexpr std::string_view kUsersUniqueEmailConstraint{"users_unique_email"};
 static constexpr std::string_view kUsersUniqueUsernameConstraint{"users_unique_username"};
+
+static constexpr const char* kCookiePath = "/";
+static constexpr const char* kSameSiteLax = "Lax";
+static constexpr const char* kLandingPageUrl = "/";
+static constexpr const char* kServerDomainName = "api.tidyapp.uz";
+static constexpr const char* kUserTokenCookieName = "session_token";
+static constexpr http::headers::PredefinedHeader kLocationHeader{"Location"};
 
 }  // namespace utils::constants

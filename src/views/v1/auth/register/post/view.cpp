@@ -1,31 +1,63 @@
 #include "view.hpp"
 
+#include <chrono>
+#include <string>
+
+#include <boost/uuid/uuid.hpp>
+
 #include <userver/logging/log.hpp>
-#include <userver/utils/boost_uuid4.hpp>
+#include <userver/utils/datetime.hpp>
+#include <userver/utils/uuid4.hpp>
 
 #include <db/api/auth/queries.hpp>
 #include <db/dto/auth/views.hpp>
 
+#include <auth/password_hasher.hpp>
 #include <utils/constants.hpp>
-#include <utils/password_hasher.hpp>
 
 #include <defs/error.hpp>
 
 namespace handlers::v1_auth_register::post {
+
+namespace {
+
+server::http::Cookie
+CreateSecureCookie(const std::string& token, const std::chrono::system_clock::time_point token_expires_at) {
+    server::http::Cookie cookie(utils::constants::kUserTokenCookieName, token);
+    cookie.SetSecure();
+    cookie.SetHttpOnly();
+    cookie.SetExpires(token_expires_at);
+    cookie.SetPath(utils::constants::kCookiePath);
+    cookie.SetSameSite(utils::constants::kSameSiteLax);
+    cookie.SetDomain(utils::constants::kServerDomainName);
+
+    return cookie;
+}
+
+}  // namespace
 
 Response View::Handle(
     Request&& request,
     [[maybe_unused]] const server::http::HttpRequest& http_request,
     [[maybe_unused]] server::request::RequestContext& request_context
 ) const {
-    std::optional<boost::uuids::uuid> created_user_id;
+    server::http::HttpResponse& response = http_request.GetHttpResponse();
+    if (request_context.GetDataOptional<boost::uuids::uuid>(utils::constants::kUserId)) {
+        LOG_INFO("valid user token in context, redirecting");
+        response.SetStatus(server::http::HttpStatus::kFound);
+        response.SetHeader(utils::constants::kLocationHeader, utils::constants::kLandingPageUrl);
+
+        return Response302();
+    }
+
+    std::optional<boost::uuids::uuid> created_user_id_opt;
     try {
-        created_user_id = db::api::auth::RegisterUser(
+        created_user_id_opt = db::api::auth::RegisterUser(
             pg_,
             db::dto::auth::User{
                 .username = request.username,
                 .email = request.email,
-                .password_hash = utils::PasswordHasher::Hash(request.password),
+                .password_hash = auth::PasswordHasher::Hash(request.password),
                 .role = defs::auth::UserRole::kPending,
             }
         );
@@ -42,11 +74,29 @@ Response View::Handle(
         }
     }
 
-    if (!created_user_id.has_value()) {
+    if (!created_user_id_opt.has_value()) {
         throw server::handlers::InternalServerError();
     }
 
-    return Response{created_user_id.value()};
+    std::string token = utils::generators::GenerateUuid();
+    boost::uuids::uuid created_user_id = created_user_id_opt.value();
+    const auto now = utils::datetime::Now();
+    const auto token_expires_at = now + std::chrono::days(1);
+
+    db::api::auth::SaveUserToken(
+        pg_,
+        db::dto::auth::UserToken{
+            .token{token},
+            .user_id = created_user_id,
+            .user_role = defs::auth::UserRole::kPending,
+            .expires_at{token_expires_at},
+            .updated_at{now}
+        }
+    );
+
+    response.SetCookie(CreateSecureCookie(std::move(token), token_expires_at));
+
+    return Response200{std::move(created_user_id)};
 }
 
 }  // namespace handlers::v1_auth_register::post

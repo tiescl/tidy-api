@@ -11,7 +11,7 @@
 #include <userver/utils/encoding/hex.hpp>
 #include <userver/utils/text.hpp>
 
-namespace utils {
+namespace auth {
 
 namespace {
 
@@ -62,4 +62,4 @@ bool PasswordHasher::Verify(const std::string& password, const std::string& stor
     return crypto::algorithm::AreStringsEqualConstTime(expected_hash, reinterpret_cast<const char*>(hash));
 }
 
-}  // namespace utils
+}  // namespace auth

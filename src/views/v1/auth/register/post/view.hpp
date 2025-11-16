@@ -1,5 +1,10 @@
 #pragma once
 
+#include <string_view>
+#include <variant>
+
+#include <userver/formats/json.hpp>
+
 #include <db/pg_ctx.hpp>
 
 #include <utils/typed_json_handler.hpp>
@@ -9,11 +14,15 @@
 namespace handlers::v1_auth_register::post {
 
 using Request = defs::auth::V1AuthRegisterRequest;
-using Response = defs::auth::V1AuthRegisterResponse;
 
-class View final : public utils::TypedJsonHandler<View, Request, Response, defs::auth::Parse, defs::auth::Serialize> {
+using Response302 = formats::json::Value;
+using Response200 = defs::auth::V1AuthRegisterResponse;
+using Response = std::variant<Response200, Response302>;
+
+class View final
+    : public utils::TypedJsonHandler<View, Request, Response, Response200, defs::auth::Parse, defs::auth::Serialize> {
 public:
-    static constexpr std::string_view kName = "handler-v1_auth_register-post";
+    static constexpr const std::string_view kName = "handler-v1_auth_register-post";
 
     View(const components::ComponentConfig& config, const components::ComponentContext& context)
         : TypedJsonHandler(config, context), pg_(context) {}

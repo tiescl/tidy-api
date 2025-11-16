@@ -1,0 +1,97 @@
+#include "auth_checker.hpp"
+
+#include <algorithm>
+#include <string>
+#include <string_view>
+#include <vector>
+
+#include <userver/http/common_headers.hpp>
+#include <userver/server/auth/user_auth_info.hpp>
+#include <userver/server/handlers/auth/auth_checker_base.hpp>
+#include <userver/server/handlers/exceptions.hpp>
+
+#include <utils/constants.hpp>
+
+namespace auth {
+
+AuthCheckerCookieRequired::AuthCheckResult AuthCheckerCookieRequired::CheckAuth(
+    const server::http::HttpRequest& request,
+    server::request::RequestContext& request_context
+) const {
+    const server::auth::UserAuthInfo::Ticket& token{request.GetCookie(utils::constants::kUserTokenCookieName)};
+    if (token.empty()) {
+        return AuthCheckResult{
+            AuthCheckResult::Status::kTokenNotFound,
+            {},
+            "Cookie Not Found",
+            server::handlers::HandlerErrorCode::kUnauthorized
+        };
+    }
+
+    const auto cache_snapshot = tokens_cache_.Get();
+    auto it = cache_snapshot->find(token);
+    if (it == cache_snapshot->end()) {
+        return AuthCheckResult{AuthCheckResult::Status::kForbidden};
+    }
+
+    const db::dto::auth::UserToken& info = it->second;
+    if (const auto& user_role_str = ToString(info.user_role);
+        std::find(required_scopes_.begin(), required_scopes_.end(), user_role_str) == required_scopes_.end()) {
+        return AuthCheckResult{
+            AuthCheckResult::Status::kForbidden,
+            {},
+            "Role '" + user_role_str + "' does not have the required permissions"
+        };
+    }
+
+    request_context.SetData("user_id", info.user_id);
+    return {};
+}
+
+AuthCheckerCookieOptional::AuthCheckResult AuthCheckerCookieOptional::CheckAuth(
+    const server::http::HttpRequest& request,
+    server::request::RequestContext& request_context
+) const {
+    const server::auth::UserAuthInfo::Ticket& token{request.GetCookie(utils::constants::kUserTokenCookieName)};
+    if (token.empty()) {
+        return {};
+    }
+
+    const auto cache_snapshot = tokens_cache_.Get();
+    auto it = cache_snapshot->find(token);
+    if (it == cache_snapshot->end()) {
+        return {};
+    }
+
+    const db::dto::auth::UserToken& info = it->second;
+    const auto& user_role_str = ToString(info.user_role);
+    if (!required_scopes_.empty() &&
+        std::find(required_scopes_.begin(), required_scopes_.end(), user_role_str) == required_scopes_.end()) {
+        return {};
+    }
+
+    request_context.SetData("user_id", info.user_id);
+    return {};
+}
+
+CheckerFactoryCookieRequired::CheckerFactoryCookieRequired(const components::ComponentContext& context)
+    : tokens_cache_(context.FindComponent<caches::UserTokensCache>()) {}
+
+server::handlers::auth::AuthCheckerBasePtr CheckerFactoryCookieRequired::MakeAuthChecker(
+    const server::handlers::auth::HandlerAuthConfig& auth_config
+) const {
+    auto scopes = auth_config["scopes"].As<server::auth::UserScopes>({});
+    return std::make_shared<AuthCheckerCookieRequired>(tokens_cache_, std::move(scopes));
+}
+
+CheckerFactoryCookieOptional::CheckerFactoryCookieOptional(const components::ComponentContext& context)
+    : tokens_cache_(context.FindComponent<caches::UserTokensCache>()) {}
+
+server::handlers::auth::AuthCheckerBasePtr CheckerFactoryCookieOptional::MakeAuthChecker(
+    const server::handlers::auth::HandlerAuthConfig& auth_config
+) const {
+    auto scopes = auth_config["scopes"].As<server::auth::UserScopes>({});
+    return std::make_shared<AuthCheckerCookieOptional>(tokens_cache_, std::move(scopes));
+}
+
+}  // namespace auth

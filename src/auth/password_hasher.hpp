@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace utils {
+namespace auth {
 
 class PasswordHasher {
 public:
@@ -11,4 +11,4 @@ public:
     static bool Verify(const std::string& password, const std::string& stored);
 };
 
-}  // namespace utils
+}  // namespace auth

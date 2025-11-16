@@ -4,13 +4,15 @@
 #include <userver/components/component_list.hpp>
 #include <userver/components/minimal_server_component_list.hpp>
 #include <userver/congestion_control/component.hpp>
+#include <userver/server/handlers/auth/auth_checker_factory.hpp>
 #include <userver/server/handlers/ping.hpp>
 #include <userver/server/handlers/tests_control.hpp>
-#include <userver/testsuite/testsuite_support.hpp>
-
 #include <userver/storages/postgres/component.hpp>
-
+#include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
+
+#include <auth/auth_checker.hpp>
+#include <caches/user_tokens.hpp>
 
 #include <views/v1/auth/register/post/view.hpp>
 
@@ -23,6 +25,9 @@ components::ComponentList GenerateServiceHandlersList() {
 }  // namespace
 
 int main(int argc, char* argv[]) {
+    server::handlers::auth::RegisterAuthCheckerFactory<auth::CheckerFactoryCookieRequired>();
+    server::handlers::auth::RegisterAuthCheckerFactory<auth::CheckerFactoryCookieOptional>();
+
     auto component_list = components::MinimalServerComponentList()
                               .Append<server::handlers::Ping>()
                               .Append<components::HttpClient>()
@@ -31,6 +36,7 @@ int main(int argc, char* argv[]) {
                               .Append<congestion_control::Component>()
                               .Append<server::handlers::TestsControl>()
                               .Append<components::Postgres>("tidy_pg")
+                              .Append<caches::UserTokensCache>()
                               .AppendComponentList(GenerateServiceHandlersList());
 
     return utils::DaemonMain(argc, argv, component_list);

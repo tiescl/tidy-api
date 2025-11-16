@@ -24,3 +24,12 @@ CREATE TABLE IF NOT EXISTS tidy.users (
     CONSTRAINT users_unique_email UNIQUE (email),
     CONSTRAINT users_unique_username UNIQUE (username)
 );
+
+CREATE TABLE IF NOT EXISTS tidy.user_tokens (
+    token TEXT PRIMARY KEY NOT NULL,
+    user_id UUID NOT NULL
+        REFERENCES tidy.users(id) ON DELETE RESTRICT,
+    user_role tidy.user_role NOT NULL,
+    expires_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);

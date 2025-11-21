@@ -4,5 +4,7 @@ components:
             type: string
             description: app-specific code
             enum:
+              - EMAIL_NOT_FOUND
               - EMAIL_ALREADY_EXISTS
+              - INVALID_PASSWORD
               - USERNAME_ALREADY_EXISTS

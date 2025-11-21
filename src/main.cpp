@@ -14,12 +14,15 @@
 #include <auth/auth_checker.hpp>
 #include <caches/user_tokens.hpp>
 
+#include <views/v1/auth/login/post/view.hpp>
 #include <views/v1/auth/register/post/view.hpp>
 
 namespace {
 
 components::ComponentList GenerateServiceHandlersList() {
-    return components::ComponentList().Append<handlers::v1_auth_register::post::View>();
+    return components::ComponentList()
+        .Append<handlers::v1_auth_login::post::View>()
+        .Append<handlers::v1_auth_register::post::View>();
 }
 
 }  // namespace
@@ -30,6 +33,7 @@ int main(int argc, char* argv[]) {
 
     auto component_list = components::MinimalServerComponentList()
                               .Append<server::handlers::Ping>()
+                              .Append<components::HttpClientCore>()
                               .Append<components::HttpClient>()
                               .Append<clients::dns::Component>()
                               .Append<components::TestsuiteSupport>()

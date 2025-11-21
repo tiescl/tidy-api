@@ -1,11 +1,11 @@
 #include "view.hpp"
 
-#include <chrono>
 #include <string>
 
 #include <boost/uuid/uuid.hpp>
 
 #include <userver/logging/log.hpp>
+#include <userver/server/handlers/exceptions.hpp>
 #include <userver/utils/datetime.hpp>
 #include <userver/utils/uuid4.hpp>
 
@@ -19,7 +19,7 @@
 #include <defs/error.hpp>
 #include <defs/users.hpp>
 
-namespace handlers::v1_auth_register::post {
+namespace handlers::v1_auth_login::post {
 
 Response View::Handle(
     Request&& request,
@@ -35,36 +35,20 @@ Response View::Handle(
         return Response302();
     }
 
-    std::optional<boost::uuids::uuid> created_user_id_opt;
-    try {
-        created_user_id_opt = db::api::auth::RegisterUser(
-            pg_,
-            db::dto::auth::User{
-                .username = request.username,
-                .email = request.email,
-                .password_hash = auth::PasswordHasher::Hash(request.password),
-                .role = defs::users::UserRole::kPending,
-            }
+    const auto stored_user_data = db::api::auth::GetUserAuthData(pg_, request.email);
+    if (!stored_user_data.has_value()) {
+        throw server::handlers::Unauthorized(
+            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kEmailNotFound)}
         );
-    } catch (const storages::postgres::UniqueViolation& exc) {
-        if (exc.GetConstraint() == utils::constants::kUsersUniqueEmailConstraint) {
-            throw server::handlers::ClientError(
-                server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kEmailAlreadyExists)}
-            );
-        }
-        if (exc.GetConstraint() == utils::constants::kUsersUniqueUsernameConstraint) {
-            throw server::handlers::ClientError(
-                server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kUsernameAlreadyExists)}
-            );
-        }
     }
 
-    if (!created_user_id_opt.has_value()) {
-        throw server::handlers::InternalServerError();
+    if (!auth::PasswordHasher::Verify(request.password, stored_user_data->password_hash)) {
+        throw server::handlers::Unauthorized(
+            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kInvalidPassword)}
+        );
     }
 
     std::string token = utils::generators::GenerateUuid();
-    boost::uuids::uuid created_user_id = created_user_id_opt.value();
     const auto now = utils::datetime::Now();
     const auto token_expires_at = now + std::chrono::days(1);
 
@@ -72,7 +56,7 @@ Response View::Handle(
         pg_,
         db::dto::auth::UserToken{
             .token{token},
-            .user_id = created_user_id,
+            .user_id = stored_user_data.value().user_id,
             .user_role = defs::users::UserRole::kPending,
             .expires_at{token_expires_at},
             .updated_at{now}
@@ -81,7 +65,7 @@ Response View::Handle(
 
     response.SetCookie(auth::CreateSecureCookie(std::move(token), token_expires_at));
 
-    return Response200{std::move(created_user_id)};
+    return Response200{};
 }
 
-}  // namespace handlers::v1_auth_register::post
+}  // namespace handlers::v1_auth_login::post

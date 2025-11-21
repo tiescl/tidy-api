@@ -7,6 +7,7 @@
 
 #include <userver/crypto/algorithm.hpp>
 #include <userver/crypto/random.hpp>
+#include <userver/logging/log.hpp>
 #include <userver/server/handlers/exceptions.hpp>
 #include <userver/utils/encoding/hex.hpp>
 #include <userver/utils/text.hpp>
@@ -17,7 +18,7 @@ namespace {
 
 static constexpr int kSaltLength{16};
 static constexpr int kHashLength{32};
-static constexpr int kIterations{100000};
+static constexpr int kIterations{600000};
 static const std::string kSeparator{"$"};
 
 }  // namespace
@@ -45,12 +46,17 @@ bool PasswordHasher::Verify(const std::string& password, const std::string& stor
     const std::string salt = utils::encoding::FromHex(split_result.at(0));
     const std::string expected_hash = utils::encoding::FromHex(split_result.at(1));
 
+    if (salt.length() != kSaltLength || expected_hash.length() != kHashLength) {
+        LOG_ERROR("broken salt/hash detected");
+        return false;
+    }
+
     unsigned char hash[kHashLength];
     if (!PKCS5_PBKDF2_HMAC(
             password.c_str(),
             password.length(),
             reinterpret_cast<const unsigned char*>(salt.c_str()),
-            kSaltLength,
+            salt.length(),
             kIterations,
             EVP_sha256(),
             kHashLength,
@@ -59,7 +65,9 @@ bool PasswordHasher::Verify(const std::string& password, const std::string& stor
         throw server::handlers::InternalServerError();
     }
 
-    return crypto::algorithm::AreStringsEqualConstTime(expected_hash, reinterpret_cast<const char*>(hash));
+    return crypto::algorithm::AreStringsEqualConstTime(
+        expected_hash, std::string_view(reinterpret_cast<const char*>(hash), kHashLength)
+    );
 }
 
 }  // namespace auth

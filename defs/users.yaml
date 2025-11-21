@@ -1,0 +1,10 @@
+components:
+    schemas:
+        UserRole:
+            type: string
+            enum:
+              - pending
+              - admin
+              - manager
+              - recruiter
+              - developer

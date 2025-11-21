@@ -1,7 +1,12 @@
+import pytest
+
 from testsuite.daemons.service_client import Client
 
+from tests.tests_tidy.consts import DB_NAME
 
-async def test_basic(service_client: Client):
+
+@pytest.mark.pgsql(DB_NAME)
+async def test_register(service_client: Client):
     response = await service_client.post(
         '/v1/auth/register',
         json={

@@ -2,12 +2,12 @@
 
 #include <userver/storages/postgres/io/enum_types.hpp>
 
-#include <defs/auth.hpp>
+#include <defs/users.hpp>
 
 namespace storages::postgres::io {
 
 template <>
-struct CppToUserPg<defs::auth::UserRole> : EnumMappingBase<defs::auth::UserRole> {
+struct CppToUserPg<defs::users::UserRole> : EnumMappingBase<defs::users::UserRole> {
     static constexpr DBTypeName postgres_name{"tidy", "user_role"};
     static constexpr EnumeratorList enumerators{
         {EnumType::kPending, "pending"},

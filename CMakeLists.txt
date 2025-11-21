@@ -45,9 +45,11 @@ userver_target_generate_chaotic(
 add_library(
     ${PROJECT_NAME}_objs OBJECT
     src/auth/auth_checker.cpp
+    src/auth/cookie.cpp
     src/auth/password_hasher.cpp
     src/db/pg_ctx.cpp
     src/db/api/auth/queries.cpp
+    src/views/v1/auth/login/post/view.cpp
     src/views/v1/auth/register/post/view.cpp
 )
 target_link_libraries(

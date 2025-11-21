@@ -7,21 +7,27 @@
 #include <userver/server/auth/user_auth_info.hpp>
 #include <userver/storages/postgres/io/chrono.hpp>
 
-#include <defs/auth.hpp>
+#include <defs/users.hpp>
 
 namespace db::dto::auth {
+
+struct UserAuthData {
+    boost::uuids::uuid user_id;
+    std::string email;
+    std::string password_hash;
+};
 
 struct User {
     std::string username;
     std::string email;
     std::string password_hash;
-    defs::auth::UserRole role;
+    defs::users::UserRole role;
 };
 
 struct UserToken {
     server::auth::UserAuthInfo::Ticket token;
     boost::uuids::uuid user_id;
-    defs::auth::UserRole user_role;
+    defs::users::UserRole user_role;
     storages::postgres::TimePointTz expires_at;
     storages::postgres::TimePointTz updated_at;
 };

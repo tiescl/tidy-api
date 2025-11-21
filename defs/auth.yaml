@@ -36,11 +36,26 @@ components:
                     type: string
                     format: uuid
 
-        UserRole:
-            type: string
-            enum:
-              - pending
-              - admin
-              - manager
-              - recruiter
-              - developer
+        V1AuthLoginRequest:
+            type: object
+            additionalProperties: false
+            required:
+              - email
+              - password
+            properties:
+                email:
+                    description: User email address
+                    type: string
+                    minLength: 5
+                    maxLength: 254
+                    pattern: ^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$
+                password:
+                    description: User password
+                    type: string
+                    minLength: 8
+                    maxLength: 128
+
+        V1AuthLoginResponse:
+            type: object
+            additionalProperties: false
+            properties: {}

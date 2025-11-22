@@ -14,6 +14,7 @@
 #include <auth/auth_checker.hpp>
 #include <caches/user_tokens.hpp>
 
+#include <views/admin/v1/users/del/view.hpp>
 #include <views/admin/v1/users/get/view.hpp>
 #include <views/v1/auth/login/post/view.hpp>
 #include <views/v1/auth/logout/post/view.hpp>
@@ -23,6 +24,7 @@ namespace {
 
 components::ComponentList GenerateServiceHandlersList() {
     return components::ComponentList()
+        .Append<handlers::admin_v1_users::del::View>()
         .Append<handlers::admin_v1_users::get::View>()
         .Append<handlers::v1_auth_login::post::View>()
         .Append<handlers::v1_auth_logout::post::View>()

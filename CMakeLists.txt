@@ -59,6 +59,8 @@ add_library(
     src/views/v1/auth/logout/post/view.cpp
     src/views/v1/auth/register/post/view.cpp
     src/views/v1/users/me/get/view.cpp
+    src/views/v1/users/me/put/view.cpp
+    src/views/v1/users/me/password/put/view.cpp
 )
 target_link_libraries(
     ${PROJECT_NAME}_objs

@@ -9,11 +9,7 @@ components:
               - recruiter
               - developer
 
-        V1UsersMeRequest:
-            type: object
-            additionalProperties: false
-
-        V1UsersMeResponse:
+        User:
             type: object
             additionalProperties: false
             required:
@@ -33,3 +29,44 @@ components:
                     type: string
                 role:
                     $ref: '#/components/schemas/UserRole'
+
+        V1UsersMeRequest:
+            type: object
+            additionalProperties: false
+
+        V1UsersMeResponse:
+            $ref: '#/components/schemas/User'
+
+        V1UsersMePutRequest:
+            type: object
+            additionalProperties: false
+            properties:
+                full_name:
+                    type: string
+                email:
+                    type: string
+                username:
+                    type: string
+
+        V1UsersMePutResponse:
+            $ref: '#/components/schemas/User'
+
+        V1UsersMePasswordResponse:
+            type: object
+            additionalProperties: false
+
+        V1UsersMePasswordRequest:
+            type: object
+            additionalProperties: false
+            required:
+              - old_password
+              - new_password
+            properties:
+                old_password:
+                    type: string
+                new_password:
+                    type: string
+
+        V1UsersMePasswordResponse:
+            type: object
+            additionalProperties: false

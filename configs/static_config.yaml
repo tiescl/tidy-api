@@ -109,6 +109,22 @@ components_manager:
                 types:
                   - cookie-required
 
+        handler-v1_users_me-put:
+            path: /v1/users/me
+            method: PUT
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required
+
+        handler-v1_users_me_password-put:
+            path: /v1/users/me/password
+            method: PUT
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required
+
         # auth endpoints
         handler-v1_auth_login-post:
             path: /v1/auth/login

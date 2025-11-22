@@ -21,6 +21,8 @@
 #include <views/v1/auth/logout/post/view.hpp>
 #include <views/v1/auth/register/post/view.hpp>
 #include <views/v1/users/me/get/view.hpp>
+#include <views/v1/users/me/password/put/view.hpp>
+#include <views/v1/users/me/put/view.hpp>
 
 namespace {
 
@@ -32,7 +34,9 @@ components::ComponentList GenerateServiceHandlersList() {
         .Append<handlers::v1_auth_login::post::View>()
         .Append<handlers::v1_auth_logout::post::View>()
         .Append<handlers::v1_auth_register::post::View>()
-        .Append<handlers::v1_users_me::get::View>();
+        .Append<handlers::v1_users_me::get::View>()
+        .Append<handlers::v1_users_me_password::put::View>()
+        .Append<handlers::v1_users_me::put::View>();
 }
 
 }  // namespace

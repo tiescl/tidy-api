@@ -33,3 +33,5 @@ CREATE TABLE IF NOT EXISTS tidy.user_tokens (
     expires_at TIMESTAMPTZ NOT NULL,
     increment BIGSERIAL UNIQUE NOT NULL
 );
+
+CREATE INDEX IF NOT EXISTS idx_users_search ON tidy.users (email, username);

@@ -6,11 +6,14 @@
 #include <vector>
 
 #include <userver/http/common_headers.hpp>
+#include <userver/logging/log.hpp>
 #include <userver/server/auth/user_auth_info.hpp>
 #include <userver/server/handlers/auth/auth_checker_base.hpp>
 #include <userver/server/handlers/exceptions.hpp>
 
 #include <utils/constants.hpp>
+
+#include <defs/error.hpp>
 
 namespace auth {
 
@@ -23,7 +26,7 @@ AuthCheckerCookieRequired::AuthCheckResult AuthCheckerCookieRequired::CheckAuth(
         return AuthCheckResult{
             AuthCheckResult::Status::kTokenNotFound,
             {},
-            "Cookie Not Found",
+            ToString(defs::error::ErrorCode::kTokenNotFound),
             server::handlers::HandlerErrorCode::kUnauthorized
         };
     }
@@ -31,7 +34,12 @@ AuthCheckerCookieRequired::AuthCheckResult AuthCheckerCookieRequired::CheckAuth(
     const auto cache_snapshot = tokens_cache_.Get();
     const auto info = cache_snapshot->GetUserInfoByToken(token);
     if (!info) {
-        return AuthCheckResult{AuthCheckResult::Status::kForbidden};
+        return AuthCheckResult{
+            AuthCheckResult::Status::kInvalidToken,
+            {},
+            ToString(defs::error::ErrorCode::kInvalidToken),
+            server::handlers::HandlerErrorCode::kUnauthorized
+        };
     }
 
     if (const auto& user_role_str = ToString(info->user_role);
@@ -39,7 +47,8 @@ AuthCheckerCookieRequired::AuthCheckResult AuthCheckerCookieRequired::CheckAuth(
         return AuthCheckResult{
             AuthCheckResult::Status::kForbidden,
             {},
-            "Role '" + user_role_str + "' does not have the required permissions"
+            ToString(defs::error::ErrorCode::kForbidden),
+            server::handlers::HandlerErrorCode::kForbidden
         };
     }
 
@@ -59,7 +68,8 @@ AuthCheckerCookieOptional::AuthCheckResult AuthCheckerCookieOptional::CheckAuth(
     const auto cache_snapshot = tokens_cache_.Get();
     const auto info = cache_snapshot->GetUserInfoByToken(token);
     if (!info) {
-        return AuthCheckResult{AuthCheckResult::Status::kForbidden};
+        LOG_WARNING("invalid token sent to cookie-optional endpoint");
+        return {};
     }
 
     const auto& user_role_str = ToString(info->user_role);

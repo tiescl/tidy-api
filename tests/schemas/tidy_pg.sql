@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS tidy.user_tokens (
     increment BIGSERIAL UNIQUE NOT NULL
 );
 
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_users_search ON tidy.users (email, username);
+
 DROP TYPE IF EXISTS tidy.issue_action CASCADE;
 CREATE TYPE tidy.issue_action AS ENUM (
     'view',

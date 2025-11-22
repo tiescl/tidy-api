@@ -13,7 +13,7 @@
 
 namespace handlers::v1_auth_logout::post {
 
-std::string View::HandleRequest(server::http::HttpRequest& request, server::request::RequestContext&) const {
+Response View::HandleRequest(server::http::HttpRequest& request, server::request::RequestContext&) const {
     server::http::HttpResponse& response = request.GetHttpResponse();
 
     const auto token = request.GetCookie(utils::constants::kUserTokenCookieName);
@@ -24,7 +24,7 @@ std::string View::HandleRequest(server::http::HttpRequest& request, server::requ
 
     response.SetCookie(auth::CreateSecureCookie(token, expire_time));
 
-    return {};
+    return Response{};
 }
 
 }  // namespace handlers::v1_auth_logout::post

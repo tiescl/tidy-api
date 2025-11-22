@@ -11,6 +11,8 @@
 
 namespace handlers::v1_auth_logout::post {
 
+using Response = std::string;
+
 class View final : public server::handlers::HttpHandlerBase {
 public:
     static constexpr std::string_view kName = "handler-v1_auth_logout-post";
@@ -20,7 +22,7 @@ public:
           pg_(context),
           tokens_cache_(context.FindComponent<caches::UserTokensCache>()) {}
 
-    std::string HandleRequest(server::http::HttpRequest& request, server::request::RequestContext&) const override;
+    Response HandleRequest(server::http::HttpRequest& request, server::request::RequestContext&) const override;
 
 private:
     const db::PgCtx pg_;

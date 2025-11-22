@@ -6,5 +6,8 @@ components:
             enum:
               - EMAIL_NOT_FOUND
               - EMAIL_ALREADY_EXISTS
+              - FORBIDDEN
               - INVALID_PASSWORD
+              - INVALID_TOKEN
+              - TOKEN_NOT_FOUND
               - USERNAME_ALREADY_EXISTS

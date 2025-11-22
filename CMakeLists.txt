@@ -49,7 +49,9 @@ add_library(
     src/auth/password_hasher.cpp
     src/caches/models/user_tokens/container.cpp
     src/db/pg_ctx.cpp
+    src/db/api/admin/queries.cpp
     src/db/api/auth/queries.cpp
+    src/views/admin/v1/users/get/view.cpp
     src/views/v1/auth/login/post/view.cpp
     src/views/v1/auth/logout/post/view.cpp
     src/views/v1/auth/register/post/view.cpp

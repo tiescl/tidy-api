@@ -1,0 +1,48 @@
+components:
+    schemas:
+        AdminV1UsersRequest:
+            type: object
+            additionalProperties: false
+
+        AdminV1UsersResponse:
+            type: object
+            additionalProperties: false
+            required:
+              - users
+            properties:
+                users:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/AdminUserListItem'
+
+        AdminUserListItem:
+            type: object
+            additionalProperties: false
+            required:
+              - id
+              - email
+              - username
+              - role
+              - removed
+              - created_at
+              - updated_at
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                full_name:
+                    type: string
+                email:
+                    type: string
+                username:
+                    type: string
+                role:
+                    type: string
+                removed:
+                    type: boolean
+                created_at:
+                    type: integer
+                    format: int64
+                updated_at:
+                    type: integer
+                    format: int64

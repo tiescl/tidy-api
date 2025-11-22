@@ -30,7 +30,7 @@ Response View::Handle(
         );
     }
 
-    db::api::users::SetNewUserPasswordHash(pg_, user_id, request.new_password);
+    db::api::users::SetNewUserPasswordHash(pg_, user_id, auth::PasswordHasher::Hash(request.new_password));
 
     return Response200{};
 }

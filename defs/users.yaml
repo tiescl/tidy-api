@@ -43,10 +43,18 @@ components:
             properties:
                 full_name:
                     type: string
-                email:
-                    type: string
+                    minLength: 5
+                    maxLength: 256
                 username:
                     type: string
+                    minLength: 3
+                    maxLength: 30
+                    pattern: ^[a-zA-Z0-9_-]+$
+                email:
+                    type: string
+                    minLength: 5
+                    maxLength: 254
+                    pattern: ^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$
 
         V1UsersMePutResponse:
             $ref: '#/components/schemas/User'
@@ -64,8 +72,12 @@ components:
             properties:
                 old_password:
                     type: string
+                    minLength: 8
+                    maxLength: 128
                 new_password:
                     type: string
+                    minLength: 8
+                    maxLength: 128
 
         V1UsersMePasswordResponse:
             type: object

@@ -37,7 +37,7 @@ components:
                 username:
                     type: string
                 role:
-                    type: string
+                    $ref: users.yaml#/components/schemas/UserRole
                 removed:
                     type: boolean
                 created_at:

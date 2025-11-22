@@ -16,6 +16,8 @@ std::optional<dto::auth::UserAuthData> GetUserAuthData(const db::PgCtx& pg, cons
 
 std::optional<boost::uuids::uuid> RegisterUser(const db::PgCtx& pg, const dto::auth::User& user);
 
+std::optional<dto::auth::UserTokenExt> GetUserTokenData(const db::PgCtx& pg, const std::string& token);
+
 void SaveUserToken(const db::PgCtx& pg, const dto::auth::UserToken& user_token);
 
 void MarkTokenAsExpired(

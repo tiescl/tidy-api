@@ -8,3 +8,28 @@ components:
               - manager
               - recruiter
               - developer
+
+        V1UsersMeRequest:
+            type: object
+            additionalProperties: false
+
+        V1UsersMeResponse:
+            type: object
+            additionalProperties: false
+            required:
+              - id
+              - email
+              - username
+              - role
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                full_name:
+                    type: string
+                email:
+                    type: string
+                username:
+                    type: string
+                role:
+                    $ref: '#/components/schemas/UserRole'

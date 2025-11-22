@@ -100,6 +100,15 @@ components_manager:
                 scopes:
                   - admin
 
+        # user endpoints
+        handler-v1_users_me-get:
+            path: /v1/users/me
+            method: GET
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required
+
         # auth endpoints
         handler-v1_auth_login-post:
             path: /v1/auth/login

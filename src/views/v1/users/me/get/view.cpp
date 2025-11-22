@@ -18,10 +18,9 @@ Response View::Handle(
     [[maybe_unused]] const server::http::HttpRequest& http_request,
     server::request::RequestContext& request_context
 ) const {
-    const auto user_id = request_context.GetDataOptional<boost::uuids::uuid>(utils::constants::kUserId);
-    UINVARIANT(user_id, "missing user_id in a cookie-required endpoint");
+    const auto user_id = request_context.GetData<boost::uuids::uuid>(utils::constants::kUserId);
 
-    auto user = db::api::users::GetCurrentUser(pg_, *user_id);
+    auto user = db::api::users::GetCurrentUser(pg_, user_id);
     if (!user.has_value()) {
         throw server::handlers::ResourceNotFound(
             server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kUserNotFound)}

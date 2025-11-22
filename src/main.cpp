@@ -15,6 +15,7 @@
 #include <caches/user_tokens.hpp>
 
 #include <views/v1/auth/login/post/view.hpp>
+#include <views/v1/auth/logout/post/view.hpp>
 #include <views/v1/auth/register/post/view.hpp>
 
 namespace {
@@ -22,6 +23,7 @@ namespace {
 components::ComponentList GenerateServiceHandlersList() {
     return components::ComponentList()
         .Append<handlers::v1_auth_login::post::View>()
+        .Append<handlers::v1_auth_logout::post::View>()
         .Append<handlers::v1_auth_register::post::View>();
 }
 

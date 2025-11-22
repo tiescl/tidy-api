@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS tidy.user_tokens (
         REFERENCES tidy.users(id) ON DELETE RESTRICT,
     user_role tidy.user_role NOT NULL,
     expires_at TIMESTAMPTZ NOT NULL,
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    increment BIGSERIAL UNIQUE NOT NULL
 );
 
 DROP TYPE IF EXISTS tidy.issue_action CASCADE;

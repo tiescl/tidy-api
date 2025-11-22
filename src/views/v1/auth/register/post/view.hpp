@@ -22,7 +22,7 @@ using Response = std::variant<Response200, Response302>;
 class View final
     : public utils::TypedJsonHandler<View, Request, Response, Response200, defs::auth::Parse, defs::auth::Serialize> {
 public:
-    static constexpr const std::string_view kName = "handler-v1_auth_register-post";
+    static constexpr std::string_view kName = "handler-v1_auth_register-post";
 
     View(const components::ComponentConfig& config, const components::ComponentContext& context)
         : TypedJsonHandler(config, context), pg_(context) {}

@@ -29,7 +29,14 @@ struct UserToken {
     boost::uuids::uuid user_id;
     defs::users::UserRole user_role;
     storages::postgres::TimePointTz expires_at;
-    storages::postgres::TimePointTz updated_at;
+};
+
+struct UserTokenExt {
+    server::auth::UserAuthInfo::Ticket token;
+    boost::uuids::uuid user_id;
+    defs::users::UserRole user_role;
+    storages::postgres::TimePointTz expires_at;
+    int64_t increment;
 };
 
 }  // namespace db::dto::auth

@@ -58,8 +58,7 @@ Response View::Handle(
             .token{token},
             .user_id = stored_user_data.value().user_id,
             .user_role = defs::users::UserRole::kPending,
-            .expires_at{token_expires_at},
-            .updated_at{now}
+            .expires_at{token_expires_at}
         }
     );
 

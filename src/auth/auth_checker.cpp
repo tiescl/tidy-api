@@ -29,13 +29,12 @@ AuthCheckerCookieRequired::AuthCheckResult AuthCheckerCookieRequired::CheckAuth(
     }
 
     const auto cache_snapshot = tokens_cache_.Get();
-    auto it = cache_snapshot->find(token);
-    if (it == cache_snapshot->end()) {
+    const auto info = cache_snapshot->GetUserInfoByToken(token);
+    if (!info) {
         return AuthCheckResult{AuthCheckResult::Status::kForbidden};
     }
 
-    const db::dto::auth::UserToken& info = it->second;
-    if (const auto& user_role_str = ToString(info.user_role);
+    if (const auto& user_role_str = ToString(info->user_role);
         std::find(required_scopes_.begin(), required_scopes_.end(), user_role_str) == required_scopes_.end()) {
         return AuthCheckResult{
             AuthCheckResult::Status::kForbidden,
@@ -44,7 +43,7 @@ AuthCheckerCookieRequired::AuthCheckResult AuthCheckerCookieRequired::CheckAuth(
         };
     }
 
-    request_context.SetData("user_id", info.user_id);
+    request_context.SetData("user_id", info->user_id);
     return {};
 }
 
@@ -58,19 +57,18 @@ AuthCheckerCookieOptional::AuthCheckResult AuthCheckerCookieOptional::CheckAuth(
     }
 
     const auto cache_snapshot = tokens_cache_.Get();
-    auto it = cache_snapshot->find(token);
-    if (it == cache_snapshot->end()) {
-        return {};
+    const auto info = cache_snapshot->GetUserInfoByToken(token);
+    if (!info) {
+        return AuthCheckResult{AuthCheckResult::Status::kForbidden};
     }
 
-    const db::dto::auth::UserToken& info = it->second;
-    const auto& user_role_str = ToString(info.user_role);
+    const auto& user_role_str = ToString(info->user_role);
     if (!required_scopes_.empty() &&
         std::find(required_scopes_.begin(), required_scopes_.end(), user_role_str) == required_scopes_.end()) {
         return {};
     }
 
-    request_context.SetData("user_id", info.user_id);
+    request_context.SetData("user_id", info->user_id);
     return {};
 }
 

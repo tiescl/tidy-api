@@ -71,6 +71,11 @@ components_manager:
                 types:
                   - cookie-optional
 
+        handler-v1_auth_logout-post:
+            path: /v1/auth/logout
+            method: POST
+            task_processor: main-task-processor
+
         tidy_pg:
             dbconnection: $pg-connection
             dbconnection#env: DB_CONNECTION
@@ -82,6 +87,5 @@ components_manager:
         user-tokens-pg-cache:
             pgcomponent: tidy_pg
             update-types: full-and-incremental
-            update-interval: 60s
-            update-correction: 30s
+            update-interval: 30s
             full-update-interval: 3h

@@ -27,9 +27,16 @@ void SaveUserToken(const db::PgCtx& pg, const dto::auth::UserToken& user_token) 
         user_token.token,
         user_token.user_id,
         user_token.user_role,
-        user_token.expires_at,
-        user_token.updated_at
+        user_token.expires_at
     );
+}
+
+void MarkTokenAsExpired(
+    const db::PgCtx& pg,
+    const std::string& token,
+    const storages::postgres::TimePointTz expire_time
+) {
+    pg.MakeRwRequest(tidy_api::sql::kUpdateTokenSetExpired, token, expire_time);
 }
 
 }  // namespace db::api::auth

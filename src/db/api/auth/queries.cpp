@@ -21,6 +21,12 @@ std::optional<boost::uuids::uuid> RegisterUser(const db::PgCtx& pg, const dto::a
     return pg_result.AsOptionalSingleRow<boost::uuids::uuid>();
 }
 
+std::optional<dto::auth::UserTokenExt> GetUserTokenData(const db::PgCtx& pg, const std::string& token) {
+    const auto pg_result = pg.MakeRoRequest(tidy_api::sql::kSelectUserToken, token);
+
+    return pg_result.AsOptionalSingleRow<dto::auth::UserTokenExt>(storages::postgres::kRowTag);
+}
+
 void SaveUserToken(const db::PgCtx& pg, const dto::auth::UserToken& user_token) {
     pg.MakeRwRequest(
         tidy_api::sql::kInsertUserToken,

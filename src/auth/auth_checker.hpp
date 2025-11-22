@@ -6,6 +6,8 @@
 
 #include <caches/user_tokens.hpp>
 
+#include <db/pg_ctx.hpp>
+
 namespace auth {
 
 /// --- checkers --- ///
@@ -15,10 +17,11 @@ public:
     using AuthCheckResult = server::handlers::auth::AuthCheckResult;
 
     AuthCheckerCookieRequired(
+        const db::PgCtx pg,
         const caches::UserTokensCache& tokens_cache,
         std::vector<server::auth::UserScope> required_scopes
     )
-        : tokens_cache_(tokens_cache), required_scopes_(std::move(required_scopes)) {}
+        : pg_(pg), tokens_cache_(tokens_cache), required_scopes_(std::move(required_scopes)) {}
 
     [[nodiscard]] AuthCheckResult CheckAuth(
         const server::http::HttpRequest& request,
@@ -28,6 +31,7 @@ public:
     [[nodiscard]] bool SupportsUserAuth() const noexcept override { return true; }
 
 private:
+    const db::PgCtx pg_;
     const caches::UserTokensCache& tokens_cache_;
     const std::vector<server::auth::UserScope> required_scopes_;
 };
@@ -68,6 +72,7 @@ public:
 
 private:
     caches::UserTokensCache& tokens_cache_;
+    const db::PgCtx pg_;
 };
 
 class CheckerFactoryCookieOptional final : public server::handlers::auth::AuthCheckerFactoryBase {

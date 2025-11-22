@@ -1,6 +1,7 @@
 #include "auth_checker.hpp"
 
 #include <algorithm>
+#include <memory>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -10,6 +11,8 @@
 #include <userver/server/auth/user_auth_info.hpp>
 #include <userver/server/handlers/auth/auth_checker_base.hpp>
 #include <userver/server/handlers/exceptions.hpp>
+
+#include <db/api/auth/queries.hpp>
 
 #include <utils/constants.hpp>
 
@@ -32,7 +35,14 @@ AuthCheckerCookieRequired::AuthCheckResult AuthCheckerCookieRequired::CheckAuth(
     }
 
     const auto cache_snapshot = tokens_cache_.Get();
-    const auto info = cache_snapshot->GetUserInfoByToken(token);
+    auto info = cache_snapshot->GetUserInfoByToken(token);
+
+    if (!info) {
+        if (auto db_result = db::api::auth::GetUserTokenData(pg_, token.GetUnderlying())) {
+            info = std::make_shared<const db::dto::auth::UserTokenExt>(std::move(*db_result));
+        }
+    }
+
     if (!info) {
         return AuthCheckResult{
             AuthCheckResult::Status::kInvalidToken,
@@ -43,6 +53,7 @@ AuthCheckerCookieRequired::AuthCheckResult AuthCheckerCookieRequired::CheckAuth(
     }
 
     if (const auto& user_role_str = ToString(info->user_role);
+        !required_scopes_.empty() &&
         std::find(required_scopes_.begin(), required_scopes_.end(), user_role_str) == required_scopes_.end()) {
         return AuthCheckResult{
             AuthCheckResult::Status::kForbidden,
@@ -83,13 +94,13 @@ AuthCheckerCookieOptional::AuthCheckResult AuthCheckerCookieOptional::CheckAuth(
 }
 
 CheckerFactoryCookieRequired::CheckerFactoryCookieRequired(const components::ComponentContext& context)
-    : tokens_cache_(context.FindComponent<caches::UserTokensCache>()) {}
+    : tokens_cache_(context.FindComponent<caches::UserTokensCache>()), pg_{context} {}
 
 server::handlers::auth::AuthCheckerBasePtr CheckerFactoryCookieRequired::MakeAuthChecker(
     const server::handlers::auth::HandlerAuthConfig& auth_config
 ) const {
     auto scopes = auth_config["scopes"].As<server::auth::UserScopes>({});
-    return std::make_shared<AuthCheckerCookieRequired>(tokens_cache_, std::move(scopes));
+    return std::make_shared<AuthCheckerCookieRequired>(pg_, tokens_cache_, std::move(scopes));
 }
 
 CheckerFactoryCookieOptional::CheckerFactoryCookieOptional(const components::ComponentContext& context)

@@ -8,7 +8,9 @@
 
 #include <caches/models/user_tokens/container.hpp>
 
+#include <db/db_types.hpp>
 #include <db/dto/auth/views.hpp>
+
 #include <tidy_api/sql_queries.hpp>
 
 namespace caches {

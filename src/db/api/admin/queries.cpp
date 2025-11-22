@@ -21,4 +21,10 @@ bool DeleteUser(const db::PgCtx& pg, const boost::uuids::uuid& user_id) {
     return pg_result.RowsAffected();
 }
 
+bool UpdateUserRole(const db::PgCtx& pg, const boost::uuids::uuid& user_id, const defs::users::UserRole user_role) {
+    const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kUpdateUserRoleForAdmin, user_id, user_role);
+
+    return pg_result.RowsAffected();
+}
+
 }  // namespace db::api::admin

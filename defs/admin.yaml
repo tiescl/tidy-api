@@ -60,3 +60,16 @@ components:
         AdminV1UsersDeleteResponse:
             type: object
             additionalProperties: false
+
+        AdminV1UsersRoleRequest:
+            type: object
+            additionalProperties: false
+            required:
+              - role
+            properties:
+                role:
+                    $ref: users.yaml#/components/schemas/UserRole
+
+        AdminV1UsersRoleResponse:
+            type: object
+            additionalProperties: false

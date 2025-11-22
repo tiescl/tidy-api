@@ -80,6 +80,16 @@ components_manager:
                 scopes:
                   - admin
 
+        handler-admin_v1_users-delete:
+            path: /admin/v1/users
+            method: DELETE
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required
+                scopes:
+                  - admin
+
         # auth endpoints
         handler-v1_auth_login-post:
             path: /v1/auth/login

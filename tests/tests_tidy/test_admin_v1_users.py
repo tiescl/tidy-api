@@ -42,3 +42,23 @@ async def test_admin_get_users(service_client: Client):
     assert len(users) == 2
     for user in users:
         assert user['username'] in ('potato_mushroom', 'harmonic_electrode')
+
+
+@pytest.mark.pgsql(DB_NAME, files=['users.sql', 'tokens.sql'])
+async def test_admin_delete_user(service_client: Client):
+    response = await service_client.delete(
+        '/admin/v1/users',
+        headers={'Cookie': 'session_token=f37116c18a9345a0a2b5ea97fbc4e8f0'},
+        json={'user_id': '605223cd-826a-46a7-9398-b21f1dd4fd45'}
+    )
+
+    assert response.status == 200
+
+    response = await service_client.delete(
+        '/admin/v1/users',
+        headers={'Cookie': 'session_token=f37116c18a9345a0a2b5ea97fbc4e8f0'},
+        json={'user_id': '605223cd-826a-46a7-9398-b21f1dd4abcd'}
+    )
+
+    assert response.status == 404
+    assert response.json() == {'code': '404', 'message': 'USER_NOT_FOUND'}

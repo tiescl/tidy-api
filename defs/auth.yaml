@@ -58,4 +58,3 @@ components:
         V1AuthLoginResponse:
             type: object
             additionalProperties: false
-            properties: {}

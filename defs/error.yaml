@@ -9,6 +9,7 @@ components:
               - FORBIDDEN
               - INVALID_PASSWORD
               - INVALID_TOKEN
+              - INVALID_USER_ID
               - TOKEN_NOT_FOUND
               - USER_NOT_FOUND
               - USERNAME_ALREADY_EXISTS

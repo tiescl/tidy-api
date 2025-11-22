@@ -53,6 +53,7 @@ add_library(
     src/db/api/auth/queries.cpp
     src/views/admin/v1/users/del/view.cpp
     src/views/admin/v1/users/get/view.cpp
+    src/views/admin/v1/users/role/post/view.cpp
     src/views/v1/auth/login/post/view.cpp
     src/views/v1/auth/logout/post/view.cpp
     src/views/v1/auth/register/post/view.cpp

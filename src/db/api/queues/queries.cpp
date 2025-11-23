@@ -20,4 +20,30 @@ std::string DeleteQueue(const db::PgCtx& pg, const boost::uuids::uuid& queue_id,
     return pg_result.AsSingleRow<std::string>();
 }
 
+std::string CreateQueueRolePermission(
+    const db::PgCtx& pg,
+    const boost::uuids::uuid& queue_id,
+    const defs::users::UserRole role,
+    const std::vector<defs::issues::IssueAction>& actions,
+    const boost::uuids::uuid& owner_id
+) {
+    const auto pg_result =
+        pg.MakeRwRequest(tidy_api::sql::kInsertQueueRolePermission, queue_id, role, actions, owner_id);
+
+    return pg_result.AsSingleRow<std::string>();
+}
+
+std::string CreateQueueUserPermission(
+    const db::PgCtx& pg,
+    const boost::uuids::uuid& queue_id,
+    const boost::uuids::uuid& user_id,
+    const std::vector<defs::issues::IssueAction>& actions,
+    const boost::uuids::uuid& owner_id
+) {
+    const auto pg_result =
+        pg.MakeRwRequest(tidy_api::sql::kInsertQueueUserPermission, queue_id, user_id, actions, owner_id);
+
+    return pg_result.AsSingleRow<std::string>();
+}
+
 }  // namespace db::api::queues

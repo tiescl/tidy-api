@@ -8,8 +8,11 @@ components:
               - EMAIL_ALREADY_EXISTS
               - FORBIDDEN
               - INVALID_PASSWORD
+              - INVALID_QUEUE_ID
               - INVALID_TOKEN
               - INVALID_USER_ID
+              - MISSING_ROLE_PERMISSION
+              - MISSING_USER_PERMISSION
               - QUEUE_ALREADY_EXISTS
               - QUEUE_NOT_FOUND
               - QUEUE_OWNER_MISMATCH

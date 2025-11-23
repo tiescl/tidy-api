@@ -2,6 +2,7 @@
 
 #include <userver/storages/postgres/io/enum_types.hpp>
 
+#include <defs/issues.hpp>
 #include <defs/users.hpp>
 
 namespace storages::postgres::io {
@@ -15,6 +16,19 @@ struct CppToUserPg<defs::users::UserRole> : EnumMappingBase<defs::users::UserRol
         {EnumType::kManager, "manager"},
         {EnumType::kRecruiter, "recruiter"},
         {EnumType::kDeveloper, "developer"},
+    };
+};
+
+template <>
+struct CppToUserPg<defs::issues::IssueAction> : EnumMappingBase<defs::issues::IssueAction> {
+    static constexpr DBTypeName postgres_name{"tidy", "issue_action"};
+    static constexpr EnumeratorList enumerators{
+        {EnumType::kView, "view"},
+        {EnumType::kCreate, "create"},
+        {EnumType::kEditOwn, "edit_own"},
+        {EnumType::kEditAny, "edit_any"},
+        {EnumType::kDeleteOwn, "delete_own"},
+        {EnumType::kDeleteAny, "delete_any"},
     };
 };
 

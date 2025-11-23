@@ -1,0 +1,11 @@
+components:
+    schemas:
+        IssueAction:
+            type: string
+            enum:
+              - view
+              - create
+              - edit_own
+              - edit_any
+              - delete_own
+              - delete_any

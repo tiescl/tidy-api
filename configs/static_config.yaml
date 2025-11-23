@@ -181,3 +181,11 @@ components_manager:
             auth:
                 types:
                   - cookie-required
+
+        handler-v1_queues_permissions-post:
+            path: /v1/queues/{queue_id}/permissions
+            method: POST
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required

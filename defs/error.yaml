@@ -11,6 +11,7 @@ components:
               - INVALID_TOKEN
               - INVALID_USER_ID
               - QUEUE_ALREADY_EXISTS
+              - QUEUE_NOT_FOUND
               - QUEUE_OWNER_MISMATCH
               - TOKEN_NOT_FOUND
               - USER_NOT_FOUND

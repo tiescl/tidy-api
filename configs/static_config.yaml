@@ -100,6 +100,16 @@ components_manager:
                 scopes:
                   - admin
 
+        handler-admin_v1_queues-delete:
+            path: /admin/v1/queues
+            method: DELETE
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required
+                scopes:
+                  - admin
+
         # user endpoints
         handler-v1_users_me-get:
             path: /v1/users/me
@@ -159,6 +169,14 @@ components_manager:
         handler-v1_queues-post:
             path: /v1/queues
             method: POST
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required
+
+        handler-v1_queues-delete:
+            path: /v1/queues
+            method: DELETE
             task_processor: main-task-processor
             auth:
                 types:

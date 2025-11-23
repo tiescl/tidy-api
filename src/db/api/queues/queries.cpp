@@ -14,4 +14,10 @@ std::optional<boost::uuids::uuid> CreateQueue(const db::PgCtx& pg, const dto::qu
     return pg_result.AsOptionalSingleRow<boost::uuids::uuid>();
 }
 
+std::string DeleteQueue(const db::PgCtx& pg, const boost::uuids::uuid& queue_id, const boost::uuids::uuid& owner_id) {
+    const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteQueue, queue_id, owner_id);
+
+    return pg_result.AsSingleRow<std::string>();
+}
+
 }  // namespace db::api::queues

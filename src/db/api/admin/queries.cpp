@@ -27,4 +27,10 @@ bool UpdateUserRole(const db::PgCtx& pg, const boost::uuids::uuid& user_id, cons
     return pg_result.RowsAffected();
 }
 
+bool DeleteQueue(const db::PgCtx& pg, const boost::uuids::uuid& queue_id) {
+    const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteQueueForAdmin, queue_id);
+
+    return pg_result.RowsAffected();
+}
+
 }  // namespace db::api::admin

@@ -19,4 +19,6 @@ bool DeleteUser(const db::PgCtx& pg, const boost::uuids::uuid& user_id);
 
 bool UpdateUserRole(const db::PgCtx& pg, const boost::uuids::uuid& user_id, const defs::users::UserRole user_role);
 
+bool DeleteQueue(const db::PgCtx& pg, const boost::uuids::uuid& queue_id);
+
 }  // namespace db::api::admin

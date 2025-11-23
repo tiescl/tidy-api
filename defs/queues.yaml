@@ -31,3 +31,17 @@ components:
                 id:
                     type: string
                     format: uuid
+
+        V1QueuesDeleteRequest:
+            type: object
+            additionalProperties: false
+            required:
+              - queue_id
+            properties:
+                queue_id:
+                    type: string
+                    format: uuid
+
+        V1QueuesDeleteResponse:
+            type: object
+            additionalProperties: false

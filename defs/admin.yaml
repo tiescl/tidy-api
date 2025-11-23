@@ -73,3 +73,17 @@ components:
         AdminV1UsersRoleResponse:
             type: object
             additionalProperties: false
+
+        AdminV1QueuesDeleteRequest:
+            type: object
+            additionalProperties: false
+            required:
+              - queue_id
+            properties:
+                queue_id:
+                    type: string
+                    format: uuid
+
+        AdminV1QueuesDeleteResponse:
+            type: object
+            additionalProperties: false

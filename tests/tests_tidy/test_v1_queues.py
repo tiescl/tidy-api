@@ -123,3 +123,54 @@ async def test_create_queue(
         assert response.json() == error_response_json
     else:
         assert 'id' in response.json()
+
+
+@pytest.mark.pgsql(DB_NAME, files=['users.sql', 'tokens.sql', 'queues.sql'])
+@pytest.mark.parametrize(
+    "session_id, queue_id, response_status, error_response_json, should_fail",
+    [
+        pytest.param(
+            'f37116c18a9345a0a2b5ea97fbc4e8f0',
+            '5d854c28-c6eb-4ed4-b429-aaf006cea6b5',
+            200,
+            None,
+            False,
+            id='ok'
+        ),
+        pytest.param(
+            'f47116c18a9345a0a2b5ea97fbc4e8f0',
+            '5d854c28-c6eb-4ed4-b429-aaf006cea6b5',
+            400,
+            {'code': '400', 'message': 'QUEUE_OWNER_MISMATCH'},
+            True,
+            id='owner mismatch'
+        ),
+        pytest.param(
+            'f37116c18a9345a0a2b5ea97fbc4e8f0',
+            '6d854c28-c6eb-4ed4-b429-aaf006cea6b5',
+            404,
+            {'code': '404', 'message': 'QUEUE_NOT_FOUND'},
+            True,
+            id='not found'
+        ),
+    ],
+)
+async def test_delete_queue(
+    service_client: Client,
+    session_id: str,
+    queue_id: str,
+    response_status: int,
+    error_response_json: typing.Dict,
+    should_fail: bool
+):
+    response = await service_client.delete(
+        '/v1/queues',
+        headers={'Cookie': f'session_token={session_id}'},
+        json={'queue_id': queue_id}
+    )
+
+    assert response.status == response_status
+    if should_fail:
+        assert response.json() == error_response_json
+    else:
+        assert response.json() == {}

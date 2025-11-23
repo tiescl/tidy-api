@@ -1,0 +1,31 @@
+-- $1 = queue_id
+-- $2 = role
+-- $3 = owner_id
+
+WITH queue AS (
+    SELECT owner_id
+    FROM tidy.queues
+    WHERE
+        id = $1
+        AND NOT removed
+),
+authorized AS (
+    SELECT 1
+    FROM queue
+    WHERE owner_id = $3
+),
+delete_attempt AS (
+    DELETE FROM tidy.queue_role_permissions
+    WHERE
+        queue_id = $1
+        AND role = $2
+        AND EXISTS (SELECT 1 FROM authorized)
+    RETURNING 1
+)
+SELECT CASE
+    WHEN NOT EXISTS (SELECT 1 FROM queue)
+        THEN 'QUEUE_NOT_FOUND'
+    WHEN NOT EXISTS (SELECT 1 FROM authorized)
+        THEN 'QUEUE_OWNER_MISMATCH'
+    ELSE 'OK'
+END;

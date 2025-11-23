@@ -53,6 +53,8 @@ add_library(
     src/db/api/auth/queries.cpp
     src/db/api/queues/queries.cpp
     src/db/api/users/queries.cpp
+    src/utils/errors.cpp
+    src/utils/text.cpp
     src/views/admin/v1/queues/del/view.cpp
     src/views/admin/v1/users/del/view.cpp
     src/views/admin/v1/users/get/view.cpp
@@ -61,6 +63,8 @@ add_library(
     src/views/v1/auth/logout/post/view.cpp
     src/views/v1/auth/register/post/view.cpp
     src/views/v1/queues/del/view.cpp
+    src/views/v1/queues/get/view.cpp
+    src/views/v1/queues/permissions/del/view.cpp
     src/views/v1/queues/permissions/post/view.cpp
     src/views/v1/queues/post/view.cpp
     src/views/v1/users/me/del/view.cpp

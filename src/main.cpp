@@ -22,6 +22,8 @@
 #include <views/v1/auth/logout/post/view.hpp>
 #include <views/v1/auth/register/post/view.hpp>
 #include <views/v1/queues/del/view.hpp>
+#include <views/v1/queues/get/view.hpp>
+#include <views/v1/queues/permissions/del/view.hpp>
 #include <views/v1/queues/permissions/post/view.hpp>
 #include <views/v1/queues/post/view.hpp>
 #include <views/v1/users/me/del/view.hpp>
@@ -41,6 +43,8 @@ components::ComponentList GenerateServiceHandlersList() {
         .Append<handlers::v1_auth_logout::post::View>()
         .Append<handlers::v1_auth_register::post::View>()
         .Append<handlers::v1_queues::del::View>()
+        .Append<handlers::v1_queues::get::View>()
+        .Append<handlers::v1_queues_permissions::del::View>()
         .Append<handlers::v1_queues_permissions::post::View>()
         .Append<handlers::v1_queues::post::View>()
         .Append<handlers::v1_users_me::del::View>()

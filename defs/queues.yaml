@@ -1,10 +1,49 @@
 components:
     schemas:
+        Queue:
+            type: object
+            additionalProperties: false
+            required:
+              - id
+              - key
+              - name
+              - owner_id
+              - created_at
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                key:
+                    type: string
+                name:
+                    type: string
+                owner_id:
+                    type: string
+                    format: uuid
+                created_at:
+                    type: integer
+                    format: int64
+
         PermissionType:
             type: string
             enum:
               - role
               - user
+
+        V1QueuesRequest:
+            type: object
+            additionalProperties: false
+
+        V1QueuesResponse:
+            type: object
+            additionalProperties: false
+            required:
+              - queues
+            properties:
+                queues:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Queue'
 
         V1QueuesPostRequest:
             type: object
@@ -73,5 +112,23 @@ components:
                         $ref: issues.yaml#/components/schemas/IssueAction
 
         V1QueuesPermissionsPostResponse:
+            type: object
+            additionalProperties: false
+
+        V1QueuesPermissionsDeleteRequest:
+            type: object
+            additionalProperties: false
+            required:
+              - permission_type
+            properties:
+                permission_type:
+                    $ref: '#/components/schemas/PermissionType'
+                role:
+                    $ref: users.yaml#/components/schemas/UserRole
+                user_id:
+                    type: string
+                    format: uuid
+
+        V1QueuesPermissionsDeleteResponse:
             type: object
             additionalProperties: false

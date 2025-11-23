@@ -144,3 +144,101 @@ async def test_create_queue_permissions(
                 '5c4b6cc6-10f9-4663-b473-3ffd8cc225f5',
                 '{view,create}',
             )
+
+
+@pytest.mark.pgsql(DB_NAME, files=['users.sql', 'tokens.sql', 'queues.sql'])
+@pytest.mark.parametrize(
+    "queue_id, session_token, permission_type, request_body, response_status, error_response_json, should_fail",
+    [
+        pytest.param(
+            '5d854c28-c6eb-4ed4-b429-aaf006cea6b5',
+            'f37116c18a9345a0a2b5ea97fbc4e8f0',
+            'role',
+            {
+                'permission_type': 'role',
+                'role': 'developer',
+            },
+            200,
+            None,
+            False,
+            id='ok role'
+        ),
+        pytest.param(
+            '5d854c28-c6eb-4ed4-b429-aaf006cea6b5',
+            'f37116c18a9345a0a2b5ea97fbc4e8f0',
+            'user',
+            {
+                'permission_type': 'user',
+                'user_id': '5c4b6cc6-10f9-4663-b473-3ffd8cc225f5',
+            },
+            200,
+            None,
+            False,
+            id='ok user'
+        ),
+        pytest.param(
+            '6d854c28-c6eb-4ed4-b429-aaf006cea6b5',
+            'f37116c18a9345a0a2b5ea97fbc4e8f0',
+            'role',
+            {
+                'permission_type': 'role',
+                'role': 'developer',
+            },
+            404,
+            {'code': '404', 'message': 'QUEUE_NOT_FOUND'},
+            True,
+            id='queue not found'
+        ),
+        pytest.param(
+            '5d854c28-c6eb-4ed4-b429-aaf006cea6b5',
+            'f47116c18a9345a0a2b5ea97fbc4e8f0',
+            'user',
+            {
+                'permission_type': 'user',
+                'user_id': '5c4b6cc6-10f9-4663-b473-3ffd8cc225f5',
+            },
+            400,
+            {'code': '400', 'message': 'QUEUE_OWNER_MISMATCH'},
+            True,
+            id='queue owner mismatch'
+        ),
+        pytest.param(
+            '7d854c28-c6eb-4ed4-b429-aaf006cea6b5',
+            'f37116c18a9345a0a2b5ea97fbc4e8f0',
+            'user',
+            {
+                'permission_type': 'user',
+                'user_id': '5c4b6cc6-10f9-4663-b473-3ffd8cc225f5',
+            },
+            404,
+            {'code': '404', 'message': 'QUEUE_NOT_FOUND'},
+            True,
+            id='deleted queue'
+        ),
+    ],
+)
+async def test_create_queue_permissions(
+    service_client: Client,
+    pgsql: typing.Dict,
+    queue_id: str,
+    session_token: str,
+    permission_type: str,
+    request_body: typing.Dict,
+    response_status: int,
+    error_response_json: typing.Dict,
+    should_fail: bool,
+):
+    response = await service_client.delete(
+        f'/v1/queues/{queue_id}/permissions',
+        headers={'Cookie': f'session_token={session_token}'},
+        json=request_body,
+    )
+
+    assert response.status == response_status
+    if should_fail:
+        assert response.json() == error_response_json
+    else:
+        if permission_type == 'role':
+            assert not select_queue_role_permission(pgsql, queue_id)
+        else:
+            assert not select_queue_user_permission(pgsql, queue_id)

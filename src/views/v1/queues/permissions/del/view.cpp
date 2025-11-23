@@ -13,7 +13,7 @@
 #include <defs/errors.hpp>
 #include <defs/queues.hpp>
 
-namespace handlers::v1_queues_permissions::post {
+namespace handlers::v1_queues_permissions::del {
 
 Response View::Handle(
     Request&& request,
@@ -40,9 +40,7 @@ Response View::Handle(
                 );
             }
 
-            result = db::api::queues::CreateQueueRolePermission(
-                pg_, queue_id, request.role.value(), request.actions, owner_id
-            );
+            result = db::api::queues::DeleteQueueRolePermission(pg_, queue_id, request.role.value(), owner_id);
 
             break;
         case defs::queues::PermissionType::kUser:
@@ -52,9 +50,7 @@ Response View::Handle(
                 );
             }
 
-            result = db::api::queues::CreateQueueUserPermission(
-                pg_, queue_id, request.user_id.value(), request.actions, owner_id
-            );
+            result = db::api::queues::DeleteQueueUserPermission(pg_, queue_id, request.user_id.value(), owner_id);
 
             break;
     };
@@ -64,4 +60,4 @@ Response View::Handle(
     return Response200{};
 }
 
-}  // namespace handlers::v1_queues_permissions::post
+}  // namespace handlers::v1_queues_permissions::del

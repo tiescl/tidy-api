@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
 DROP TYPE IF EXISTS tidy.issue_action;
 CREATE TYPE tidy.issue_action AS ENUM (
     'view',
@@ -22,6 +24,15 @@ CREATE TABLE IF NOT EXISTS tidy.queues (
     CONSTRAINT queues_unique_key UNIQUE (key)
 );
 
+CREATE INDEX IF NOT EXISTS idx_queues_owner_id_removed
+    ON tidy.queues (owner_id, removed);
+
+CREATE INDEX IF NOT EXISTS idx_queues_key_trgm
+    ON tidy.queues USING gin (key gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS idx_queues_name_trgm
+    ON tidy.queues USING gin (name gin_trgm_ops);
+
 DROP TRIGGER IF EXISTS trigger_update ON tidy.queues;
 CREATE TRIGGER trigger_update BEFORE UPDATE ON tidy.queues
     FOR EACH ROW EXECUTE PROCEDURE set_update('tidy.queues_increment_seq');
@@ -36,6 +47,9 @@ CREATE TABLE IF NOT EXISTS tidy.queue_role_permissions (
     PRIMARY KEY (queue_id, role)
 );
 
+CREATE INDEX IF NOT EXISTS idx_queue_role_permissions_actions_gin
+    ON tidy.queue_role_permissions USING gin (actions);
+
 CREATE TABLE IF NOT EXISTS tidy.queue_user_permissions (
     queue_id UUID NOT NULL
         REFERENCES tidy.queues(id) ON DELETE RESTRICT,
@@ -46,3 +60,6 @@ CREATE TABLE IF NOT EXISTS tidy.queue_user_permissions (
 
     PRIMARY KEY (queue_id, user_id)
 );
+
+CREATE INDEX IF NOT EXISTS id_queue_user_permissions_actions_gin
+    ON tidy.queue_user_permissions USING gin (actions);

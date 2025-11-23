@@ -14,6 +14,7 @@ namespace db::dto::auth {
 struct UserAuthData {
     boost::uuids::uuid user_id;
     std::string email;
+    defs::users::UserRole role;
     std::string password_hash;
 };
 

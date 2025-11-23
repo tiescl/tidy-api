@@ -57,7 +57,7 @@ Response View::Handle(
         db::dto::auth::UserToken{
             .token{token},
             .user_id = stored_user_data.value().user_id,
-            .user_role = defs::users::UserRole::kPending,
+            .user_role = stored_user_data.value().role,
             .expires_at{token_expires_at}
         }
     );

@@ -35,6 +35,24 @@ CREATE TABLE IF NOT EXISTS tidy.user_tokens (
 );
 
 CREATE INDEX IF NOT EXISTS idx_users_search ON tidy.users (email, username);
+CREATE INDEX IF NOT EXISTS idx_user_tokens_user_id ON tidy.user_tokens (user_id);
+
+-- triggers
+CREATE OR REPLACE FUNCTION set_update()
+    RETURNS TRIGGER AS $$
+BEGIN
+    NEW.increment = NEXTVAL(TG_ARGV[0]);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS trigger_update ON tidy.users CASCADE;
+CREATE TRIGGER trigger_update BEFORE UPDATE ON tidy.users
+    FOR EACH ROW EXECUTE PROCEDURE set_update('tidy.users_increment_seq');
+
+DROP TRIGGER IF EXISTS trigger_update ON tidy.user_tokens CASCADE;
+CREATE TRIGGER trigger_update BEFORE UPDATE ON tidy.user_tokens
+    FOR EACH ROW EXECUTE PROCEDURE set_update('tidy.user_tokens_increment_seq');
 
 DROP TYPE IF EXISTS tidy.issue_action CASCADE;
 CREATE TYPE tidy.issue_action AS ENUM (
@@ -57,6 +75,10 @@ CREATE TABLE IF NOT EXISTS tidy.queues (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     increment BIGSERIAL UNIQUE NOT NULL
 );
+
+DROP TRIGGER IF EXISTS trigger_update ON tidy.queues CASCADE;
+CREATE TRIGGER trigger_update BEFORE UPDATE ON tidy.queues
+    FOR EACH ROW EXECUTE PROCEDURE set_update('tidy.queues_increment_seq');
 
 CREATE TABLE IF NOT EXISTS tidy.queue_role_permissions (
     queue_id UUID NOT NULL
@@ -165,4 +187,8 @@ CREATE TABLE IF NOT EXISTS tidy.boards (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     increment BIGSERIAL UNIQUE NOT NULL
 );
+
+DROP TRIGGER IF EXISTS trigger_update ON tidy.boards CASCADE;
+CREATE TRIGGER trigger_update BEFORE UPDATE ON tidy.boards
+    FOR EACH ROW EXECUTE PROCEDURE set_update('tidy.boards_increment_seq');
 

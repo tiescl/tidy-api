@@ -6,42 +6,61 @@ from tests.tests_tidy.consts import DB_NAME
 
 
 @pytest.mark.pgsql(DB_NAME, files=['users.sql', 'tokens.sql'])
-async def test_admin_get_users(service_client: Client):
+@pytest.mark.parametrize(
+    "url, response_status, response_user_cnt, check_potato_electro",
+    [
+        pytest.param(
+            '/admin/v1/users?limit=2',
+            200,
+            2,
+            False,
+            id='simple limit'
+        ),
+        pytest.param(
+            '/admin/v1/users?limit=4&search=potato',
+            200,
+            1,
+            False,
+            id='limit with search'
+        ),
+        pytest.param(
+            '/admin/v1/users?limit=100&search=gmail',
+            200,
+            4,
+            False,
+            id='large limit'
+        ),
+        pytest.param(
+            '/admin/v1/users?page=2&limit=2',
+            200,
+            2,
+            True,
+            id='limit with page'
+        ),
+    ],
+)
+async def test_admin_get_users(
+    service_client: Client,
+    url: str,
+    response_status: int,
+    response_user_cnt: int,
+    check_potato_electro: bool,
+):
     response = await service_client.get(
-        '/admin/v1/users?limit=2',
+        url,
         headers={'Cookie': 'session_token=f37116c18a9345a0a2b5ea97fbc4e8f0'},
     )
 
-    assert response.status == 200
-    assert len(response.json()['users']) == 2
+    assert response.status == response_status
+    assert len(response.json()['users']) == response_user_cnt
 
-    response = await service_client.get(
-        '/admin/v1/users?limit=4&search=potato',
-        headers={'Cookie': 'session_token=f37116c18a9345a0a2b5ea97fbc4e8f0'},
-    )
-
-    assert response.status == 200
-    assert len(response.json()['users']) == 1
-
-    response = await service_client.get(
-        '/admin/v1/users?limit=100&search=gmail',
-        headers={'Cookie': 'session_token=f37116c18a9345a0a2b5ea97fbc4e8f0'},
-    )
-
-    assert response.status == 200
-    assert len(response.json()['users']) == 4
-
-    response = await service_client.get(
-        '/admin/v1/users?page=2&limit=2',
-        headers={'Cookie': 'session_token=f37116c18a9345a0a2b5ea97fbc4e8f0'},
-    )
-
-    assert response.status == 200
-
-    users = response.json()['users']
-    assert len(users) == 2
-    for user in users:
-        assert user['username'] in ('potato_mushroom', 'harmonic_electrode')
+    if check_potato_electro:
+        users = response.json()['users']
+        for user in users:
+            assert user['username'] in [
+                'potato_mushroom',
+                'harmonic_electrode'
+            ]
 
 
 @pytest.mark.pgsql(DB_NAME, files=['users.sql', 'tokens.sql'])

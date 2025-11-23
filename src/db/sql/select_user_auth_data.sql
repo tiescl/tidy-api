@@ -6,4 +6,6 @@ SELECT
     role,
     password_hash
 FROM tidy.users
-WHERE email = $1;
+WHERE
+    email = $1
+    AND NOT removed;

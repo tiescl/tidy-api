@@ -23,4 +23,12 @@ VALUES (
     'pending',
     TRUE,
     '2025-11-22T10:00:00+00'
+), (
+    '0cbbdb18-6760-4cf9-a653-a6cef58b4d7b',
+    'asdf@gmail.com',
+    'uzbek_og''loni',
+    'abcd',
+    'developer',
+    FALSE,
+    '2025-11-22T13:00:00+00'
 );

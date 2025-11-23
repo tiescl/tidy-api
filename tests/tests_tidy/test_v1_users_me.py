@@ -139,3 +139,14 @@ async def test_update_current_user(
 
     assert response.status == response_status
     assert response.json() == response_json
+
+
+@pytest.mark.pgsql(DB_NAME, files=['users.sql', 'tokens.sql'])
+async def test_get_curr_user_token_expired(service_client: Client):
+    response = await service_client.get(
+        '/v1/users/me',
+        headers={'Cookie': 'session_token=f57116c18a9345a0a2b5ea97fbc4e8f0'}
+    )
+
+    assert response.status == 401
+    assert response.json() == {'code': '401', 'message': 'INVALID_TOKEN'}

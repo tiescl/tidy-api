@@ -13,11 +13,5 @@ VALUES (
     '4e734c48109cf28f985886afdb14bc3d$e2ba51c33d42832fe6db5f0754ea3702774be01924ed47045b740a692a9e2b0d',
     'pending',
     FALSE
-), (
-    '5c4b6cc6-10f9-4663-b473-3ffd8cc225f5',
-    'potato_mushroom',
-    'potato@gmail.com',
-    '4e734c48109cf28f985886afdb14bc3d$e2ba51c33d42832fe6db5f0754ea3702774be01924ed47045b740a692a9e2b0d',
-    'manager',
-    TRUE
 );
+

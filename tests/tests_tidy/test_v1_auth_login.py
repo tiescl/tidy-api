@@ -6,25 +6,57 @@ from tests.tests_tidy.consts import DB_NAME
 
 
 @pytest.mark.pgsql(DB_NAME, files=['users.sql'])
-async def test_login(service_client: Client):
+@pytest.mark.parametrize(
+    'request_body, response_status, response_json',
+    [
+        pytest.param(
+            {
+                'email': 'slayy@gmail.com',
+                'password': '777cantfindme',
+            },
+            200,
+            {},
+            id='ok',
+        ),
+        pytest.param(
+            {
+                'email': 'slayer_clone@gmail.com',
+                'password': '777cantfindme',
+            },
+            401,
+            {'code': '401', 'message': 'EMAIL_NOT_FOUND'},
+            id='email not found',
+        ),
+        pytest.param(
+            {
+                'email': 'slayy@gmail.com',
+                'password': '333cantfindme',
+            },
+            401,
+            {'code': '401', 'message': 'INVALID_PASSWORD'},
+            id='wrong password',
+        ),
+        pytest.param(
+            {
+                'email': 'potato@gmail.com',
+                'password': '777cantfindme',
+            },
+            401,
+            {'code': '401', 'message': 'EMAIL_NOT_FOUND'},
+            id='deleted user',
+        ),
+    ],
+)
+async def test_login(
+    service_client: Client,
+    request_body,
+    response_status,
+    response_json,
+):
     response = await service_client.post(
         '/v1/auth/login',
-        json={
-            'email': 'slayy@gmail.com',
-            'password': '777cantfindme',
-        }
+        json=request_body,
     )
 
-    assert response.status == 200
-    assert response.json() == {}
-
-    response = await service_client.post(
-        '/v1/auth/login',
-        json={
-            'email': 'slayer_clone@gmail.com',
-            'password': '777cantfindme',
-        }
-    )
-
-    assert response.status == 401
-    assert response.json()['message'] == 'EMAIL_NOT_FOUND'
+    assert response.status == response_status
+    assert response.json() == response_json

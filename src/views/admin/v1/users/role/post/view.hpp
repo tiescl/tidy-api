@@ -13,13 +13,13 @@
 
 namespace handlers::admin_v1_users_role::post {
 
-using Request = defs::admin::AdminV1UsersRoleRequest;
+using namespace defs::admin;
 
-using Response200 = defs::admin::AdminV1UsersRoleResponse;
+using Request = AdminV1UsersRoleRequest;
+using Response200 = AdminV1UsersRoleResponse;
 using Response = std::variant<Response200>;
 
-class View final
-    : public utils::TypedJsonHandler<View, Request, Response, Response200, defs::admin::Parse, defs::admin::Serialize> {
+class View final : public utils::TypedJsonHandler<View, Request, Response, Response200, Parse, Serialize> {
 public:
     static constexpr std::string_view kName = "handler-admin_v1_users_role-post";
 

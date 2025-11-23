@@ -10,6 +10,8 @@ components:
               - INVALID_PASSWORD
               - INVALID_TOKEN
               - INVALID_USER_ID
+              - QUEUE_ALREADY_EXISTS
+              - QUEUE_OWNER_MISMATCH
               - TOKEN_NOT_FOUND
               - USER_NOT_FOUND
               - USERNAME_ALREADY_EXISTS

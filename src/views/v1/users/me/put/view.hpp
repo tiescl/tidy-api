@@ -13,13 +13,13 @@
 
 namespace handlers::v1_users_me::put {
 
-using Request = defs::users::V1UsersMePutRequest;
+using namespace defs::users;
 
-using Response200 = defs::users::V1UsersMePutResponse;
+using Request = V1UsersMePutRequest;
+using Response200 = V1UsersMePutResponse;
 using Response = std::variant<Response200>;
 
-class View final
-    : public utils::TypedJsonHandler<View, Request, Response, Response200, defs::users::Parse, defs::users::Serialize> {
+class View final : public utils::TypedJsonHandler<View, Request, Response, Response200, Parse, Serialize> {
 public:
     static constexpr std::string_view kName = "handler-v1_users_me-put";
 

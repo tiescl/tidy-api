@@ -9,19 +9,19 @@
 
 #include <utils/typed_json_handler.hpp>
 
-#include <defs/admin.hpp>
+#include <defs/queues.hpp>
 
-namespace handlers::admin_v1_users::get {
+namespace handlers::v1_queues::post {
 
-using namespace defs::admin;
+using namespace defs::queues;
 
-using Request = AdminV1UsersRequest;
-using Response200 = AdminV1UsersResponse;
+using Request = V1QueuesPostRequest;
+using Response200 = V1QueuesPostResponse;
 using Response = std::variant<Response200>;
 
 class View final : public utils::TypedJsonHandler<View, Request, Response, Response200, Parse, Serialize> {
 public:
-    static constexpr std::string_view kName = "handler-admin_v1_users-post";
+    static constexpr std::string_view kName = "handler-v1_queues-post";
 
     View(const components::ComponentConfig& config, const components::ComponentContext& context)
         : TypedJsonHandler(config, context), pg_(context) {}
@@ -36,4 +36,4 @@ private:
     const db::PgCtx pg_;
 };
 
-}  // namespace handlers::admin_v1_users::get
+}  // namespace handlers::v1_queues::post

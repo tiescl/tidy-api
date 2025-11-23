@@ -13,13 +13,13 @@
 
 namespace handlers::v1_users_me_password::put {
 
-using Request = defs::users::V1UsersMePasswordRequest;
+using namespace defs::users;
 
-using Response200 = defs::users::V1UsersMePasswordResponse;
+using Request = V1UsersMePasswordRequest;
+using Response200 = V1UsersMePasswordResponse;
 using Response = std::variant<Response200>;
 
-class View final
-    : public utils::TypedJsonHandler<View, Request, Response, Response200, defs::users::Parse, defs::users::Serialize> {
+class View final : public utils::TypedJsonHandler<View, Request, Response, Response200, Parse, Serialize> {
 public:
     static constexpr std::string_view kName = "handler-v1_users_me_password-put";
 

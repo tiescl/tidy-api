@@ -13,13 +13,13 @@
 
 namespace handlers::admin_v1_users::del {
 
-using Request = defs::admin::AdminV1UsersDeleteRequest;
+using namespace defs::admin;
 
-using Response200 = defs::admin::AdminV1UsersDeleteResponse;
+using Request = AdminV1UsersDeleteRequest;
+using Response200 = AdminV1UsersDeleteResponse;
 using Response = std::variant<Response200>;
 
-class View final
-    : public utils::TypedJsonHandler<View, Request, Response, Response200, defs::admin::Parse, defs::admin::Serialize> {
+class View final : public utils::TypedJsonHandler<View, Request, Response, Response200, Parse, Serialize> {
 public:
     static constexpr std::string_view kName = "handler-admin_v1_users-delete";
 

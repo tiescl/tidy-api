@@ -13,13 +13,13 @@
 
 namespace handlers::v1_users_me::get {
 
-using Request = defs::users::V1UsersMeRequest;
+using namespace defs::users;
 
-using Response200 = defs::users::V1UsersMeResponse;
+using Request = V1UsersMeRequest;
+using Response200 = V1UsersMeResponse;
 using Response = std::variant<Response200>;
 
-class View final
-    : public utils::TypedJsonHandler<View, Request, Response, Response200, defs::users::Parse, defs::users::Serialize> {
+class View final : public utils::TypedJsonHandler<View, Request, Response, Response200, Parse, Serialize> {
 public:
     static constexpr std::string_view kName = "handler-v1_users_me-get";
 

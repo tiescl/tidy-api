@@ -3,7 +3,6 @@
 #include <boost/uuid/uuid.hpp>
 
 #include <userver/server/handlers/exceptions.hpp>
-#include <userver/utils/assert.hpp>
 
 #include <db/api/users/queries.hpp>
 

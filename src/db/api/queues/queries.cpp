@@ -1,0 +1,17 @@
+#include "queries.hpp"
+
+#include <userver/storages/postgres/io/row_types.hpp>
+
+#include <db/db_types.hpp>
+
+#include <tidy_api/sql_queries.hpp>
+
+namespace db::api::queues {
+
+std::optional<boost::uuids::uuid> CreateQueue(const db::PgCtx& pg, const dto::queues::Queue& queue) {
+    const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kInsertQueue, queue.key, queue.name, queue.owner_id);
+
+    return pg_result.AsOptionalSingleRow<boost::uuids::uuid>();
+}
+
+}  // namespace db::api::queues

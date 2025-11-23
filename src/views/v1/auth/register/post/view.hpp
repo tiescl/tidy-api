@@ -13,14 +13,14 @@
 
 namespace handlers::v1_auth_register::post {
 
-using Request = defs::auth::V1AuthRegisterRequest;
+using namespace defs::auth;
 
+using Request = V1AuthRegisterRequest;
 using Response302 = formats::json::Value;
-using Response200 = defs::auth::V1AuthRegisterResponse;
+using Response200 = V1AuthRegisterResponse;
 using Response = std::variant<Response200, Response302>;
 
-class View final
-    : public utils::TypedJsonHandler<View, Request, Response, Response200, defs::auth::Parse, defs::auth::Serialize> {
+class View final : public utils::TypedJsonHandler<View, Request, Response, Response200, Parse, Serialize> {
 public:
     static constexpr std::string_view kName = "handler-v1_auth_register-post";
 

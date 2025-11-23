@@ -10,14 +10,16 @@ CREATE TYPE tidy.issue_action AS ENUM (
 
 CREATE TABLE IF NOT EXISTS tidy.queues (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    key TEXT NOT NULL UNIQUE,
+    key TEXT NOT NULL,
     name TEXT NOT NULL,
     owner_id UUID NOT NULL
         REFERENCES tidy.users(id) ON DELETE RESTRICT,
     removed BOOLEAN NOT NULL DEFAULT false,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    increment BIGSERIAL UNIQUE NOT NULL
+    increment BIGSERIAL UNIQUE NOT NULL,
+
+    CONSTRAINT queues_unique_key UNIQUE (key)
 );
 
 DROP TRIGGER IF EXISTS trigger_update ON tidy.queues;

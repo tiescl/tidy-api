@@ -1,0 +1,33 @@
+components:
+    schemas:
+        V1QueuesPostRequest:
+            type: object
+            additionalProperties: false
+            required:
+              - key
+              - name
+              - owner_id
+            properties:
+                key:
+                    type: string
+                    minLength: 4
+                    maxLength: 32
+                    pattern: ^[A-Z]+$
+                name:
+                    type: string
+                    minLength: 4
+                    maxLength: 256
+                    pattern: ^[a-zA-Z0-9 _-]+$
+                owner_id:
+                    type: string
+                    format: uuid
+
+        V1QueuesPostResponse:
+            type: object
+            additionalProperties: false
+            required:
+              - id
+            properties:
+                id:
+                    type: string
+                    format: uuid

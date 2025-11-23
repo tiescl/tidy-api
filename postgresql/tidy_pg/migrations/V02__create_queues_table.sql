@@ -20,6 +20,10 @@ CREATE TABLE IF NOT EXISTS tidy.queues (
     increment BIGSERIAL UNIQUE NOT NULL
 );
 
+DROP TRIGGER IF EXISTS trigger_update ON tidy.queues;
+CREATE TRIGGER trigger_update BEFORE UPDATE ON tidy.queues
+    FOR EACH ROW EXECUTE PROCEDURE set_update('tidy.queues_increment_seq');
+
 CREATE TABLE IF NOT EXISTS tidy.queue_role_permissions (
     queue_id UUID NOT NULL
         REFERENCES tidy.queues(id) ON DELETE RESTRICT,

@@ -11,6 +11,7 @@
 #include <userver/server/auth/user_auth_info.hpp>
 #include <userver/server/handlers/auth/auth_checker_base.hpp>
 #include <userver/server/handlers/exceptions.hpp>
+#include <userver/storages/postgres/io/chrono.hpp>
 
 #include <db/api/auth/queries.hpp>
 
@@ -43,7 +44,7 @@ AuthCheckerCookieRequired::AuthCheckResult AuthCheckerCookieRequired::CheckAuth(
         }
     }
 
-    if (!info) {
+    if (!info || info->expires_at < storages::postgres::Now()) {
         return AuthCheckResult{
             AuthCheckResult::Status::kInvalidToken,
             {},

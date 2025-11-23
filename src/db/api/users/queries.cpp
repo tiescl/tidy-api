@@ -18,6 +18,12 @@ void SetNewUserPasswordHash(const db::PgCtx& pg, const boost::uuids::uuid& user_
     pg.MakeRwRequest(tidy_api::sql::kUpdateUserPasswordHash, user_id, new_hash);
 }
 
+bool DeleteUser(const db::PgCtx& pg, const boost::uuids::uuid& user_id) {
+    const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteUser, user_id);
+
+    return pg_result.RowsAffected();
+}
+
 std::optional<db::dto::users::UpdatedUser> UpdateUserData(
     const db::PgCtx& pg,
     const boost::uuids::uuid user_id,

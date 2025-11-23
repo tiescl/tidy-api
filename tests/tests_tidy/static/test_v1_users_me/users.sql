@@ -31,4 +31,12 @@ VALUES (
     'developer',
     FALSE,
     '2025-11-22T13:00:00+00'
+), (
+    '605223cd-826a-46a7-9398-b21f1dd4fd45',
+    'slayer_of_demons',
+    'asdf@gmail.com',
+    'abcd',
+    'pending',
+    FALSE,
+    '2025-11-22T12:00:00+00'
 );

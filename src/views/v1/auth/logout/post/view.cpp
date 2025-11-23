@@ -13,10 +13,14 @@
 
 namespace handlers::v1_auth_logout::post {
 
-Response View::HandleRequest(server::http::HttpRequest& request, server::request::RequestContext&) const {
-    server::http::HttpResponse& response = request.GetHttpResponse();
+Response View::Handle(
+    [[maybe_unused]] Request&& request,
+    const server::http::HttpRequest& http_request,
+    [[maybe_unused]] server::request::RequestContext& request_context
+) const {
+    server::http::HttpResponse& response = http_request.GetHttpResponse();
 
-    const auto token = request.GetCookie(utils::constants::kUserTokenCookieName);
+    const auto token = http_request.GetCookie(utils::constants::kUserTokenCookieName);
     const auto expire_time = utils::datetime::Now() - std::chrono::seconds(1);
     db::api::auth::MarkTokenAsExpired(pg_, token, storages::postgres::TimePointTz{expire_time});
 

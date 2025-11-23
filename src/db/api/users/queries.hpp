@@ -14,6 +14,8 @@ std::optional<std::string> GetUserPasswordHash(const db::PgCtx& pg, const boost:
 
 void SetNewUserPasswordHash(const db::PgCtx& pg, const boost::uuids::uuid& user_id, const std::string& new_hash);
 
+bool DeleteUser(const db::PgCtx& pg, const boost::uuids::uuid& user_id);
+
 std::optional<db::dto::users::UpdatedUser> UpdateUserData(
     const db::PgCtx& pg,
     const boost::uuids::uuid user_id,

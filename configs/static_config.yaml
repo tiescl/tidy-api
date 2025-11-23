@@ -117,6 +117,14 @@ components_manager:
                 types:
                   - cookie-required
 
+        handler-v1_users_me-delete:
+            path: /v1/users/me
+            method: DELETE
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required
+
         handler-v1_users_me_password-put:
             path: /v1/users/me/password
             method: PUT

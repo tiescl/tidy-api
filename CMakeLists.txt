@@ -60,6 +60,7 @@ add_library(
     src/views/v1/auth/logout/post/view.cpp
     src/views/v1/auth/register/post/view.cpp
     src/views/v1/queues/post/view.cpp
+    src/views/v1/users/me/del/view.cpp
     src/views/v1/users/me/get/view.cpp
     src/views/v1/users/me/put/view.cpp
     src/views/v1/users/me/password/put/view.cpp

@@ -58,3 +58,11 @@ components:
         V1AuthLoginResponse:
             type: object
             additionalProperties: false
+
+        V1AuthLogoutRequest:
+            type: object
+            additionalProperties: false
+
+        V1AuthLogoutResponse:
+            type: object
+            additionalProperties: false

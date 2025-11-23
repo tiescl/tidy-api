@@ -59,6 +59,14 @@ components:
         V1UsersMePutResponse:
             $ref: '#/components/schemas/User'
 
+        V1UsersMeDeleteRequest:
+            type: object
+            additionalProperties: false
+
+        V1UsersMeDeleteResponse:
+            type: object
+            additionalProperties: false
+
         V1UsersMePasswordResponse:
             type: object
             additionalProperties: false

@@ -16,7 +16,7 @@
 #include <auth/password_hasher.hpp>
 #include <utils/constants.hpp>
 
-#include <defs/error.hpp>
+#include <defs/errors.hpp>
 #include <defs/users.hpp>
 
 namespace handlers::v1_auth_register::post {
@@ -49,12 +49,12 @@ Response View::Handle(
     } catch (const storages::postgres::UniqueViolation& exc) {
         if (exc.GetConstraint() == utils::constants::kUsersUniqueEmailConstraint) {
             throw server::handlers::ClientError(
-                server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kEmailAlreadyExists)}
+                server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kEmailAlreadyExists)}
             );
         }
         if (exc.GetConstraint() == utils::constants::kUsersUniqueUsernameConstraint) {
             throw server::handlers::ClientError(
-                server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kUsernameAlreadyExists)}
+                server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUsernameAlreadyExists)}
             );
         }
     }

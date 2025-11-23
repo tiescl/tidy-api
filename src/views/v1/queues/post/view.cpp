@@ -11,7 +11,7 @@
 
 #include <utils/constants.hpp>
 
-#include <defs/error.hpp>
+#include <defs/errors.hpp>
 
 namespace handlers::v1_queues::post {
 
@@ -24,7 +24,7 @@ Response View::Handle(
 
     if (queue.owner_id != user_id) {
         throw server::handlers::ClientError(
-            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kQueueOwnerMismatch)}
+            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kQueueOwnerMismatch)}
         );
     }
 
@@ -34,14 +34,14 @@ Response View::Handle(
     } catch (const storages::postgres::UniqueViolation& exc) {
         if (exc.GetConstraint() == utils::constants::kQueuesUniqueKeyConstraint) {
             throw server::handlers::ClientError(
-                server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kQueueAlreadyExists)}
+                server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kQueueAlreadyExists)}
             );
         }
     }
 
     if (!created_queue_id_opt.has_value()) {
         throw server::handlers::ClientError(
-            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kUserNotFound)}
+            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUserNotFound)}
         );
     }
 

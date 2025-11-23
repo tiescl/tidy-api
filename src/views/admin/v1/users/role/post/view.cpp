@@ -9,7 +9,7 @@
 
 #include <utils/constants.hpp>
 
-#include <defs/error.hpp>
+#include <defs/errors.hpp>
 
 namespace handlers::admin_v1_users_role::post {
 
@@ -23,13 +23,13 @@ Response View::Handle(
         user_id = utils::BoostUuidFromString(http_request.GetPathArg(utils::constants::kUserId));
     } catch (const std::exception& exc) {
         throw server::handlers::ClientError(
-            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kInvalidUserId)}
+            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kInvalidUserId)}
         );
     }
 
     if (!db::api::admin::UpdateUserRole(pg_, user_id, request.role)) {
         throw server::handlers::ResourceNotFound(
-            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kUserNotFound)}
+            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUserNotFound)}
         );
     }
 

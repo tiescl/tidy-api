@@ -4,7 +4,7 @@
 
 #include <db/api/admin/queries.hpp>
 
-#include <defs/error.hpp>
+#include <defs/errors.hpp>
 
 namespace handlers::admin_v1_users::del {
 
@@ -15,7 +15,7 @@ Response View::Handle(
 ) const {
     if (!db::api::admin::DeleteUser(pg_, request.user_id)) {
         throw server::handlers::ResourceNotFound(
-            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kUserNotFound)}
+            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUserNotFound)}
         );
     }
 

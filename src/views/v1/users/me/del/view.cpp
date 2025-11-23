@@ -6,7 +6,7 @@
 
 #include <utils/constants.hpp>
 
-#include <defs/error.hpp>
+#include <defs/errors.hpp>
 
 namespace handlers::v1_users_me::del {
 
@@ -19,7 +19,7 @@ Response View::Handle(
 
     if (!db::api::users::DeleteUser(pg_, user_id)) {
         throw server::handlers::ResourceNotFound(
-            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kUserNotFound)}
+            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUserNotFound)}
         );
     }
 

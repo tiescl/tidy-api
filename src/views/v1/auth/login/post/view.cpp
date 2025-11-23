@@ -16,7 +16,7 @@
 #include <auth/password_hasher.hpp>
 #include <utils/constants.hpp>
 
-#include <defs/error.hpp>
+#include <defs/errors.hpp>
 #include <defs/users.hpp>
 
 namespace handlers::v1_auth_login::post {
@@ -38,13 +38,13 @@ Response View::Handle(
     const auto stored_user_data = db::api::auth::GetUserAuthData(pg_, request.email);
     if (!stored_user_data.has_value()) {
         throw server::handlers::Unauthorized(
-            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kEmailNotFound)}
+            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kEmailNotFound)}
         );
     }
 
     if (!auth::PasswordHasher::Verify(request.password, stored_user_data->password_hash)) {
         throw server::handlers::Unauthorized(
-            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kInvalidPassword)}
+            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kInvalidPassword)}
         );
     }
 

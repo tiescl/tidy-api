@@ -8,7 +8,7 @@
 
 #include <utils/constants.hpp>
 
-#include <defs/error.hpp>
+#include <defs/errors.hpp>
 
 namespace handlers::v1_users_me::get {
 
@@ -22,7 +22,7 @@ Response View::Handle(
     auto user = db::api::users::GetCurrentUser(pg_, user_id);
     if (!user.has_value()) {
         throw server::handlers::ResourceNotFound(
-            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kUserNotFound)}
+            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUserNotFound)}
         );
     }
 

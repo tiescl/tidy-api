@@ -6,7 +6,7 @@
 
 #include <utils/constants.hpp>
 
-#include <defs/error.hpp>
+#include <defs/errors.hpp>
 
 namespace handlers::v1_queues::del {
 
@@ -18,14 +18,14 @@ Response View::Handle(
     const auto user_id = request_context.GetData<boost::uuids::uuid>(utils::constants::kUserId);
 
     const auto result = db::api::queues::DeleteQueue(pg_, request.queue_id, user_id);
-    if (result == ToString(defs::error::ErrorCode::kQueueNotFound)) {
+    if (result == ToString(defs::errors::ErrorCode::kQueueNotFound)) {
         throw server::handlers::ResourceNotFound(
-            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kQueueNotFound)}
+            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kQueueNotFound)}
         );
     }
-    if (result == ToString(defs::error::ErrorCode::kQueueOwnerMismatch)) {
+    if (result == ToString(defs::errors::ErrorCode::kQueueOwnerMismatch)) {
         throw server::handlers::ClientError(
-            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kQueueOwnerMismatch)}
+            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kQueueOwnerMismatch)}
         );
     }
 

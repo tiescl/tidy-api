@@ -4,7 +4,7 @@
 
 #include <db/api/admin/queries.hpp>
 
-#include <defs/error.hpp>
+#include <defs/errors.hpp>
 
 namespace handlers::admin_v1_queues::del {
 
@@ -15,7 +15,7 @@ Response View::Handle(
 ) const {
     if (!db::api::admin::DeleteQueue(pg_, request.queue_id)) {
         throw server::handlers::ResourceNotFound(
-            server::handlers::ExternalBody{ToString(defs::error::ErrorCode::kQueueNotFound)}
+            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kQueueNotFound)}
         );
     }
 

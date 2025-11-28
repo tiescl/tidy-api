@@ -74,6 +74,52 @@ components:
             type: object
             additionalProperties: false
 
+        AdminV1QueuesRequest:
+            type: object
+            additionalProperties: false
+
+        AdminV1QueuesResponse:
+            type: object
+            additionalProperties: false
+            required:
+              - queues
+            properties:
+                queues:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/AdminQueueListItem'
+
+        AdminQueueListItem:
+            type: object
+            additionalProperties: false
+            required:
+              - id
+              - key
+              - name
+              - owner_id
+              - removed
+              - created_at
+              - updated_at
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                key:
+                    type: string
+                name:
+                    type: string
+                owner_id:
+                    type: string
+                    format: uuid
+                removed:
+                    type: boolean
+                created_at:
+                    type: integer
+                    format: int64
+                updated_at:
+                    type: integer
+                    format: int64
+
         AdminV1QueuesDeleteRequest:
             type: object
             additionalProperties: false

@@ -2,6 +2,7 @@
 
 #include <optional>
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 #include <boost/uuid/uuid.hpp>
@@ -23,6 +24,9 @@ std::vector<defs::queues::Queue> GetAvailableQueues(
     const int64_t offset
 );
 
+std::optional<defs::queues::Queue>
+GetQueue(const db::PgCtx& pg, const boost::uuids::uuid& user_id, const boost::uuids::uuid& queue_id);
+
 std::optional<boost::uuids::uuid> CreateQueue(const db::PgCtx& pg, const dto::queues::Queue& queue);
 
 std::string DeleteQueue(const db::PgCtx& pg, const boost::uuids::uuid& queue_id, const boost::uuids::uuid& owner_id);
@@ -31,7 +35,7 @@ std::string CreateQueueRolePermission(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const defs::users::UserRole role,
-    const std::vector<defs::issues::IssueAction>& actions,
+    const std::unordered_set<defs::issues::IssueAction>& actions,
     const boost::uuids::uuid& owner_id
 );
 
@@ -39,7 +43,7 @@ std::string CreateQueueUserPermission(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const boost::uuids::uuid& user_id,
-    const std::vector<defs::issues::IssueAction>& actions,
+    const std::unordered_set<defs::issues::IssueAction>& actions,
     const boost::uuids::uuid& owner_id
 );
 

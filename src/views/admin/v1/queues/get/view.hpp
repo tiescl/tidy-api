@@ -11,17 +11,17 @@
 
 #include <defs/admin.hpp>
 
-namespace handlers::admin_v1_users::get {
+namespace handlers::admin_v1_queues::get {
 
 using namespace defs::admin;
 
-using Request = AdminV1UsersRequest;
-using Response200 = AdminV1UsersResponse;
+using Request = AdminV1QueuesRequest;
+using Response200 = AdminV1QueuesResponse;
 using Response = std::variant<Response200>;
 
 class View final : public utils::TypedJsonHandler<View, Request, Response, Response200, Parse, Serialize> {
 public:
-    static constexpr std::string_view kName = "handler-admin_v1_users-get";
+    static constexpr std::string_view kName = "handler-admin_v1_queues-get";
 
     View(const components::ComponentConfig& config, const components::ComponentContext& context)
         : TypedJsonHandler(config, context), pg_(context) {}
@@ -36,4 +36,4 @@ private:
     const db::PgCtx pg_;
 };
 
-}  // namespace handlers::admin_v1_users::get
+}  // namespace handlers::admin_v1_queues::get

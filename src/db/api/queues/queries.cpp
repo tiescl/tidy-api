@@ -20,6 +20,13 @@ std::vector<defs::queues::Queue> GetAvailableQueues(
     return pg_result.AsContainer<std::vector<defs::queues::Queue>>(storages::postgres::kRowTag);
 }
 
+std::optional<defs::queues::Queue>
+GetQueue(const db::PgCtx& pg, const boost::uuids::uuid& user_id, const boost::uuids::uuid& queue_id) {
+    const auto pg_result = pg.MakeRoRequest(tidy_api::sql::kSelectQueue, user_id, queue_id);
+
+    return pg_result.AsOptionalSingleRow<defs::queues::Queue>(storages::postgres::kRowTag);
+}
+
 std::optional<boost::uuids::uuid> CreateQueue(const db::PgCtx& pg, const dto::queues::Queue& queue) {
     const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kInsertQueue, queue.key, queue.name, queue.owner_id);
 
@@ -36,7 +43,7 @@ std::string CreateQueueRolePermission(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const defs::users::UserRole role,
-    const std::vector<defs::issues::IssueAction>& actions,
+    const std::unordered_set<defs::issues::IssueAction>& actions,
     const boost::uuids::uuid& owner_id
 ) {
     const auto pg_result =
@@ -49,7 +56,7 @@ std::string CreateQueueUserPermission(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const boost::uuids::uuid& user_id,
-    const std::vector<defs::issues::IssueAction>& actions,
+    const std::unordered_set<defs::issues::IssueAction>& actions,
     const boost::uuids::uuid& owner_id
 ) {
     const auto pg_result =

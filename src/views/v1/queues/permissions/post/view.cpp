@@ -11,6 +11,7 @@
 #include <utils/errors.hpp>
 
 #include <defs/errors.hpp>
+#include <defs/issues.hpp>
 #include <defs/queues.hpp>
 
 namespace handlers::v1_queues_permissions::post {
@@ -30,6 +31,8 @@ Response View::Handle(
             server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kInvalidQueueId)}
         );
     }
+
+    request.actions.insert(defs::issues::IssueAction::kView);  // any action other than view also implies view
 
     std::string result;
     switch (request.permission_type) {

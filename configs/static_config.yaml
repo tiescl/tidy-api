@@ -53,8 +53,8 @@ components_manager:
         user-tokens-pg-cache:
             pgcomponent: tidy_pg
             update-types: full-and-incremental
-            update-interval: 30s
-            full-update-interval: 3h
+            update-interval: 15s
+            full-update-interval: 6h
 
         tests-control:
             load-enabled: $is-testing
@@ -70,7 +70,7 @@ components_manager:
             url_trailing_slash: strict-match
 
         # admin endpoints
-        handler-admin_v1_users-post:
+        handler-admin_v1_users-get:
             path: /admin/v1/users
             method: GET
             task_processor: main-task-processor
@@ -93,6 +93,16 @@ components_manager:
         handler-admin_v1_users_role-post:
             path: /admin/v1/users/{user_id}/role
             method: POST
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required
+                scopes:
+                  - admin
+
+        handler-admin_v1_queues-get:
+            path: /admin/v1/queues
+            method: GET
             task_processor: main-task-processor
             auth:
                 types:
@@ -168,6 +178,14 @@ components_manager:
         # queues endpoints
         handler-v1_queues-get:
             path: /v1/queues
+            method: GET
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required
+
+        handler-v1_queues_single-get:
+            path: /v1/queues/{queue_id}
             method: GET
             task_processor: main-task-processor
             auth:

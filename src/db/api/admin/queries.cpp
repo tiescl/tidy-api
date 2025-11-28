@@ -27,6 +27,13 @@ bool UpdateUserRole(const db::PgCtx& pg, const boost::uuids::uuid& user_id, cons
     return pg_result.RowsAffected();
 }
 
+std::vector<defs::admin::AdminQueueListItem>
+GetQueues(const db::PgCtx& pg, const std::string& search, int64_t limit, int64_t offset) {
+    const auto pg_result = pg.MakeRoRequest(tidy_api::sql::kSelectQueuesForAdmin, search, limit, offset);
+
+    return pg_result.AsContainer<std::vector<defs::admin::AdminQueueListItem>>(storages::postgres::kRowTag);
+}
+
 bool DeleteQueue(const db::PgCtx& pg, const boost::uuids::uuid& queue_id) {
     const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteQueueForAdmin, queue_id);
 

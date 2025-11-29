@@ -11,17 +11,17 @@
 
 #include <defs/queues.hpp>
 
-namespace handlers::v1_queues::del {
+namespace handlers::v1_queues_queue::del {
 
 using namespace defs::queues;
 
-using Request = V1QueuesDeleteRequest;
-using Response200 = V1QueuesDeleteResponse;
+using Request = V1QueuesQueueDeleteRequest;
+using Response200 = V1QueuesQueueDeleteResponse;
 using Response = std::variant<Response200>;
 
 class View final : public utils::TypedJsonHandler<View, Request, Response, Response200, Parse, Serialize> {
 public:
-    static constexpr std::string_view kName = "handler-v1_queues-delete";
+    static constexpr std::string_view kName = "handler-v1_queues_queue-delete";
 
     View(const components::ComponentConfig& config, const components::ComponentContext& context)
         : TypedJsonHandler(config, context), pg_(context) {}
@@ -36,4 +36,4 @@ private:
     const db::PgCtx pg_;
 };
 
-}  // namespace handlers::v1_queues::del
+}  // namespace handlers::v1_queues_queue::del

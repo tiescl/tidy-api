@@ -54,6 +54,7 @@ add_library(
     src/db/api/queues/queries.cpp
     src/db/api/users/queries.cpp
     src/utils/errors.cpp
+    src/utils/path_args.cpp
     src/utils/text.cpp
     src/views/admin/v1/queues/del/view.cpp
     src/views/admin/v1/queues/get/view.cpp
@@ -63,12 +64,12 @@ add_library(
     src/views/v1/auth/login/post/view.cpp
     src/views/v1/auth/logout/post/view.cpp
     src/views/v1/auth/register/post/view.cpp
-    src/views/v1/queues/del/view.cpp
     src/views/v1/queues/get/view.cpp
+    src/views/v1/queues/post/view.cpp
+    src/views/v1/queues/queue/del/view.cpp
+    src/views/v1/queues/queue/get/view.cpp
     src/views/v1/queues/queue/permissions/del/view.cpp
     src/views/v1/queues/queue/permissions/post/view.cpp
-    src/views/v1/queues/post/view.cpp
-    src/views/v1/queues/queue/get/view.cpp
     src/views/v1/users/me/del/view.cpp
     src/views/v1/users/me/get/view.cpp
     src/views/v1/users/me/put/view.cpp

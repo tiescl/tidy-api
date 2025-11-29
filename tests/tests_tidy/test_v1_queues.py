@@ -164,9 +164,8 @@ async def test_delete_queue(
     should_fail: bool
 ):
     response = await service_client.delete(
-        '/v1/queues',
+        f'/v1/queues/{queue_id}',
         headers={'Cookie': f'session_token={session_id}'},
-        json={'queue_id': queue_id}
     )
 
     assert response.status == response_status

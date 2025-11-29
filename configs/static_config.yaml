@@ -184,14 +184,6 @@ components_manager:
                 types:
                   - cookie-required
 
-        handler-v1_queues_queue-get:
-            path: /v1/queues/{queue}
-            method: GET
-            task_processor: main-task-processor
-            auth:
-                types:
-                  - cookie-required
-
         handler-v1_queues-post:
             path: /v1/queues
             method: POST
@@ -200,8 +192,16 @@ components_manager:
                 types:
                   - cookie-required
 
-        handler-v1_queues-delete:
-            path: /v1/queues
+        handler-v1_queues_queue-get:
+            path: /v1/queues/{queue}
+            method: GET
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required
+
+        handler-v1_queues_queue-delete:
+            path: /v1/queues/{queue}
             method: DELETE
             task_processor: main-task-processor
             auth:

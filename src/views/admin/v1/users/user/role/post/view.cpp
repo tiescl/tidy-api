@@ -3,11 +3,11 @@
 #include <boost/uuid/uuid.hpp>
 
 #include <userver/server/handlers/exceptions.hpp>
-#include <userver/utils/boost_uuid4.hpp>
 
 #include <db/api/admin/queries.hpp>
 
 #include <utils/constants.hpp>
+#include <utils/path_args.hpp>
 
 #include <defs/errors.hpp>
 
@@ -18,16 +18,7 @@ Response View::Handle(
     [[maybe_unused]] const server::http::HttpRequest& http_request,
     [[maybe_unused]] server::request::RequestContext& request_context
 ) const {
-    boost::uuids::uuid user_id;
-    try {
-        user_id = utils::BoostUuidFromString(http_request.GetPathArg(utils::constants::kUser));
-    } catch (const std::exception& exc) {
-        throw server::handlers::ClientError(
-            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kInvalidUserId)}
-        );
-    }
-
-    if (!db::api::admin::UpdateUserRole(pg_, user_id, request.role)) {
+    if (!db::api::admin::UpdateUserRole(pg_, utils::GetUserPathArg(http_request), request.role)) {
         throw server::handlers::ResourceNotFound(
             server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUserNotFound)}
         );

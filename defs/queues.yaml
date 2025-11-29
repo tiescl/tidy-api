@@ -84,17 +84,11 @@ components:
                     type: string
                     format: uuid
 
-        V1QueuesDeleteRequest:
+        V1QueuesQueueDeleteRequest:
             type: object
             additionalProperties: false
-            required:
-              - queue_id
-            properties:
-                queue_id:
-                    type: string
-                    format: uuid
 
-        V1QueuesDeleteResponse:
+        V1QueuesQueueDeleteResponse:
             type: object
             additionalProperties: false
 

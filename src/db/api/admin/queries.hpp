@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 #include <boost/uuid/uuid.hpp>
@@ -15,7 +16,7 @@ namespace db::api::admin {
 std::vector<defs::admin::AdminUserListItem>
 GetUsers(const db::PgCtx& pg, const std::string& search, int64_t limit, int64_t offset);
 
-bool DeleteUser(const db::PgCtx& pg, const boost::uuids::uuid& user_id);
+void DeleteUsers(const db::PgCtx& pg, const std::unordered_set<boost::uuids::uuid>& user_ids);
 
 bool UpdateUserRole(const db::PgCtx& pg, const boost::uuids::uuid& user_id, const defs::users::UserRole user_role);
 

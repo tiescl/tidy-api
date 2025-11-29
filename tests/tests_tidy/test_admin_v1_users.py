@@ -1,6 +1,8 @@
+import typing
 import pytest
 
 from testsuite.daemons.service_client import Client
+from testsuite.databases.pgsql.control import PgDatabaseWrapper
 
 from tests.tests_tidy.consts import DB_NAME
 
@@ -63,21 +65,34 @@ async def test_admin_get_users(
             ]
 
 
+def select_count_removed_users(pgsql: typing.Dict[str, PgDatabaseWrapper]):
+    cursor = pgsql[DB_NAME].cursor()
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM tidy.users
+        WHERE removed
+   """)
+
+    return cursor.fetchone()
+
+
 @pytest.mark.pgsql(DB_NAME, files=['users.sql', 'tokens.sql'])
-async def test_admin_delete_user(service_client: Client):
+async def test_admin_delete_users(service_client: Client, pgsql):
+    assert select_count_removed_users(pgsql) == (0,)
+
     response = await service_client.delete(
         '/admin/v1/users',
         headers={'Cookie': 'session_token=f37116c18a9345a0a2b5ea97fbc4e8f0'},
-        json={'user_id': '605223cd-826a-46a7-9398-b21f1dd4fd45'}
+        json={
+            'user_ids': [
+                '774cc050-2542-4c05-9027-f4919112fc81',
+                '605223cd-826a-46a7-9398-b21f1dd4fd45',
+                '5c4b6cc6-10f9-4663-b473-3ffd8cc225f5',
+                '5ac15ada-0726-4590-92b8-59e0ef096afa'
+            ],
+        }
     )
 
     assert response.status == 200
-
-    response = await service_client.delete(
-        '/admin/v1/users',
-        headers={'Cookie': 'session_token=f37116c18a9345a0a2b5ea97fbc4e8f0'},
-        json={'user_id': '605223cd-826a-46a7-9398-b21f1dd4abcd'}
-    )
-
-    assert response.status == 404
-    assert response.json() == {'code': '404', 'message': 'USER_NOT_FOUND'}
+    assert select_count_removed_users(pgsql) == (4,)

@@ -15,10 +15,8 @@ GetUsers(const db::PgCtx& pg, const std::string& search, int64_t limit, int64_t 
     return pg_result.AsContainer<std::vector<defs::admin::AdminUserListItem>>(storages::postgres::kRowTag);
 }
 
-bool DeleteUser(const db::PgCtx& pg, const boost::uuids::uuid& user_id) {
-    const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteUserForAdmin, user_id);
-
-    return pg_result.RowsAffected();
+void DeleteUsers(const db::PgCtx& pg, const std::unordered_set<boost::uuids::uuid>& user_ids) {
+    pg.MakeRwRequest(tidy_api::sql::kDeleteUsersForAdmin, user_ids);
 }
 
 bool UpdateUserRole(const db::PgCtx& pg, const boost::uuids::uuid& user_id, const defs::users::UserRole user_role) {

@@ -1,10 +1,6 @@
 #include "view.hpp"
 
-#include <userver/server/handlers/exceptions.hpp>
-
 #include <db/api/admin/queries.hpp>
-
-#include <defs/errors.hpp>
 
 namespace handlers::admin_v1_users::del {
 
@@ -13,11 +9,7 @@ Response View::Handle(
     [[maybe_unused]] const server::http::HttpRequest& http_request,
     [[maybe_unused]] server::request::RequestContext& request_context
 ) const {
-    if (!db::api::admin::DeleteUser(pg_, request.user_id)) {
-        throw server::handlers::ResourceNotFound(
-            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUserNotFound)}
-        );
-    }
+    db::api::admin::DeleteUsers(pg_, request.user_ids);
 
     return Response200{};
 }

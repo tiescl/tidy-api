@@ -51,11 +51,14 @@ components:
             type: object
             additionalProperties: false
             required:
-              - user_id
+              - user_ids
             properties:
-                user_id:
-                    type: string
-                    format: uuid
+                user_ids:
+                    type: array
+                    items:
+                        type: string
+                        format: uuid
+                    x-usrv-cpp-type: std::unordered_set
 
         AdminV1UsersDeleteResponse:
             type: object

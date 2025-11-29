@@ -60,7 +60,7 @@ def select_queue_user_permission(pgsql: typing.Dict[str, PgDatabaseWrapper], que
             {
                 'permission_type': 'user',
                 'user_id': '5c4b6cc6-10f9-4663-b473-3ffd8cc225f5',
-                'actions': ['view', 'create'],
+                'actions': ['create', 'delete_own', 'edit_own'],
             },
             200,
             None,
@@ -142,7 +142,7 @@ async def test_create_queue_permissions(
             assert select_queue_user_permission(pgsql, queue_id) == (
                 '5d854c28-c6eb-4ed4-b429-aaf006cea6b5',
                 '5c4b6cc6-10f9-4663-b473-3ffd8cc225f5',
-                '{view,create}',
+                '{view,create,delete_own,edit_own}',
             )
 
 
@@ -217,7 +217,7 @@ async def test_create_queue_permissions(
         ),
     ],
 )
-async def test_create_queue_permissions(
+async def test_delete_queue_permissions(
     service_client: Client,
     pgsql: typing.Dict,
     queue_id: str,

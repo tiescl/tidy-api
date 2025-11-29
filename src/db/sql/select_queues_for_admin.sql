@@ -8,8 +8,8 @@ SELECT
     name,
     owner_id,
     removed,
-    EXTRACT(epoch FROM q.created_at)::BIGINT,
-    EXTRACT(epoch FROM q.updated_at)::BIGINT
+    EXTRACT(epoch FROM created_at)::BIGINT,
+    EXTRACT(epoch FROM updated_at)::BIGINT
 FROM tidy.queues
 WHERE
     CASE

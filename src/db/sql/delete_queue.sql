@@ -17,7 +17,7 @@ SELECT
         WHEN u.id IS NOT NULL THEN 'OK'
         WHEN q.id IS NULL THEN 'QUEUE_NOT_FOUND'
         ELSE 'QUEUE_OWNER_MISMATCH'
-    END AS result
+    END AS code
 FROM (SELECT $1 AS id) AS v
 LEFT JOIN queue_check q ON q.id = v.id
 LEFT JOIN updated u ON u.id = v.id;

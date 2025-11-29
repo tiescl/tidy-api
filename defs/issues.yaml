@@ -9,3 +9,34 @@ components:
               - edit_any
               - delete_own
               - delete_any
+
+        IssueStatus:
+            type: string
+            enum:
+              - description
+              - backlog
+              - planned
+              - in_progress
+              - need_info
+              - pull_request
+              - merged
+              - closed
+            default: description
+
+        IssuePriority:
+            type: string
+            enum:
+              - minor
+              - normal
+              - critical
+              - blocker
+            default: normal
+
+        IssueType:
+            type: string
+            enum:
+              - task
+              - bug
+              - linker
+              - epic
+            default: task

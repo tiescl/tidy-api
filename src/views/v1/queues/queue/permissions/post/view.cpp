@@ -26,7 +26,7 @@ Response View::Handle(
 
     request.actions.insert(defs::issues::IssueAction::kView);  // any action other than view also implies view
 
-    std::string result;
+    defs::errors::ErrorCode result;
     switch (request.permission_type) {
         case defs::queues::PermissionType::kRole:
             if (!request.role.has_value()) {

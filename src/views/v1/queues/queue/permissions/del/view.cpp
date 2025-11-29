@@ -23,7 +23,7 @@ Response View::Handle(
     const auto owner_id = request_context.GetData<boost::uuids::uuid>(utils::constants::kUserId);
     const auto queue_id = utils::GetQueuePathArg(http_request);
 
-    std::string result;
+    defs::errors::ErrorCode result;
     switch (request.permission_type) {
         case defs::queues::PermissionType::kRole:
             if (!request.role.has_value()) {

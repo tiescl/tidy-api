@@ -3,7 +3,7 @@
 #include <string_view>
 #include <variant>
 
-#include <userver/formats/json.hpp>
+#include <userver/formats/json/value.hpp>
 
 #include <db/pg_ctx.hpp>
 

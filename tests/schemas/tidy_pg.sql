@@ -155,13 +155,13 @@ CREATE TABLE IF NOT EXISTS tidy.issues (
     number INTEGER NOT NULL,
 
     title TEXT NOT NULL,
-    description TEXT NOT NULL,
+    description TEXT,
     type tidy.issue_type NOT NULL DEFAULT 'task',
     status tidy.issue_status NOT NULL DEFAULT 'description',
     priority tidy.issue_priority NOT NULL DEFAULT 'normal',
 
-    component TEXT CHECK (component ~ '^[a-z0-9_-]+$'),
-    story_points INTEGER CHECK (story_points > 0),
+    component TEXT,
+    story_points INTEGER,
 
     author_id UUID NOT NULL
         REFERENCES tidy.users(id) ON DELETE RESTRICT,

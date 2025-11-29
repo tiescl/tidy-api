@@ -1,0 +1,104 @@
+-- $1  - queue_id
+-- $2  - author_id
+-- $3  - assignee_id (opt)
+-- $4  - title
+-- $5  - description (opt)
+-- $6  - type (opt)
+-- $7  - status (opt)
+-- $8  - priority (opt)
+-- $9  - component (opt)
+-- $10 - story_points (opt)
+
+WITH queue_check AS (
+    SELECT id, owner_id
+    FROM tidy.queues
+    WHERE
+        id = $1
+        AND NOT removed
+),
+
+author_check AS (
+    SELECT id, role
+    FROM tidy.users
+    WHERE
+        id = $2
+        AND NOT removed
+),
+
+assignee_check AS (
+    SELECT id
+    FROM tidy.users
+    WHERE
+        id = $3
+        AND NOT removed
+),
+
+permission_check AS (
+    SELECT queue.id AS queue_id
+    FROM queue_check queue
+    JOIN author_check author ON TRUE
+
+    LEFT JOIN tidy.queue_user_permissions u
+        ON u.queue_id = queue.id AND u.user_id = $2
+
+    LEFT JOIN tidy.queue_role_permissions r
+        ON r.queue_id = queue.id AND r.role = author.role
+
+    WHERE
+        queue.owner_id = $2
+        OR (u.actions @> ARRAY['create']::tidy.issue_action[])
+        OR (r.actions @> ARRAY['create']::tidy.issue_action[])
+),
+
+insert_attempt AS (
+    INSERT INTO tidy.issues (
+        queue_id,
+        number,
+        author_id,
+        assignee_id,
+        title,
+        description,
+        type,
+        status,
+        priority,
+        component,
+        story_points
+    )
+    SELECT
+        permission.queue_id,
+        COALESCE(MAX(issues.number), 0) + 1,
+        author.id,
+        $3,  -- assignee_id
+        $4,  -- title
+        $5,  -- description
+        $6,  -- type
+        $7,  -- status
+        $8,  -- priority
+        $9,  -- component
+        $10  -- story_points
+    FROM permission_check permission
+    CROSS JOIN author_check author
+    LEFT JOIN assignee_check assignee ON TRUE
+    LEFT JOIN tidy.issues
+        ON issues.queue_id = permission.queue_id
+    GROUP BY
+        permission.queue_id,
+        author.id,
+        assignee.id
+    RETURNING id
+)
+
+SELECT CASE
+    WHEN EXISTS (SELECT 1 FROM insert_attempt)
+        THEN 'OK'
+    WHEN NOT EXISTS (SELECT 1 FROM queue_check)
+        THEN 'QUEUE_NOT_FOUND'
+    WHEN NOT EXISTS (SELECT 1 FROM author_check)
+        THEN 'USER_NOT_FOUND'
+    WHEN $3 IS NOT NULL
+         AND NOT EXISTS (SELECT 1 FROM assignee_check)
+        THEN 'USER_NOT_FOUND'
+    WHEN NOT EXISTS (SELECT 1 FROM permission_check)
+        THEN 'FORBIDDEN'
+END AS code,
+(SELECT id FROM insert_attempt) AS issue_id;

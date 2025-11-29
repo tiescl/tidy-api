@@ -30,4 +30,4 @@ SELECT CASE
         THEN 'QUEUE_OWNER_MISMATCH'
     WHEN EXISTS (SELECT 1 FROM insert_attempt)
         THEN 'OK'
-END;
+END AS code;

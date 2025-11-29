@@ -3,8 +3,6 @@
 #include <string_view>
 #include <variant>
 
-#include <userver/formats/json.hpp>
-
 #include <db/pg_ctx.hpp>
 
 #include <utils/typed_json_handler.hpp>

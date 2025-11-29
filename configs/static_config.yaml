@@ -223,3 +223,11 @@ components_manager:
             auth:
                 types:
                   - cookie-required
+
+        handler-v1_queues_queue_issues-post:
+            path: /v1/queues/{queue}/issues
+            method: POST
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required

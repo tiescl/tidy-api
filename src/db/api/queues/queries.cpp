@@ -1,10 +1,13 @@
 #include "queries.hpp"
 
+#include <userver/formats/parse/to.hpp>
 #include <userver/storages/postgres/io/row_types.hpp>
 
 #include <db/db_types.hpp>
 
 #include <tidy_api/sql_queries.hpp>
+
+#include <utils/constants.hpp>
 
 namespace db::api::queues {
 
@@ -33,13 +36,16 @@ std::optional<boost::uuids::uuid> CreateQueue(const db::PgCtx& pg, const dto::qu
     return pg_result.AsOptionalSingleRow<boost::uuids::uuid>();
 }
 
-std::string DeleteQueue(const db::PgCtx& pg, const boost::uuids::uuid& queue_id, const boost::uuids::uuid& owner_id) {
+defs::errors::ErrorCode
+DeleteQueue(const db::PgCtx& pg, const boost::uuids::uuid& queue_id, const boost::uuids::uuid& owner_id) {
     const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteQueue, queue_id, owner_id);
 
-    return pg_result.AsSingleRow<std::string>();
+    return FromString(
+        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+    );
 }
 
-std::string CreateQueueRolePermission(
+defs::errors::ErrorCode CreateQueueRolePermission(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const defs::users::UserRole role,
@@ -49,10 +55,12 @@ std::string CreateQueueRolePermission(
     const auto pg_result =
         pg.MakeRwRequest(tidy_api::sql::kInsertQueueRolePermission, queue_id, role, actions, owner_id);
 
-    return pg_result.AsSingleRow<std::string>();
+    return FromString(
+        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+    );
 }
 
-std::string CreateQueueUserPermission(
+defs::errors::ErrorCode CreateQueueUserPermission(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const boost::uuids::uuid& user_id,
@@ -62,10 +70,12 @@ std::string CreateQueueUserPermission(
     const auto pg_result =
         pg.MakeRwRequest(tidy_api::sql::kInsertQueueUserPermission, queue_id, user_id, actions, owner_id);
 
-    return pg_result.AsSingleRow<std::string>();
+    return FromString(
+        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+    );
 }
 
-std::string DeleteQueueRolePermission(
+defs::errors::ErrorCode DeleteQueueRolePermission(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const defs::users::UserRole role,
@@ -73,10 +83,12 @@ std::string DeleteQueueRolePermission(
 ) {
     const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteQueueRolePermission, queue_id, role, owner_id);
 
-    return pg_result.AsSingleRow<std::string>();
+    return FromString(
+        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+    );
 }
 
-std::string DeleteQueueUserPermission(
+defs::errors::ErrorCode DeleteQueueUserPermission(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const boost::uuids::uuid& user_id,
@@ -84,7 +96,9 @@ std::string DeleteQueueUserPermission(
 ) {
     const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteQueueUserPermission, queue_id, user_id, owner_id);
 
-    return pg_result.AsSingleRow<std::string>();
+    return FromString(
+        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+    );
 }
 
 }  // namespace db::api::queues

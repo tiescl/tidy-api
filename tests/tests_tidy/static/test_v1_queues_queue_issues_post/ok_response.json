@@ -1,0 +1,14 @@
+{
+    "queue_id": "5d854c28-c6eb-4ed4-b429-aaf006cea6b5",
+    "number": 1,
+    "title": "Refactor code in /v1/auth",
+    "description": "After the new intern guy wrote some new features there the code became super hard to read. Let's get rid of that BS ASAP",
+    "type": "task",
+    "status": "description",
+    "priority": "normal",
+    "component": "tidy_development_team",
+    "story_points": null,
+    "author_id": "774cc050-2542-4c05-9027-f4919112fc81",
+    "assignee_id": null,
+    "removed": false
+}

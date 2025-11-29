@@ -3,8 +3,6 @@
 #include <string_view>
 #include <variant>
 
-#include <userver/formats/json.hpp>
-
 #include <caches/user_tokens.hpp>
 #include <db/pg_ctx.hpp>
 

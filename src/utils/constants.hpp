@@ -6,7 +6,10 @@
 
 namespace utils::constants {
 
+static constexpr const char* kCode{"code"};
+
 static constexpr const char* kUserId{"user_id"};
+static constexpr const char* kIssueId{"issue_id"};
 static constexpr std::string_view kUser{"user"};
 static constexpr std::string_view kQueue{"queue"};
 

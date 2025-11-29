@@ -51,6 +51,7 @@ add_library(
     src/db/pg_ctx.cpp
     src/db/api/admin/queries.cpp
     src/db/api/auth/queries.cpp
+    src/db/api/issues/queries.cpp
     src/db/api/queues/queries.cpp
     src/db/api/users/queries.cpp
     src/utils/errors.cpp
@@ -68,6 +69,7 @@ add_library(
     src/views/v1/queues/post/view.cpp
     src/views/v1/queues/queue/del/view.cpp
     src/views/v1/queues/queue/get/view.cpp
+    src/views/v1/queues/queue/issues/post/view.cpp
     src/views/v1/queues/queue/permissions/del/view.cpp
     src/views/v1/queues/queue/permissions/post/view.cpp
     src/views/v1/users/me/del/view.cpp

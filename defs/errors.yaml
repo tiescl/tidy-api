@@ -4,6 +4,10 @@ components:
             type: string
             description: app-specific code
             enum:
+              # special case
+              # for db queries
+              - OK
+
               - EMAIL_NOT_FOUND
               - EMAIL_ALREADY_EXISTS
               - FORBIDDEN

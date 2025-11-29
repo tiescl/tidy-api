@@ -22,14 +22,14 @@ from tests.tests_tidy.consts import DB_NAME
             'developer',
             400,
             {'code': '400', 'message': 'INVALID_USER_ID'},
-            id='invalid-uuid',
+            id='invalid uuid',
         ),
         pytest.param(
             '695223cd-826a-46a7-9398-b21f1dd4fd45',
             'developer',
             404,
             {'code': '404', 'message': 'USER_NOT_FOUND'},
-            id='user-purged',
+            id='user purged',
         ),
     ]
 )

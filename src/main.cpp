@@ -18,16 +18,16 @@
 #include <views/admin/v1/queues/get/view.hpp>
 #include <views/admin/v1/users/del/view.hpp>
 #include <views/admin/v1/users/get/view.hpp>
-#include <views/admin/v1/users/role/post/view.hpp>
+#include <views/admin/v1/users/user/role/post/view.hpp>
 #include <views/v1/auth/login/post/view.hpp>
 #include <views/v1/auth/logout/post/view.hpp>
 #include <views/v1/auth/register/post/view.hpp>
 #include <views/v1/queues/del/view.hpp>
 #include <views/v1/queues/get/view.hpp>
-#include <views/v1/queues/permissions/del/view.hpp>
-#include <views/v1/queues/permissions/post/view.hpp>
 #include <views/v1/queues/post/view.hpp>
-#include <views/v1/queues/single/get/view.hpp>
+#include <views/v1/queues/queue/get/view.hpp>
+#include <views/v1/queues/queue/permissions/del/view.hpp>
+#include <views/v1/queues/queue/permissions/post/view.hpp>
 #include <views/v1/users/me/del/view.hpp>
 #include <views/v1/users/me/get/view.hpp>
 #include <views/v1/users/me/password/put/view.hpp>
@@ -41,16 +41,16 @@ components::ComponentList GenerateServiceHandlersList() {
         .Append<handlers::admin_v1_queues::get::View>()
         .Append<handlers::admin_v1_users::del::View>()
         .Append<handlers::admin_v1_users::get::View>()
-        .Append<handlers::admin_v1_users_role::post::View>()
+        .Append<handlers::admin_v1_users_user_role::post::View>()
         .Append<handlers::v1_auth_login::post::View>()
         .Append<handlers::v1_auth_logout::post::View>()
         .Append<handlers::v1_auth_register::post::View>()
         .Append<handlers::v1_queues::del::View>()
         .Append<handlers::v1_queues::get::View>()
-        .Append<handlers::v1_queues_permissions::del::View>()
-        .Append<handlers::v1_queues_permissions::post::View>()
+        .Append<handlers::v1_queues_queue_permissions::del::View>()
+        .Append<handlers::v1_queues_queue_permissions::post::View>()
         .Append<handlers::v1_queues::post::View>()
-        .Append<handlers::v1_queues_single::get::View>()
+        .Append<handlers::v1_queues_queue::get::View>()
         .Append<handlers::v1_users_me::del::View>()
         .Append<handlers::v1_users_me::get::View>()
         .Append<handlers::v1_users_me_password::put::View>()

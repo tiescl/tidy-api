@@ -23,6 +23,6 @@ bool UpdateUserRole(const db::PgCtx& pg, const boost::uuids::uuid& user_id, cons
 std::vector<defs::admin::AdminQueueListItem>
 GetQueues(const db::PgCtx& pg, const std::string& search, int64_t limit, int64_t offset);
 
-bool DeleteQueue(const db::PgCtx& pg, const boost::uuids::uuid& queue_id);
+void DeleteQueues(const db::PgCtx& pg, const std::unordered_set<boost::uuids::uuid>& queue_ids);
 
 }  // namespace db::api::admin

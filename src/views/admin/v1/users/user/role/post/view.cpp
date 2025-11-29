@@ -11,7 +11,7 @@
 
 #include <defs/errors.hpp>
 
-namespace handlers::admin_v1_users_role::post {
+namespace handlers::admin_v1_users_user_role::post {
 
 Response View::Handle(
     Request&& request,
@@ -20,7 +20,7 @@ Response View::Handle(
 ) const {
     boost::uuids::uuid user_id;
     try {
-        user_id = utils::BoostUuidFromString(http_request.GetPathArg(utils::constants::kUserId));
+        user_id = utils::BoostUuidFromString(http_request.GetPathArg(utils::constants::kUser));
     } catch (const std::exception& exc) {
         throw server::handlers::ClientError(
             server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kInvalidUserId)}
@@ -36,4 +36,4 @@ Response View::Handle(
     return Response200{};
 }
 
-}  // namespace handlers::admin_v1_users_role::post
+}  // namespace handlers::admin_v1_users_user_role::post

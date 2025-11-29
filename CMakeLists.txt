@@ -59,16 +59,16 @@ add_library(
     src/views/admin/v1/queues/get/view.cpp
     src/views/admin/v1/users/del/view.cpp
     src/views/admin/v1/users/get/view.cpp
-    src/views/admin/v1/users/role/post/view.cpp
+    src/views/admin/v1/users/user/role/post/view.cpp
     src/views/v1/auth/login/post/view.cpp
     src/views/v1/auth/logout/post/view.cpp
     src/views/v1/auth/register/post/view.cpp
     src/views/v1/queues/del/view.cpp
     src/views/v1/queues/get/view.cpp
-    src/views/v1/queues/permissions/del/view.cpp
-    src/views/v1/queues/permissions/post/view.cpp
+    src/views/v1/queues/queue/permissions/del/view.cpp
+    src/views/v1/queues/queue/permissions/post/view.cpp
     src/views/v1/queues/post/view.cpp
-    src/views/v1/queues/single/get/view.cpp
+    src/views/v1/queues/queue/get/view.cpp
     src/views/v1/users/me/del/view.cpp
     src/views/v1/users/me/get/view.cpp
     src/views/v1/users/me/put/view.cpp

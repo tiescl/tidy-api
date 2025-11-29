@@ -64,7 +64,7 @@ components:
             type: object
             additionalProperties: false
 
-        AdminV1UsersRoleRequest:
+        AdminV1UsersUserRoleRequest:
             type: object
             additionalProperties: false
             required:
@@ -73,7 +73,7 @@ components:
                 role:
                     $ref: users.yaml#/components/schemas/UserRole
 
-        AdminV1UsersRoleResponse:
+        AdminV1UsersUserRoleResponse:
             type: object
             additionalProperties: false
 
@@ -127,11 +127,14 @@ components:
             type: object
             additionalProperties: false
             required:
-              - queue_id
+              - queue_ids
             properties:
-                queue_id:
-                    type: string
-                    format: uuid
+                queue_ids:
+                    type: array
+                    items:
+                        type: string
+                        format: uuid
+                    x-usrv-cpp-type: std::unordered_set
 
         AdminV1QueuesDeleteResponse:
             type: object

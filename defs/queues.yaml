@@ -45,11 +45,11 @@ components:
                     items:
                         $ref: '#/components/schemas/Queue'
 
-        V1QueuesSingleRequest:
+        V1QueuesQueueRequest:
             type: object
             additionalProperties: false
 
-        V1QueuesSingleResponse:
+        V1QueuesQueueResponse:
             $ref: '#/components/schemas/Queue'
 
         V1QueuesPostRequest:
@@ -98,7 +98,7 @@ components:
             type: object
             additionalProperties: false
 
-        V1QueuesPermissionsPostRequest:
+        V1QueuesQueuePermissionsPostRequest:
             type: object
             additionalProperties: false
             required:
@@ -119,11 +119,11 @@ components:
                         $ref: issues.yaml#/components/schemas/IssueAction
                     x-usrv-cpp-type: std::unordered_set
 
-        V1QueuesPermissionsPostResponse:
+        V1QueuesQueuePermissionsPostResponse:
             type: object
             additionalProperties: false
 
-        V1QueuesPermissionsDeleteRequest:
+        V1QueuesQueuePermissionsDeleteRequest:
             type: object
             additionalProperties: false
             required:
@@ -137,6 +137,6 @@ components:
                     type: string
                     format: uuid
 
-        V1QueuesPermissionsDeleteResponse:
+        V1QueuesQueuePermissionsDeleteResponse:
             type: object
             additionalProperties: false

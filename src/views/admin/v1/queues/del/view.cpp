@@ -13,11 +13,7 @@ Response View::Handle(
     [[maybe_unused]] const server::http::HttpRequest& http_request,
     [[maybe_unused]] server::request::RequestContext& request_context
 ) const {
-    if (!db::api::admin::DeleteQueue(pg_, request.queue_id)) {
-        throw server::handlers::ResourceNotFound(
-            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kQueueNotFound)}
-        );
-    }
+    db::api::admin::DeleteQueues(pg_, request.queue_ids);
 
     return Response200{};
 }

@@ -6,8 +6,9 @@
 
 namespace utils::constants {
 
-static constexpr std::string_view kUserId{"user_id"};
-static constexpr std::string_view kQueueId{"queue_id"};
+static constexpr const char* kUserId{"user_id"};
+static constexpr std::string_view kUser{"user"};
+static constexpr std::string_view kQueue{"queue"};
 
 static constexpr std::string_view kQueuesUniqueKeyConstraint{"queues_unique_key"};
 static constexpr std::string_view kUsersUniqueEmailConstraint{"users_unique_email"};

@@ -39,7 +39,7 @@ from tests.tests_tidy.consts import DB_NAME
         ),
     ],
 )
-async def test_get_single_queue(
+async def test_get_queue(
     service_client: Client,
     queue_id,
     response_status,

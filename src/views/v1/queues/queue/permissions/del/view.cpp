@@ -13,7 +13,7 @@
 #include <defs/errors.hpp>
 #include <defs/queues.hpp>
 
-namespace handlers::v1_queues_permissions::del {
+namespace handlers::v1_queues_queue_permissions::del {
 
 Response View::Handle(
     Request&& request,
@@ -24,7 +24,7 @@ Response View::Handle(
 
     boost::uuids::uuid queue_id;
     try {
-        queue_id = utils::BoostUuidFromString(http_request.GetPathArg(utils::constants::kQueueId));
+        queue_id = utils::BoostUuidFromString(http_request.GetPathArg(utils::constants::kQueue));
     } catch (const std::exception& exc) {
         throw server::handlers::ClientError(
             server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kInvalidQueueId)}
@@ -60,4 +60,4 @@ Response View::Handle(
     return Response200{};
 }
 
-}  // namespace handlers::v1_queues_permissions::del
+}  // namespace handlers::v1_queues_queue_permissions::del

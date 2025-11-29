@@ -90,8 +90,8 @@ components_manager:
                 scopes:
                   - admin
 
-        handler-admin_v1_users_role-post:
-            path: /admin/v1/users/{user_id}/role
+        handler-admin_v1_users_user_role-post:
+            path: /admin/v1/users/{user}/role
             method: POST
             task_processor: main-task-processor
             auth:
@@ -184,8 +184,8 @@ components_manager:
                 types:
                   - cookie-required
 
-        handler-v1_queues_single-get:
-            path: /v1/queues/{queue_id}
+        handler-v1_queues_queue-get:
+            path: /v1/queues/{queue}
             method: GET
             task_processor: main-task-processor
             auth:
@@ -208,16 +208,16 @@ components_manager:
                 types:
                   - cookie-required
 
-        handler-v1_queues_permissions-post:
-            path: /v1/queues/{queue_id}/permissions
+        handler-v1_queues_queue_permissions-post:
+            path: /v1/queues/{queue}/permissions
             method: POST
             task_processor: main-task-processor
             auth:
                 types:
                   - cookie-required
 
-        handler-v1_queues_permissions-delete:
-            path: /v1/queues/{queue_id}/permissions
+        handler-v1_queues_queue_permissions-delete:
+            path: /v1/queues/{queue}/permissions
             method: DELETE
             task_processor: main-task-processor
             auth:

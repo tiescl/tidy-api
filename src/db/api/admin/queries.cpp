@@ -32,10 +32,8 @@ GetQueues(const db::PgCtx& pg, const std::string& search, int64_t limit, int64_t
     return pg_result.AsContainer<std::vector<defs::admin::AdminQueueListItem>>(storages::postgres::kRowTag);
 }
 
-bool DeleteQueue(const db::PgCtx& pg, const boost::uuids::uuid& queue_id) {
-    const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteQueueForAdmin, queue_id);
-
-    return pg_result.RowsAffected();
+void DeleteQueues(const db::PgCtx& pg, const std::unordered_set<boost::uuids::uuid>& queue_ids) {
+    pg.MakeRwRequest(tidy_api::sql::kDeleteQueuesForAdmin, queue_ids);
 }
 
 }  // namespace db::api::admin

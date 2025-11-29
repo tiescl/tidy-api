@@ -64,7 +64,7 @@ AuthCheckerCookieRequired::AuthCheckResult AuthCheckerCookieRequired::CheckAuth(
         };
     }
 
-    request_context.SetData("user_id", info->user_id);
+    request_context.SetData(utils::constants::kUserId, info->user_id);
     return {};
 }
 
@@ -90,7 +90,7 @@ AuthCheckerCookieOptional::AuthCheckResult AuthCheckerCookieOptional::CheckAuth(
         return {};
     }
 
-    request_context.SetData("user_id", info->user_id);
+    request_context.SetData(utils::constants::kUserId, info->user_id);
     return {};
 }
 

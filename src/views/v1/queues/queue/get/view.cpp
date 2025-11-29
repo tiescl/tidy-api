@@ -11,7 +11,7 @@
 
 #include <defs/errors.hpp>
 
-namespace handlers::v1_queues_single::get {
+namespace handlers::v1_queues_queue::get {
 
 Response View::Handle(
     [[maybe_unused]] Request&& request,
@@ -22,7 +22,7 @@ Response View::Handle(
 
     boost::uuids::uuid queue_id;
     try {
-        queue_id = utils::BoostUuidFromString(http_request.GetPathArg(utils::constants::kQueueId));
+        queue_id = utils::BoostUuidFromString(http_request.GetPathArg(utils::constants::kQueue));
     } catch (const std::exception& exc) {
         throw server::handlers::ClientError(
             server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kInvalidQueueId)}
@@ -39,4 +39,4 @@ Response View::Handle(
     return Response200{std::move(queue).value()};
 }
 
-}  // namespace handlers::v1_queues_single::get
+}  // namespace handlers::v1_queues_queue::get

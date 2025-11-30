@@ -13,7 +13,7 @@
 #include <defs/errors.hpp>
 #include <defs/queues.hpp>
 
-namespace handlers::v1_queues_queue_permissions::del {
+namespace handlers::v1_queues_queue_permissions_delete::post {
 
 Response View::Handle(
     Request&& request,
@@ -52,4 +52,4 @@ Response View::Handle(
     return Response200{};
 }
 
-}  // namespace handlers::v1_queues_queue_permissions::del
+}  // namespace handlers::v1_queues_queue_permissions_delete::post

@@ -1,0 +1,192 @@
+openapi: 3.0.0
+
+info:
+    title: Tidy Service
+    version: '1.0'
+
+servers:
+  - url: https://api.tidyapp.uz
+    description: production
+  - url: http://127.0.0.1:8080
+    description: testing
+
+paths:
+    /v1/auth/register:
+        post:
+            tags:
+              - auth
+            parameters:
+              - name: session_id
+                in: cookie
+                description: optional authentication token
+                required: false
+                schema:
+                    type: string
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/V1AuthRegisterRequest'
+            responses:
+                200:
+                    description: successful registration
+                    headers:
+                        Set-Cookie:
+                            schema:
+                                type: string
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/V1AuthRegisterResponse'
+                302:
+                    description: valid token exists, redirect to main page
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                400:
+                    description: username/email already exists
+                    content:
+                        application/json:
+                            schema:
+                                $ref: errors.yaml#/components/schemas/ErrorResponse
+
+    /v1/auth/login:
+        post:
+            summary: user login
+            tags:
+              - auth
+            parameters:
+              - name: session_id
+                in: cookie
+                description: optional authentication token
+                required: false
+                schema:
+                    type: string
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/V1AuthLoginRequest'
+            responses:
+                200:
+                    description: successful login
+                    headers:
+                        Set-Cookie:
+                            schema:
+                                type: string
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/V1AuthLoginResponse'
+                302:
+                    description: valid token exists, redirect to main page
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                401:
+                    description: invalid email/password
+                    content:
+                        application/json:
+                            schema:
+                                $ref: errors.yaml#/components/schemas/ErrorResponse
+
+    /v1/auth/logout:
+        post:
+            tags:
+              - auth
+            parameters:
+              - name: session_id
+                in: cookie
+                required: false
+                schema:
+                    type: string
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/V1AuthLogoutRequest'
+            responses:
+                200:
+                    description: successful logout
+                    headers:
+                        Set-Cookie:
+                            schema:
+                                type: string
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/V1AuthLogoutResponse'
+
+components:
+    schemas:
+        V1AuthRegisterRequest:
+            type: object
+            additionalProperties: false
+            required:
+              - username
+              - email
+              - password
+            properties:
+                username:
+                    description: Unique username
+                    type: string
+                    minLength: 3
+                    maxLength: 30
+                    pattern: ^[A-Za-z][A-Za-z0-9_]+$
+                email:
+                    description: User email address
+                    type: string
+                    minLength: 5
+                    maxLength: 254
+                    pattern: ^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$
+                password:
+                    description: User password
+                    type: string
+                    minLength: 8
+                    maxLength: 128
+
+        V1AuthRegisterResponse:
+            type: object
+            additionalProperties: false
+            required:
+              - id
+            properties:
+                id:
+                    type: string
+                    format: uuid
+
+        V1AuthLoginRequest:
+            type: object
+            additionalProperties: false
+            required:
+              - email
+              - password
+            properties:
+                email:
+                    description: User email address
+                    type: string
+                    minLength: 5
+                    maxLength: 254
+                    pattern: ^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$
+                password:
+                    description: User password
+                    type: string
+                    minLength: 8
+                    maxLength: 128
+
+        V1AuthLoginResponse:
+            type: object
+            additionalProperties: false
+
+        V1AuthLogoutRequest:
+            type: object
+            additionalProperties: false
+
+        V1AuthLogoutResponse:
+            type: object
+            additionalProperties: false

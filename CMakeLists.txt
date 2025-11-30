@@ -32,7 +32,7 @@ userver_add_sql_library(
     *.sql
 )
 
-file(GLOB_RECURSE SCHEMAS ${CMAKE_CURRENT_SOURCE_DIR}/defs/*.yaml)
+file(GLOB_RECURSE SCHEMAS ${CMAKE_CURRENT_SOURCE_DIR}/docs/*.yaml)
 userver_target_generate_chaotic(
     ${PROJECT_NAME}_gen
     GENERATE_SERIALIZERS
@@ -57,11 +57,11 @@ add_library(
     src/utils/errors.cpp
     src/utils/path_args.cpp
     src/utils/text.cpp
-    src/views/admin/v1/issues/del/view.cpp
+    src/views/admin/v1/issues/delete/post/view.cpp
     src/views/admin/v1/issues/get/view.cpp
-    src/views/admin/v1/queues/del/view.cpp
+    src/views/admin/v1/queues/delete/post/view.cpp
     src/views/admin/v1/queues/get/view.cpp
-    src/views/admin/v1/users/del/view.cpp
+    src/views/admin/v1/users/delete/post/view.cpp
     src/views/admin/v1/users/get/view.cpp
     src/views/admin/v1/users/user/role/post/view.cpp
     src/views/v1/auth/login/post/view.cpp
@@ -69,18 +69,18 @@ add_library(
     src/views/v1/auth/register/post/view.cpp
     src/views/v1/queues/get/view.cpp
     src/views/v1/queues/post/view.cpp
-    src/views/v1/queues/queue/del/view.cpp
+    src/views/v1/queues/queue/delete/post/view.cpp
     src/views/v1/queues/queue/get/view.cpp
-    src/views/v1/queues/queue/issues/issue/del/view.cpp
+    src/views/v1/queues/queue/issues/issue/delete/post/view.cpp
     src/views/v1/queues/queue/issues/issue/get/view.cpp
     src/views/v1/queues/queue/issues/issue/put/view.cpp
     src/views/v1/queues/queue/issues/post/view.cpp
-    src/views/v1/queues/queue/permissions/del/view.cpp
+    src/views/v1/queues/queue/permissions/delete/post/view.cpp
     src/views/v1/queues/queue/permissions/post/view.cpp
-    src/views/v1/users/me/del/view.cpp
+    src/views/v1/users/me/delete/post/view.cpp
     src/views/v1/users/me/get/view.cpp
-    src/views/v1/users/me/put/view.cpp
     src/views/v1/users/me/password/put/view.cpp
+    src/views/v1/users/me/put/view.cpp
 )
 target_link_libraries(
     ${PROJECT_NAME}_objs

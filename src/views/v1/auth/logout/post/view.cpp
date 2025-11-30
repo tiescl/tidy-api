@@ -24,8 +24,6 @@ Response View::Handle(
     const auto expire_time = utils::datetime::Now() - std::chrono::seconds(1);
     db::api::auth::MarkTokenAsExpired(pg_, token, storages::postgres::TimePointTz{expire_time});
 
-    tokens_cache_.InvalidateAsync(cache::UpdateType::kIncremental);
-
     response.SetCookie(auth::CreateSecureCookie(token, expire_time));
 
     return Response{};

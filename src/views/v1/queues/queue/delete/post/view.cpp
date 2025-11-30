@@ -10,7 +10,7 @@
 
 #include <defs/errors.hpp>
 
-namespace handlers::v1_queues_queue::del {
+namespace handlers::v1_queues_queue_delete::post {
 
 Response View::Handle(
     [[maybe_unused]] Request&& request,
@@ -26,4 +26,4 @@ Response View::Handle(
     return Response200{};
 }
 
-}  // namespace handlers::v1_queues_queue::del
+}  // namespace handlers::v1_queues_queue_delete::post

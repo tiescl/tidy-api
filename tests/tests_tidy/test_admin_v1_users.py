@@ -81,8 +81,8 @@ def select_count_removed_users(pgsql: typing.Dict[str, PgDatabaseWrapper]):
 async def test_admin_delete_users(service_client: Client, pgsql):
     assert select_count_removed_users(pgsql) == (0,)
 
-    response = await service_client.delete(
-        '/admin/v1/users',
+    response = await service_client.post(
+        '/admin/v1/users/delete',
         headers={'Cookie': 'session_token=f37116c18a9345a0a2b5ea97fbc4e8f0'},
         json={
             'user_ids': [

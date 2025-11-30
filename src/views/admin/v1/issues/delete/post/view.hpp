@@ -9,17 +9,17 @@
 
 #include <defs/admin.hpp>
 
-namespace handlers::admin_v1_queues::del {
+namespace handlers::admin_v1_issues_delete::post {
 
 using namespace defs::admin;
 
-using Request = AdminV1QueuesDeleteRequest;
-using Response200 = AdminV1QueuesDeleteResponse;
+using Request = AdminV1IssuesDeleteRequest;
+using Response200 = AdminV1IssuesDeleteResponse;
 using Response = std::variant<Response200>;
 
 class View final : public utils::TypedJsonHandler<View, Request, Response, Response200, Parse, Serialize> {
 public:
-    static constexpr std::string_view kName = "handler-admin_v1_queues-delete";
+    static constexpr std::string_view kName = "handler-admin_v1_issues_delete-post";
 
     View(const components::ComponentConfig& config, const components::ComponentContext& context)
         : TypedJsonHandler(config, context), pg_(context) {}
@@ -34,4 +34,4 @@ private:
     const db::PgCtx pg_;
 };
 
-}  // namespace handlers::admin_v1_queues::del
+}  // namespace handlers::admin_v1_issues_delete::post

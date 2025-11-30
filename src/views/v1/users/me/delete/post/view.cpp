@@ -8,7 +8,7 @@
 
 #include <defs/errors.hpp>
 
-namespace handlers::v1_users_me::del {
+namespace handlers::v1_users_me_delete::post {
 
 Response View::Handle(
     [[maybe_unused]] Request&& request,
@@ -26,4 +26,4 @@ Response View::Handle(
     return Response200{};
 }
 
-}  // namespace handlers::v1_users_me::del
+}  // namespace handlers::v1_users_me_delete::post

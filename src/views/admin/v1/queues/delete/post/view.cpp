@@ -2,7 +2,7 @@
 
 #include <db/api/admin/queries.hpp>
 
-namespace handlers::admin_v1_queues::del {
+namespace handlers::admin_v1_queues_delete::post {
 
 Response View::Handle(
     Request&& request,
@@ -14,4 +14,4 @@ Response View::Handle(
     return Response200{};
 }
 
-}  // namespace handlers::admin_v1_queues::del
+}  // namespace handlers::admin_v1_queues_delete::post

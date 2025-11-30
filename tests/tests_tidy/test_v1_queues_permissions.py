@@ -228,8 +228,8 @@ async def test_delete_queue_permissions(
     error_response_json: typing.Dict,
     should_fail: bool,
 ):
-    response = await service_client.delete(
-        f'/v1/queues/{queue_id}/permissions',
+    response = await service_client.post(
+        f'/v1/queues/{queue_id}/permissions/delete',
         headers={'Cookie': f'session_token={session_token}'},
         json=request_body,
     )

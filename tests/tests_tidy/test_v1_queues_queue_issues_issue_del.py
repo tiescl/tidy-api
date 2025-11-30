@@ -101,8 +101,8 @@ async def test_delete_issue(
     should_fail,
     error_response_json,
 ):
-    response = await service_client.delete(
-        f'/v1/queues/{queue_id}/issues/{issue_id}',
+    response = await service_client.post(
+        f'/v1/queues/{queue_id}/issues/{issue_id}/delete',
         headers={'Cookie': 'session_token=f37116c18a9345a0a2b5ea97fbc4e8f0'}
     )
 

@@ -26,3 +26,17 @@ components:
               - TOKEN_NOT_FOUND
               - USER_NOT_FOUND
               - USERNAME_ALREADY_EXISTS
+
+        ErrorResponse:
+            type: object
+            additionalProperties: false
+            required:
+              - code
+              - message
+            properties:
+                code:
+                    type: string
+                message:
+                    type: string
+                detail:
+                    type: string

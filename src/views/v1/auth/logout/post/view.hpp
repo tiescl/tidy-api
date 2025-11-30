@@ -3,7 +3,6 @@
 #include <string_view>
 #include <variant>
 
-#include <caches/user_tokens.hpp>
 #include <db/pg_ctx.hpp>
 
 #include <utils/typed_json_handler.hpp>
@@ -23,9 +22,7 @@ public:
     static constexpr std::string_view kName = "handler-v1_auth_logout-post";
 
     View(const components::ComponentConfig& config, const components::ComponentContext& context)
-        : TypedJsonHandler(config, context),
-          pg_(context),
-          tokens_cache_(context.FindComponent<caches::UserTokensCache>()) {}
+        : TypedJsonHandler(config, context), pg_(context) {}
 
     Response Handle(
         Request&& request,
@@ -35,7 +32,6 @@ public:
 
 private:
     const db::PgCtx pg_;
-    caches::UserTokensCache& tokens_cache_;
 };
 
 }  // namespace handlers::v1_auth_logout::post

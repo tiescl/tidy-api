@@ -8,7 +8,7 @@
 #include <utils/errors.hpp>
 #include <utils/path_args.hpp>
 
-namespace handlers::v1_queues_queue_issues_issue::del {
+namespace handlers::v1_queues_queue_issues_issue_delete::post {
 
 Response View::Handle(
     [[maybe_unused]] Request&& request,
@@ -24,4 +24,4 @@ Response View::Handle(
     return Response200{};
 }
 
-}  // namespace handlers::v1_queues_queue_issues_issue::del
+}  // namespace handlers::v1_queues_queue_issues_issue_delete::post

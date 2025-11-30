@@ -14,11 +14,11 @@
 #include <auth/auth_checker.hpp>
 #include <caches/user_tokens.hpp>
 
-#include <views/admin/v1/issues/del/view.hpp>
+#include <views/admin/v1/issues/delete/post/view.hpp>
 #include <views/admin/v1/issues/get/view.hpp>
-#include <views/admin/v1/queues/del/view.hpp>
+#include <views/admin/v1/queues/delete/post/view.hpp>
 #include <views/admin/v1/queues/get/view.hpp>
-#include <views/admin/v1/users/del/view.hpp>
+#include <views/admin/v1/users/delete/post/view.hpp>
 #include <views/admin/v1/users/get/view.hpp>
 #include <views/admin/v1/users/user/role/post/view.hpp>
 #include <views/v1/auth/login/post/view.hpp>
@@ -26,15 +26,15 @@
 #include <views/v1/auth/register/post/view.hpp>
 #include <views/v1/queues/get/view.hpp>
 #include <views/v1/queues/post/view.hpp>
-#include <views/v1/queues/queue/del/view.hpp>
+#include <views/v1/queues/queue/delete/post/view.hpp>
 #include <views/v1/queues/queue/get/view.hpp>
-#include <views/v1/queues/queue/issues/issue/del/view.hpp>
+#include <views/v1/queues/queue/issues/issue/delete/post/view.hpp>
 #include <views/v1/queues/queue/issues/issue/get/view.hpp>
 #include <views/v1/queues/queue/issues/issue/put/view.hpp>
 #include <views/v1/queues/queue/issues/post/view.hpp>
-#include <views/v1/queues/queue/permissions/del/view.hpp>
+#include <views/v1/queues/queue/permissions/delete/post/view.hpp>
 #include <views/v1/queues/queue/permissions/post/view.hpp>
-#include <views/v1/users/me/del/view.hpp>
+#include <views/v1/users/me/delete/post/view.hpp>
 #include <views/v1/users/me/get/view.hpp>
 #include <views/v1/users/me/password/put/view.hpp>
 #include <views/v1/users/me/put/view.hpp>
@@ -43,11 +43,11 @@ namespace {
 
 components::ComponentList GenerateServiceHandlersList() {
     return components::ComponentList()
-        .Append<handlers::admin_v1_issues::del::View>()
+        .Append<handlers::admin_v1_issues_delete::post::View>()
         .Append<handlers::admin_v1_issues::get::View>()
-        .Append<handlers::admin_v1_queues::del::View>()
+        .Append<handlers::admin_v1_queues_delete::post::View>()
         .Append<handlers::admin_v1_queues::get::View>()
-        .Append<handlers::admin_v1_users::del::View>()
+        .Append<handlers::admin_v1_users_delete::post::View>()
         .Append<handlers::admin_v1_users::get::View>()
         .Append<handlers::admin_v1_users_user_role::post::View>()
         .Append<handlers::v1_auth_login::post::View>()
@@ -55,15 +55,15 @@ components::ComponentList GenerateServiceHandlersList() {
         .Append<handlers::v1_auth_register::post::View>()
         .Append<handlers::v1_queues::get::View>()
         .Append<handlers::v1_queues::post::View>()
-        .Append<handlers::v1_queues_queue::del::View>()
+        .Append<handlers::v1_queues_queue_delete::post::View>()
         .Append<handlers::v1_queues_queue::get::View>()
-        .Append<handlers::v1_queues_queue_issues_issue::del::View>()
+        .Append<handlers::v1_queues_queue_issues_issue_delete::post::View>()
         .Append<handlers::v1_queues_queue_issues_issue::get::View>()
         .Append<handlers::v1_queues_queue_issues_issue::put::View>()
         .Append<handlers::v1_queues_queue_issues::post::View>()
-        .Append<handlers::v1_queues_queue_permissions::del::View>()
+        .Append<handlers::v1_queues_queue_permissions_delete::post::View>()
         .Append<handlers::v1_queues_queue_permissions::post::View>()
-        .Append<handlers::v1_users_me::del::View>()
+        .Append<handlers::v1_users_me_delete::post::View>()
         .Append<handlers::v1_users_me::get::View>()
         .Append<handlers::v1_users_me_password::put::View>()
         .Append<handlers::v1_users_me::put::View>();

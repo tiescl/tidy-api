@@ -154,8 +154,8 @@ async def test_get_curr_user_token_expired(service_client: Client):
 
 @pytest.mark.pgsql(DB_NAME, files=['users.sql', 'tokens.sql'])
 async def test_delete_user(service_client: Client):
-    response = await service_client.delete(
-        '/v1/users/me',
+    response = await service_client.post(
+        '/v1/users/me/delete',
         headers={'Cookie': 'session_token=f67116c18a9345a0a2b5ea97fbc4e8f0'}
     )
 

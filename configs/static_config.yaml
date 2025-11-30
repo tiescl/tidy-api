@@ -80,9 +80,9 @@ components_manager:
                 scopes:
                   - admin
 
-        handler-admin_v1_users-delete:
-            path: /admin/v1/users
-            method: DELETE
+        handler-admin_v1_users_delete-post:
+            path: /admin/v1/users/delete
+            method: POST
             task_processor: main-task-processor
             auth:
                 types:
@@ -110,9 +110,9 @@ components_manager:
                 scopes:
                   - admin
 
-        handler-admin_v1_queues-delete:
-            path: /admin/v1/queues
-            method: DELETE
+        handler-admin_v1_queues_delete-post:
+            path: /admin/v1/queues/delete
+            method: POST
             task_processor: main-task-processor
             auth:
                 types:
@@ -130,9 +130,9 @@ components_manager:
                 scopes:
                   - admin
 
-        handler-admin_v1_issues-delete:
-            path: /admin/v1/issues
-            method: DELETE
+        handler-admin_v1_issues_delete-post:
+            path: /admin/v1/issues/delete
+            method: POST
             task_processor: main-task-processor
             auth:
                 types:
@@ -157,9 +157,9 @@ components_manager:
                 types:
                   - cookie-required
 
-        handler-v1_users_me-delete:
-            path: /v1/users/me
-            method: DELETE
+        handler-v1_users_me_delete-post:
+            path: /v1/users/me/delete
+            method: POST
             task_processor: main-task-processor
             auth:
                 types:
@@ -220,9 +220,9 @@ components_manager:
                 types:
                   - cookie-required
 
-        handler-v1_queues_queue-delete:
-            path: /v1/queues/{queue}
-            method: DELETE
+        handler-v1_queues_queue_delete-post:
+            path: /v1/queues/{queue}/delete
+            method: POST
             task_processor: main-task-processor
             auth:
                 types:
@@ -236,9 +236,9 @@ components_manager:
                 types:
                   - cookie-required
 
-        handler-v1_queues_queue_permissions-delete:
-            path: /v1/queues/{queue}/permissions
-            method: DELETE
+        handler-v1_queues_queue_permissions_delete-post:
+            path: /v1/queues/{queue}/permissions/delete
+            method: POST
             task_processor: main-task-processor
             auth:
                 types:
@@ -260,9 +260,9 @@ components_manager:
                 types:
                   - cookie-required
 
-        handler-v1_queues_queue_issues_issue-delete:
-            path: /v1/queues/{queue}/issues/{issue}
-            method: DELETE
+        handler-v1_queues_queue_issues_issue_delete-post:
+            path: /v1/queues/{queue}/issues/{issue}/delete
+            method: POST
             task_processor: main-task-processor
             auth:
                 types:

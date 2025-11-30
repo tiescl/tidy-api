@@ -23,8 +23,8 @@ def select_count_removed_issues(pgsql: typing.Dict[str, PgDatabaseWrapper]):
 async def test_admin_delete_issues(service_client: Client, pgsql):
     assert select_count_removed_issues(pgsql) == (0,)
 
-    response = await service_client.delete(
-        '/admin/v1/issues',
+    response = await service_client.post(
+        '/admin/v1/issues/delete',
         headers={'Cookie': 'session_token=f37116c18a9345a0a2b5ea97fbc4e8f0'},
         json={'issue_ids': ['264c7fc0-6020-48ae-b10c-d0d1479d9355',
                             '5fe28b12-824e-4c0a-aee4-f98e9b9aacbc',

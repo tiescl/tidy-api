@@ -171,3 +171,11 @@ components:
 
         V1QueuesQueueIssuesIssueResponse:
             $ref: issues.yaml#/components/schemas/Issue
+
+        V1QueuesQueueIssuesIssueDeleteRequest:
+            type: object
+            additionalProperties: false
+
+        V1QueuesQueueIssuesIssueDeleteResponse:
+            type: object
+            additionalProperties: false

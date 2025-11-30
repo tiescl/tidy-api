@@ -239,3 +239,11 @@ components_manager:
             auth:
                 types:
                   - cookie-required
+
+        handler-v1_queues_queue_issues_issue-delete:
+            path: /v1/queues/{queue}/issues/{issue}
+            method: DELETE
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required

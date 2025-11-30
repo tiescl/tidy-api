@@ -60,4 +60,15 @@ dto::issues::GetIssueResult GetIssue(
     };
 }
 
+defs::errors::ErrorCode DeleteIssue(
+    const db::PgCtx& pg,
+    const boost::uuids::uuid& user_id,
+    const boost::uuids::uuid& queue_id,
+    const boost::uuids::uuid& issue_id
+) {
+    const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteIssue, user_id, queue_id, issue_id);
+
+    return FromString(pg_result.AsSingleRow<std::string>(), formats::parse::To<defs::errors::ErrorCode>());
+}
+
 }  // namespace db::api::issues

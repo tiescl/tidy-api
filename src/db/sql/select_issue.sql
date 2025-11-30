@@ -19,9 +19,9 @@ queue_check AS (
 ),
 
 permission_check AS (
-    SELECT queue.id AS queue_id
+    SELECT TRUE AS has_permission
     FROM queue_check queue
-    JOIN user_check auth_user ON TRUE
+    CROSS JOIN user_check auth_user
 
     LEFT JOIN tidy.queue_user_permissions u
         ON u.queue_id = queue.id AND u.user_id = $1
@@ -101,8 +101,8 @@ SELECT
             EXTRACT(EPOCH FROM issue.updated_at)::BIGINT
         )
         FROM issue_check issue
-        INNER JOIN queue_check queue
-            ON queue.id = issue.queue_id
+        CROSS JOIN queue_check queue
+        CROSS JOIN permission_check perm
         INNER JOIN tidy.users author
             ON author.id = issue.author_id
         LEFT JOIN tidy.users assignee

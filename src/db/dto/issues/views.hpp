@@ -10,12 +10,14 @@
 
 namespace db::dto::issues {
 
-struct CreateIssueResult {
+struct IssueResult {
     defs::errors::ErrorCode code;
     std::optional<defs::issues::Issue> issue;
 };
 
-using GetIssueResult = CreateIssueResult;
+using CreateIssueResult = IssueResult;
+
+using GetIssueResult = IssueResult;
 
 using Issue = defs::queues::V1QueuesQueueIssuesPostRequest;
 

@@ -1,0 +1,14 @@
+[
+    {
+        "id": "7d854c28-c6eb-4ed4-b429-aaf006cea6b5",
+        "key": "TRASH",
+        "name": "Queue for useless tickets (purged)",
+        "owner": {
+            "id": "774cc050-2542-4c05-9027-f4919112fc81",
+            "username": "demon_slayer"
+        },
+        "removed": true,
+        "created_at": 1760083200,
+        "updated_at": 1760083200
+    }
+]

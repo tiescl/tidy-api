@@ -7,47 +7,46 @@ from tests.tests_tidy.consts import DB_NAME
 
 @pytest.mark.pgsql(DB_NAME, files=['users.sql', 'tokens.sql', 'queues.sql'])
 @pytest.mark.parametrize(
-    "url, response_len, response_queues",
+    "url, response_len, response_json",
     [
         pytest.param(
             '/v1/queues',
             7,
-            ['TIDYBACK', 'TIDYFRONT', 'TIDYARCHREVIEW',
-                'TIDYQA', 'TIDYDUTY', 'TEST', 'TIDYTOP'],
+            'ok_all_queues_response.json',
             id='ok all available'
         ),
         pytest.param(
             '/v1/queues?limit=1',
             1,
-            ['TEST'],
+            'one_most_recent_response.json',
             id='one most recent'
         ),
         pytest.param(
             '/v1/queues?page=7&limit=1',
             1,
-            ['TIDYBACK'],
+            'one_most_ancient_response.json',
             id='one most ancient'
         ),
         pytest.param(
             '/v1/queues?search=tidy',
             6,
-            ['TIDYBACK', 'TIDYFRONT', 'TIDYQA',
-                'TIDYDUTY', 'TIDYTOP', 'TIDYARCHREVIEW'],
+            'name_contains_tidy_response.json',
             id='name contains tidy'
         ),
         pytest.param(
             '/v1/queues?page=1123232142142412423412412341234124234214124134123412',
             -1,
-            [],
+            None,
             id='stupid value for page'
         )
     ],
 )
 async def test_get_available_queues(
     service_client: Client,
+    load_json,
     url,
     response_len,
-    response_queues,
+    response_json,
 ):
     response = await service_client.get(
         url,
@@ -60,7 +59,8 @@ async def test_get_available_queues(
         return
 
     assert response.status == 200
+
     queues = response.json()['queues']
     assert len(queues) == response_len
-    for queue in queues:
-        assert queue['key'] in response_queues
+    if response_json:
+        assert queues == load_json(response_json)

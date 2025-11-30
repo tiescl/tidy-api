@@ -1,39 +1,14 @@
-import typing
 import pytest
 
 from testsuite.daemons.service_client import Client
-from testsuite.databases.pgsql.control import PgDatabaseWrapper
 
 from tests.tests_tidy.consts import DB_NAME
-
-
-def select_issue(pgsql: typing.Dict[str, PgDatabaseWrapper], issue_id: str):
-    cursor = pgsql[DB_NAME].cursor()
-
-    cursor.execute("""
-        SELECT
-            queue_id,
-            number,
-            title,
-            description,
-            type,
-            status,
-            priority,
-            component,
-            story_points,
-            author_id,
-            assignee_id,
-            removed
-        FROM tidy.issues
-        WHERE id = %s
-    """, (issue_id,))
-
-    return cursor.fetchone()
+from tests.tests_tidy.utils import remove_ids_and_timestamps
 
 
 @pytest.mark.pgsql(DB_NAME, files=['users.sql', 'tokens.sql', 'queues.sql'])
 @pytest.mark.parametrize(
-    "queue_id, request_body, response_status, issue_json, should_fail, error_response_json",
+    "queue_id, request_body, response_status, response_json, should_fail, error_response_json",
     [
         pytest.param(
             '5d854c28-c6eb-4ed4-b429-aaf006cea6b5',
@@ -45,7 +20,7 @@ def select_issue(pgsql: typing.Dict[str, PgDatabaseWrapper], issue_id: str):
                 'component': 'tidy_development_team'
             },
             200,
-            'ok_response.json',
+            'ok_owner_response.json',
             False,
             None,
             id='ok owner'
@@ -150,12 +125,11 @@ def select_issue(pgsql: typing.Dict[str, PgDatabaseWrapper], issue_id: str):
 )
 async def test_create_issue(
     service_client: Client,
-    pgsql,
     load_json,
     queue_id,
     request_body,
     response_status,
-    issue_json,
+    response_json,
     should_fail,
     error_response_json,
 ):
@@ -167,11 +141,10 @@ async def test_create_issue(
 
     assert response.status == response_status
     response = response.json()
+    remove_ids_and_timestamps(response)
+
     if should_fail:
         assert response == error_response_json
     else:
-        assert 'id' in response
-
-        issue = select_issue(pgsql, response['id'])
-        print(issue)
-        assert issue == tuple(load_json(issue_json).values())
+        print(response)
+        assert response == load_json(response_json)

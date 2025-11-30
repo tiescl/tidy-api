@@ -1,5 +1,59 @@
 components:
     schemas:
+        Issue:
+            type: object
+            additionalProperties: false
+            required:
+              - id
+              - queue
+              - number
+              - title
+              - type
+              - status
+              - priority
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                queue:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - id
+                      - key
+                    properties:
+                        id:
+                            type: string
+                            format: uuid
+                        key:
+                            type: string
+                number:
+                    type: integer
+                title:
+                    type: string
+                description:
+                    type: string
+                type:
+                    $ref: '#/components/schemas/IssueType'
+                status:
+                    $ref: '#/components/schemas/IssueStatus'
+                priority:
+                    $ref: '#/components/schemas/IssuePriority'
+                component:
+                    type: string
+                story_points:
+                    type: integer
+                author:
+                    $ref: users.yaml#/components/schemas/UserRef
+                assignee:
+                    $ref: users.yaml#/components/schemas/UserRef
+                created_at:
+                    type: integer
+                    format: int64
+                updated_at:
+                    type: integer
+                    format: int64
+
         IssueAction:
             type: string
             enum:

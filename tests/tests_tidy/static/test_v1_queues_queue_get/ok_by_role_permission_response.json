@@ -1,0 +1,10 @@
+{
+    "id": "c7838595-1516-4d86-a22a-6bac8cc46961",
+    "key": "TEST",
+    "name": "Another noname guy's queue",
+    "owner": {
+        "id": "774cc050-2542-4c05-9027-f4919112fc81",
+        "username": "demon_slayer"
+    },
+    "created_at": 1760076000
+}

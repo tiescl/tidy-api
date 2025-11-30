@@ -99,7 +99,7 @@ components:
               - id
               - key
               - name
-              - owner_id
+              - owner
               - removed
               - created_at
               - updated_at
@@ -111,9 +111,8 @@ components:
                     type: string
                 name:
                     type: string
-                owner_id:
-                    type: string
-                    format: uuid
+                owner:
+                    $ref: users.yaml#/components/schemas/UserRef
                 removed:
                     type: boolean
                 created_at:

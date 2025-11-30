@@ -28,7 +28,7 @@ std::vector<defs::queues::Queue> GetAvailableQueues(
 std::optional<defs::queues::Queue>
 GetQueue(const db::PgCtx& pg, const boost::uuids::uuid& user_id, const boost::uuids::uuid& queue_id);
 
-std::optional<boost::uuids::uuid> CreateQueue(const db::PgCtx& pg, const dto::queues::Queue& queue);
+std::optional<defs::queues::Queue> CreateQueue(const db::PgCtx& pg, const dto::queues::Queue& queue);
 
 defs::errors::ErrorCode
 DeleteQueue(const db::PgCtx& pg, const boost::uuids::uuid& queue_id, const boost::uuids::uuid& owner_id);

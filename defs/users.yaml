@@ -30,6 +30,19 @@ components:
                 role:
                     $ref: '#/components/schemas/UserRole'
 
+        UserRef:
+            type: object
+            additionalProperties: false
+            required:
+                - id
+                - username
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                username:
+                    type: string
+
         V1UsersMeRequest:
             type: object
             additionalProperties: false
@@ -49,7 +62,7 @@ components:
                     type: string
                     minLength: 3
                     maxLength: 30
-                    pattern: ^[a-zA-Z0-9_-]+$
+                    pattern: ^[A-Za-z][A-Za-z0-9_]+$
                 email:
                     type: string
                     minLength: 5

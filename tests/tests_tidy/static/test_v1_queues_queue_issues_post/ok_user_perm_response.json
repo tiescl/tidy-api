@@ -1,5 +1,8 @@
 {
-    "queue_id": "8cb68c39-1cd0-4a57-960d-c13f3b5c5e4a",
+    "queue": {
+        "id": "8cb68c39-1cd0-4a57-960d-c13f3b5c5e4a",
+        "key": "TIDYDUTY"
+    },
     "number": 2,
     "title": "Clicking on profile icon leads to 404 screen",
     "description": "Hi! Can you please look into this, we have received over 15 complaints over the last 20 minutes about this",
@@ -7,8 +10,8 @@
     "status": "description",
     "priority": "normal",
     "component": "tidy_development_team",
-    "story_points": null,
-    "author_id": "774cc050-2542-4c05-9027-f4919112fc81",
-    "assignee_id": null,
-    "removed": false
+    "author": {
+        "id": "774cc050-2542-4c05-9027-f4919112fc81",
+        "username": "demon_slayer"
+    }
 }

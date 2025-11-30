@@ -10,7 +10,10 @@ SELECT
     q.id,
     q.key,
     q.name,
-    q.owner_id,
+    ROW (
+        q.owner_id,
+        (SELECT username FROM tidy.users WHERE id = q.owner_id)
+    ) AS owner,
     EXTRACT(epoch FROM q.created_at)::BIGINT
 FROM tidy.queues q
 LEFT JOIN tidy.queue_user_permissions u

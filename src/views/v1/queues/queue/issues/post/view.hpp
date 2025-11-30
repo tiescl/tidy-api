@@ -7,17 +7,18 @@
 
 #include <utils/typed_json_handler.hpp>
 
+#include <defs/issues.hpp>
 #include <defs/queues.hpp>
 
 namespace handlers::v1_queues_queue_issues::post {
 
-using namespace defs::queues;
-
-using Request = V1QueuesQueueIssuesPostRequest;
-using Response200 = V1QueuesQueueIssuesPostResponse;
+using Request = defs::queues::V1QueuesQueueIssuesPostRequest;
+using Response200 = defs::queues::V1QueuesQueueIssuesPostResponse;
 using Response = std::variant<Response200>;
 
-class View final : public utils::TypedJsonHandler<View, Request, Response, Response200, Parse, Serialize> {
+class View final
+    : public utils::
+          TypedJsonHandler<View, Request, Response, Response200, defs::queues::Parse, defs::issues::Serialize> {
 public:
     static constexpr std::string_view kName = "handler-v1_queues_queue_issues-post";
 

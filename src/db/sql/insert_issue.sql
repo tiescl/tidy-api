@@ -10,7 +10,7 @@
 -- $10 - story_points (opt)
 
 WITH queue_check AS (
-    SELECT id, owner_id
+    SELECT id, key, owner_id
     FROM tidy.queues
     WHERE
         id = $1
@@ -18,7 +18,7 @@ WITH queue_check AS (
 ),
 
 author_check AS (
-    SELECT id, role
+    SELECT id, username, role
     FROM tidy.users
     WHERE
         id = $2
@@ -26,7 +26,7 @@ author_check AS (
 ),
 
 assignee_check AS (
-    SELECT id
+    SELECT id, username
     FROM tidy.users
     WHERE
         id = $3
@@ -68,7 +68,7 @@ insert_attempt AS (
         permission.queue_id,
         COALESCE(MAX(issues.number), 0) + 1,
         author.id,
-        $3,  -- assignee_id
+        assignee.id,
         $4,  -- title
         $5,  -- description
         $6,  -- type
@@ -85,20 +85,61 @@ insert_attempt AS (
         permission.queue_id,
         author.id,
         assignee.id
-    RETURNING id
+    RETURNING *
 )
 
-SELECT CASE
-    WHEN EXISTS (SELECT 1 FROM insert_attempt)
-        THEN 'OK'
-    WHEN NOT EXISTS (SELECT 1 FROM queue_check)
-        THEN 'QUEUE_NOT_FOUND'
-    WHEN NOT EXISTS (SELECT 1 FROM author_check)
-        THEN 'USER_NOT_FOUND'
-    WHEN $3 IS NOT NULL
-         AND NOT EXISTS (SELECT 1 FROM assignee_check)
-        THEN 'USER_NOT_FOUND'
-    WHEN NOT EXISTS (SELECT 1 FROM permission_check)
-        THEN 'FORBIDDEN'
-END AS code,
-(SELECT id FROM insert_attempt) AS issue_id;
+SELECT
+    COALESCE(
+        (SELECT 'OK' FROM insert_attempt LIMIT 1),
+        CASE
+            WHEN NOT EXISTS (SELECT 1 FROM queue_check)
+                THEN 'QUEUE_NOT_FOUND'
+            WHEN NOT EXISTS (SELECT 1 FROM author_check)
+                THEN 'USER_NOT_FOUND'
+            WHEN $3 IS NOT NULL
+                 AND NOT EXISTS (SELECT 1 FROM assignee_check)
+                THEN 'USER_NOT_FOUND'
+            WHEN NOT EXISTS (SELECT 1 FROM permission_check)
+                THEN 'FORBIDDEN'
+        END
+    ) AS code,
+    (
+        -- order MUST match issues.yaml#/components/schemas/Issue
+        SELECT ROW (
+            issue.id,
+            ROW (
+                queue.id,
+                queue.key
+            ),
+            issue.number,
+            issue.title,
+            issue.description,
+            issue.type,
+            issue.status,
+            issue.priority,
+            issue.component,
+            issue.story_points,
+            ROW (
+                author.id,
+                author.username
+            ),
+            CASE
+                WHEN assignee.id IS NULL
+                    THEN NULL
+                ELSE ROW (
+                    assignee.id,
+                    assignee.username
+                )
+            END,
+            EXTRACT(EPOCH FROM issue.created_at)::BIGINT,
+            EXTRACT(EPOCH FROM issue.updated_at)::BIGINT
+        )
+        FROM insert_attempt issue
+        LEFT JOIN queue_check queue
+            ON queue.id = issue.queue_id
+        LEFT JOIN author_check author
+            ON author.id = issue.author_id
+        LEFT JOIN assignee_check assignee
+            ON assignee.id = issue.assignee_id
+        LIMIT 1
+    ) AS issue;

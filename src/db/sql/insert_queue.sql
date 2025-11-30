@@ -2,17 +2,36 @@
 -- $2 - name
 -- $3 - owner_id
 
-INSERT INTO tidy.queues (
-    key,
-    name,
-    owner_id
-)
-SELECT $1, $2, $3
-WHERE EXISTS (
-    SELECT 1
+WITH owner AS (
+    SELECT id, username
     FROM tidy.users
     WHERE
-        users.id = $3
-        AND NOT users.removed
+        id = $3
+        AND NOT removed
+),
+insert_attempt AS (
+    INSERT INTO tidy.queues (
+        key,
+        name,
+        owner_id
+    )
+    SELECT $1, $2, owner.id
+    FROM owner
+    RETURNING
+        id,
+        key,
+        name,
+        owner_id,
+        created_at
 )
-RETURNING id;
+SELECT
+    i.id,
+    i.key,
+    i.name,
+    ROW (
+        i.owner_id,
+        o.username
+    ) AS owner,
+    EXTRACT(epoch FROM i.created_at)::BIGINT
+FROM insert_attempt i
+CROSS JOIN owner o;

@@ -28,9 +28,9 @@ Response View::Handle(
         );
     }
 
-    std::optional<boost::uuids::uuid> created_queue_id_opt;
+    std::optional<defs::queues::Queue> created_queue_opt;
     try {
-        created_queue_id_opt = db::api::queues::CreateQueue(pg_, queue);
+        created_queue_opt = db::api::queues::CreateQueue(pg_, queue);
     } catch (const storages::postgres::UniqueViolation& exc) {
         if (exc.GetConstraint() == utils::constants::kQueuesUniqueKeyConstraint) {
             throw server::handlers::ClientError(
@@ -39,13 +39,13 @@ Response View::Handle(
         }
     }
 
-    if (!created_queue_id_opt.has_value()) {
+    if (!created_queue_opt.has_value()) {
         throw server::handlers::ClientError(
             server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUserNotFound)}
         );
     }
 
-    return Response200{std::move(created_queue_id_opt).value()};
+    return Response200{std::move(created_queue_opt).value()};
 }
 
 }  // namespace handlers::v1_queues::post

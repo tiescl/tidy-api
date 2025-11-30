@@ -12,6 +12,7 @@
 #include <utils/constants.hpp>
 
 #include <defs/errors.hpp>
+#include <defs/issues.hpp>
 
 namespace db::api::issues {
 
@@ -39,7 +40,7 @@ dto::issues::CreateIssueResult CreateIssue(
         .code = FromString(
             pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
         ),
-        .issue_id = pg_result.Front()[utils::constants::kIssueId].As<std::optional<boost::uuids::uuid>>()
+        .issue = pg_result.Front()[utils::constants::kIssue].As<std::optional<defs::issues::Issue>>()
     };
 }
 

@@ -1,0 +1,62 @@
+[
+    {
+        "id": "1e6fd243-6239-4d76-8f0d-2bcdbc194f18",
+        "key": "TIDYTOP",
+        "name": "Some noname guy's queue",
+        "owner": {
+            "id": "a9f70642-6e70-4c86-97ff-455d659bede0",
+            "username": "whoami"
+        },
+        "created_at": 1760072400
+    },
+    {
+        "id": "57996a05-fb8c-454d-910e-8b53d313741e",
+        "key": "TIDYARCHREVIEW",
+        "name": "Queue for tracking tickets for architecture reviews",
+        "owner": {
+            "id": "774cc050-2542-4c05-9027-f4919112fc81",
+            "username": "demon_slayer"
+        },
+        "created_at": 1760068800
+    },
+    {
+        "id": "58550d9c-571e-4f30-8a78-368444d9b6d0",
+        "key": "TIDYQA",
+        "name": "Queue for tracking tickets from QA testers",
+        "owner": {
+            "id": "774cc050-2542-4c05-9027-f4919112fc81",
+            "username": "demon_slayer"
+        },
+        "created_at": 1760065200
+    },
+    {
+        "id": "8cb68c39-1cd0-4a57-960d-c13f3b5c5e4a",
+        "key": "TIDYDUTY",
+        "name": "Queue for tracking tickets from bughunters",
+        "owner": {
+            "id": "774cc050-2542-4c05-9027-f4919112fc81",
+            "username": "demon_slayer"
+        },
+        "created_at": 1760061600
+    },
+    {
+        "id": "5bf11df6-3c74-4962-a272-aed7c9e35f22",
+        "key": "TIDYFRONT",
+        "name": "Queue for tracking frontend related tickets for tidy",
+        "owner": {
+            "id": "774cc050-2542-4c05-9027-f4919112fc81",
+            "username": "demon_slayer"
+        },
+        "created_at": 1760058000
+    },
+    {
+        "id": "5d854c28-c6eb-4ed4-b429-aaf006cea6b5",
+        "key": "TIDYBACK",
+        "name": "Queue for tracking backend related tickets for tidy",
+        "owner": {
+            "id": "774cc050-2542-4c05-9027-f4919112fc81",
+            "username": "demon_slayer"
+        },
+        "created_at": 1760054400
+    }
+]

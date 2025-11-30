@@ -6,7 +6,10 @@ SELECT
     id,
     key,
     name,
-    owner_id,
+    ROW (
+        owner_id,
+        (SELECT username FROM tidy.users WHERE id = owner_id)
+    ) AS owner,
     removed,
     EXTRACT(epoch FROM created_at)::BIGINT,
     EXTRACT(epoch FROM updated_at)::BIGINT

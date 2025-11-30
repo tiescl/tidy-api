@@ -7,7 +7,7 @@ components:
               - id
               - key
               - name
-              - owner_id
+              - owner
               - created_at
             properties:
                 id:
@@ -17,9 +17,8 @@ components:
                     type: string
                 name:
                     type: string
-                owner_id:
-                    type: string
-                    format: uuid
+                owner:
+                    $ref: users.yaml#/components/schemas/UserRef
                 created_at:
                     type: integer
                     format: int64
@@ -45,13 +44,6 @@ components:
                     items:
                         $ref: '#/components/schemas/Queue'
 
-        V1QueuesQueueRequest:
-            type: object
-            additionalProperties: false
-
-        V1QueuesQueueResponse:
-            $ref: '#/components/schemas/Queue'
-
         V1QueuesPostRequest:
             type: object
             additionalProperties: false
@@ -74,14 +66,14 @@ components:
                     format: uuid
 
         V1QueuesPostResponse:
+            $ref: '#/components/schemas/Queue'
+
+        V1QueuesQueueRequest:
             type: object
             additionalProperties: false
-            required:
-              - id
-            properties:
-                id:
-                    type: string
-                    format: uuid
+
+        V1QueuesQueueResponse:
+            $ref: '#/components/schemas/Queue'
 
         V1QueuesQueueDeleteRequest:
             type: object
@@ -171,11 +163,11 @@ components:
                     format: uuid
 
         V1QueuesQueueIssuesPostResponse:
+            $ref: issues.yaml#/components/schemas/Issue
+
+        V1QueuesQueueIssuesIssueRequest:
             type: object
             additionalProperties: false
-            required:
-              - id
-            properties:
-                id:
-                    type: string
-                    format: uuid
+
+        V1QueuesQueueIssuesIssueResponse:
+            $ref: issues.yaml#/components/schemas/Issue

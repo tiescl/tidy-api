@@ -30,10 +30,10 @@ GetQueue(const db::PgCtx& pg, const boost::uuids::uuid& user_id, const boost::uu
     return pg_result.AsOptionalSingleRow<defs::queues::Queue>(storages::postgres::kRowTag);
 }
 
-std::optional<boost::uuids::uuid> CreateQueue(const db::PgCtx& pg, const dto::queues::Queue& queue) {
+std::optional<defs::queues::Queue> CreateQueue(const db::PgCtx& pg, const dto::queues::Queue& queue) {
     const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kInsertQueue, queue.key, queue.name, queue.owner_id);
 
-    return pg_result.AsOptionalSingleRow<boost::uuids::uuid>();
+    return pg_result.AsOptionalSingleRow<defs::queues::Queue>(storages::postgres::kRowTag);
 }
 
 defs::errors::ErrorCode

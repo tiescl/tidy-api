@@ -25,9 +25,9 @@ Response View::Handle(
     auto result = db::api::issues::CreateIssue(pg_, queue_id, author_id, issue);
 
     utils::HandleIssueQueryErrors(result.code);
-    UINVARIANT(result.issue_id.has_value(), "issue_id must have a value at this point");
+    UINVARIANT(result.issue.has_value(), "issue_id must have a value at this point");
 
-    return Response200{std::move(result.issue_id).value()};
+    return Response200{std::move(result.issue).value()};
 }
 
 }  // namespace handlers::v1_queues_queue_issues::post

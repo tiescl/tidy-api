@@ -120,6 +120,26 @@ components_manager:
                 scopes:
                   - admin
 
+        handler-admin_v1_issues-get:
+            path: /admin/v1/issues
+            method: GET
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required
+                scopes:
+                  - admin
+
+        handler-admin_v1_issues-delete:
+            path: /admin/v1/issues
+            method: DELETE
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required
+                scopes:
+                  - admin
+
         # user endpoints
         handler-v1_users_me-get:
             path: /v1/users/me

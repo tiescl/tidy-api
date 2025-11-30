@@ -1,0 +1,21 @@
+[
+    {
+        "id": "60d9f516-f2df-4e00-94a9-8265c0cc9dfb",
+        "queue": {
+            "id": "7d854c28-c6eb-4ed4-b429-aaf006cea6b5",
+            "key": "TRASH"
+        },
+        "number": 2,
+        "title": "Task 2 for meetings",
+        "type": "task",
+        "status": "description",
+        "priority": "normal",
+        "removed": false,
+        "author": {
+            "id": "5c4b6cc6-10f9-4663-b473-3ffd8cc225f5",
+            "username": "potato@gmail.com"
+        },
+        "created_at": 1764478800,
+        "updated_at": 1764478800
+    }
+]

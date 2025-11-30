@@ -14,6 +14,8 @@
 #include <auth/auth_checker.hpp>
 #include <caches/user_tokens.hpp>
 
+#include <views/admin/v1/issues/del/view.hpp>
+#include <views/admin/v1/issues/get/view.hpp>
 #include <views/admin/v1/queues/del/view.hpp>
 #include <views/admin/v1/queues/get/view.hpp>
 #include <views/admin/v1/users/del/view.hpp>
@@ -41,6 +43,8 @@ namespace {
 
 components::ComponentList GenerateServiceHandlersList() {
     return components::ComponentList()
+        .Append<handlers::admin_v1_issues::del::View>()
+        .Append<handlers::admin_v1_issues::get::View>()
         .Append<handlers::admin_v1_queues::del::View>()
         .Append<handlers::admin_v1_queues::get::View>()
         .Append<handlers::admin_v1_users::del::View>()

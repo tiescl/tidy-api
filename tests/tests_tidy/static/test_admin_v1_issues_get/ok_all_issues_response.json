@@ -1,0 +1,105 @@
+[
+    {
+        "id": "60d9f516-f2df-4e00-94a9-8265c0cc9dfb",
+        "queue": {
+            "id": "7d854c28-c6eb-4ed4-b429-aaf006cea6b5",
+            "key": "TRASH"
+        },
+        "number": 2,
+        "title": "Task 2 for meetings",
+        "type": "task",
+        "status": "description",
+        "priority": "normal",
+        "removed": false,
+        "author": {
+            "id": "5c4b6cc6-10f9-4663-b473-3ffd8cc225f5",
+            "username": "potato@gmail.com"
+        },
+        "created_at": 1764478800,
+        "updated_at": 1764478800
+    },
+    {
+        "id": "18225480-acaa-4521-a5e2-bc8ba43725e0",
+        "queue": {
+            "id": "7d854c28-c6eb-4ed4-b429-aaf006cea6b5",
+            "key": "TRASH"
+        },
+        "number": 1,
+        "title": "Task 1 for slacking off",
+        "type": "task",
+        "status": "description",
+        "priority": "normal",
+        "removed": true,
+        "author": {
+            "id": "a9f70642-6e70-4c86-97ff-455d659bede0",
+            "username": "whoami"
+        },
+        "assignee": {
+            "id": "774cc050-2542-4c05-9027-f4919112fc81",
+            "username": "demon_slayer"
+        },
+        "created_at": 1764475200,
+        "updated_at": 1764475200
+    },
+    {
+        "id": "2d7227a4-ba35-4c42-a24a-34194c07e814",
+        "queue": {
+            "id": "5d854c28-c6eb-4ed4-b429-aaf006cea6b5",
+            "key": "TIDYBACK"
+        },
+        "number": 3,
+        "title": "Task 3 for bugfixing",
+        "type": "task",
+        "status": "description",
+        "priority": "normal",
+        "removed": true,
+        "author": {
+            "id": "a9f70642-6e70-4c86-97ff-455d659bede0",
+            "username": "whoami"
+        },
+        "created_at": 1764471600,
+        "updated_at": 1764471600
+    },
+    {
+        "id": "5fe28b12-824e-4c0a-aee4-f98e9b9aacbc",
+        "queue": {
+            "id": "5d854c28-c6eb-4ed4-b429-aaf006cea6b5",
+            "key": "TIDYBACK"
+        },
+        "number": 2,
+        "title": "Task 2 for refactoring",
+        "type": "task",
+        "status": "description",
+        "priority": "normal",
+        "removed": false,
+        "author": {
+            "id": "a9f70642-6e70-4c86-97ff-455d659bede0",
+            "username": "whoami"
+        },
+        "created_at": 1764468000,
+        "updated_at": 1764468000
+    },
+    {
+        "id": "264c7fc0-6020-48ae-b10c-d0d1479d9355",
+        "queue": {
+            "id": "5d854c28-c6eb-4ed4-b429-aaf006cea6b5",
+            "key": "TIDYBACK"
+        },
+        "number": 1,
+        "title": "Task 1 for bugfixing",
+        "type": "task",
+        "status": "description",
+        "priority": "normal",
+        "removed": false,
+        "author": {
+            "id": "a9f70642-6e70-4c86-97ff-455d659bede0",
+            "username": "whoami"
+        },
+        "assignee": {
+            "id": "774cc050-2542-4c05-9027-f4919112fc81",
+            "username": "demon_slayer"
+        },
+        "created_at": 1764464400,
+        "updated_at": 1764464400
+    }
+]

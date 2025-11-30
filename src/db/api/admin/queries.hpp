@@ -25,4 +25,9 @@ GetQueues(const db::PgCtx& pg, const std::string& search, int64_t limit, int64_t
 
 void DeleteQueues(const db::PgCtx& pg, const std::unordered_set<boost::uuids::uuid>& queue_ids);
 
+std::vector<defs::admin::AdminIssueListItem>
+GetIssues(const db::PgCtx& pg, const std::string& search, int64_t limit, int64_t offset);
+
+void DeleteIssues(const db::PgCtx& pg, const std::unordered_set<boost::uuids::uuid>& issue_ids);
+
 }  // namespace db::api::admin

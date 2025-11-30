@@ -36,4 +36,15 @@ void DeleteQueues(const db::PgCtx& pg, const std::unordered_set<boost::uuids::uu
     pg.MakeRwRequest(tidy_api::sql::kDeleteQueuesForAdmin, queue_ids);
 }
 
+std::vector<defs::admin::AdminIssueListItem>
+GetIssues(const db::PgCtx& pg, const std::string& search, int64_t limit, int64_t offset) {
+    const auto pg_result = pg.MakeRoRequest(tidy_api::sql::kSelectIssuesForAdmin, search, limit, offset);
+
+    return pg_result.AsContainer<std::vector<defs::admin::AdminIssueListItem>>(storages::postgres::kRowTag);
+}
+
+void DeleteIssues(const db::PgCtx& pg, const std::unordered_set<boost::uuids::uuid>& issue_ids) {
+    pg.MakeRwRequest(tidy_api::sql::kDeleteIssuesForAdmin, issue_ids);
+}
+
 }  // namespace db::api::admin

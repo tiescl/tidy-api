@@ -57,6 +57,8 @@ add_library(
     src/utils/errors.cpp
     src/utils/path_args.cpp
     src/utils/text.cpp
+    src/views/admin/v1/issues/del/view.cpp
+    src/views/admin/v1/issues/get/view.cpp
     src/views/admin/v1/queues/del/view.cpp
     src/views/admin/v1/queues/get/view.cpp
     src/views/admin/v1/users/del/view.cpp

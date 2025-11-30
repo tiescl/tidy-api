@@ -16,12 +16,7 @@ paths:
             tags:
               - auth
             parameters:
-              - name: session_id
-                in: cookie
-                description: optional authentication token
-                required: false
-                schema:
-                    type: string
+              - $ref: '#/components/parameters/SessionIdCookie'
             requestBody:
                 required: true
                 content:
@@ -58,12 +53,7 @@ paths:
             tags:
               - auth
             parameters:
-              - name: session_id
-                in: cookie
-                description: optional authentication token
-                required: false
-                schema:
-                    type: string
+              - $ref: '#/components/parameters/SessionIdCookie'
             requestBody:
                 required: true
                 content:
@@ -99,11 +89,7 @@ paths:
             tags:
               - auth
             parameters:
-              - name: session_id
-                in: cookie
-                required: false
-                schema:
-                    type: string
+              - $ref: '#/components/parameters/SessionIdCookie'
             requestBody:
                 required: true
                 content:
@@ -123,6 +109,14 @@ paths:
                                 $ref: '#/components/schemas/V1AuthLogoutResponse'
 
 components:
+    parameters:
+        SessionIdCookie:
+            name: session_id
+            in: cookie
+            required: false
+            schema:
+                type: string
+
     schemas:
         V1AuthRegisterRequest:
             type: object

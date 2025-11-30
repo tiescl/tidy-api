@@ -1,4 +1,115 @@
+openapi: 3.0.0
+
+info:
+    title: Tidy Service
+    version: '1.0'
+
+servers:
+  - url: https://api.tidyapp.uz
+    description: production
+  - url: http://127.0.0.1:8080
+    description: testing
+
+paths:
+    /v1/users/me:
+        get:
+            tags:
+              - users
+            parameters:
+              - $ref: '#/components/parameters/SessionIdCookie'
+            responses:
+                200:
+                    description: currently authenticated user
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/V1UsersMeResponse'
+                404:
+                    description: user not found
+                    content:
+                        application/json:
+                            schema:
+                                $ref: errors.yaml#/components/schemas/ErrorResponse
+        put:
+            tags:
+              - users
+            parameters:
+              - $ref: '#/components/parameters/SessionIdCookie'
+            responses:
+                200:
+                    description: updated user
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/V1UsersMePutResponse'
+                400:
+                    description: email/username already exist
+                    content:
+                        application/json:
+                            schema:
+                                $ref: errors.yaml#/components/schemas/ErrorResponse
+                404:
+                    description: user not found
+                    content:
+                        application/json:
+                            schema:
+                                $ref: errors.yaml#/components/schemas/ErrorResponse
+
+    /v1/users/me/delete:
+        post:
+            tags:
+              - users
+            parameters:
+              - $ref: '#/components/parameters/SessionIdCookie'
+            responses:
+                200:
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/V1UsersMeDeleteResponse'
+                404:
+                    description: user not found
+                    content:
+                        application/json:
+                            schema:
+                                $ref: errors.yaml#/components/schemas/ErrorResponse
+
+    /v1/users/me/password:
+        put:
+            tags:
+              - users
+            parameters:
+              - $ref: '#/components/parameters/SessionIdCookie'
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/V1UsersMePasswordRequest'
+            responses:
+                200:
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/V1UsersMePasswordResponse'
+                400:
+                    description: invalid password
+                    content:
+                        application/json:
+                            schema:
+                                $ref: errors.yaml#/components/schemas/ErrorResponse
+
 components:
+    parameters:
+        SessionIdCookie:
+            name: session_id
+            in: cookie
+            required: true
+            schema:
+                type: string
+
     schemas:
         UserRole:
             type: string
@@ -34,8 +145,8 @@ components:
             type: object
             additionalProperties: false
             required:
-                - id
-                - username
+              - id
+              - username
             properties:
                 id:
                     type: string
@@ -77,10 +188,6 @@ components:
             additionalProperties: false
 
         V1UsersMeDeleteResponse:
-            type: object
-            additionalProperties: false
-
-        V1UsersMePasswordResponse:
             type: object
             additionalProperties: false
 

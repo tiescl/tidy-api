@@ -40,7 +40,7 @@ Response View::Handle(
     }
 
     if (!created_queue_opt.has_value()) {
-        throw server::handlers::ClientError(
+        throw server::handlers::ResourceNotFound(
             server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUserNotFound)}
         );
     }

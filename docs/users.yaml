@@ -16,7 +16,7 @@ paths:
             tags:
               - users
             parameters:
-              - $ref: '#/components/parameters/SessionIdCookie'
+              - $ref: common.yaml#/components/parameters/SessionIdCookieRequired
             responses:
                 200:
                     description: currently authenticated user
@@ -34,7 +34,7 @@ paths:
             tags:
               - users
             parameters:
-              - $ref: '#/components/parameters/SessionIdCookie'
+              - $ref: common.yaml#/components/parameters/SessionIdCookieRequired
             responses:
                 200:
                     description: updated user
@@ -60,7 +60,7 @@ paths:
             tags:
               - users
             parameters:
-              - $ref: '#/components/parameters/SessionIdCookie'
+              - $ref: common.yaml#/components/parameters/SessionIdCookieRequired
             responses:
                 200:
                     description: OK
@@ -80,7 +80,7 @@ paths:
             tags:
               - users
             parameters:
-              - $ref: '#/components/parameters/SessionIdCookie'
+              - $ref: common.yaml#/components/parameters/SessionIdCookieRequired
             requestBody:
                 required: true
                 content:
@@ -102,14 +102,6 @@ paths:
                                 $ref: errors.yaml#/components/schemas/ErrorResponse
 
 components:
-    parameters:
-        SessionIdCookie:
-            name: session_id
-            in: cookie
-            required: true
-            schema:
-                type: string
-
     schemas:
         UserRole:
             type: string

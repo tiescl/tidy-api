@@ -1,0 +1,66 @@
+components:
+    parameters:
+        SessionIdCookieRequired:
+            name: session_id
+            in: cookie
+            required: true
+            schema:
+                type: string
+
+        SessionIdCookieOptional:
+            name: session_id
+            in: cookie
+            required: false
+            schema:
+                type: string
+
+        SearchQuery:
+            name: search
+            in: query
+            required: false
+            schema:
+                type: string
+                maxLength: 256
+
+        PageQuery:
+            name: page
+            in: query
+            required: false
+            schema:
+                type: integer
+                minimum: 1
+
+        LimitQuery:
+            name: limit
+            in: query
+            required: false
+            schema:
+                type: integer
+                minimum: 1
+                maximum: 100
+
+        UserArg:
+            name: user
+            in: path
+            required: true
+            schema:
+                type: string
+                format: uuid
+
+        QueueArg:
+            name: queue
+            in: path
+            required: true
+            schema:
+                type: string
+                format: uuid
+
+        IssueArg:
+            name: issue
+            in: path
+            required: true
+            schema:
+                type: string
+                format: uuid
+
+    schemas: {}

@@ -56,10 +56,10 @@ from tests.tests_tidy.consts import DB_NAME
                 'name': 'Queue for tracking front end related tickets for tidy',
                 'owner_id': '5ac15ada-0726-4590-92b8-59e0ef096afa',
             },
-            400,
+            404,
             None,
             True,
-            {'code': '400', 'message': 'USER_NOT_FOUND'},
+            {'code': '404', 'message': 'USER_NOT_FOUND'},
             id='removed user'
         ),
         pytest.param(

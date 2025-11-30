@@ -23,4 +23,11 @@ boost::uuids::uuid GetQueuePathArg(const server::http::HttpRequest& http_request
     )});
 }
 
+boost::uuids::uuid GetIssuePathArg(const server::http::HttpRequest& http_request) try {
+    return utils::BoostUuidFromString(http_request.GetPathArg(utils::constants::kIssue));
+} catch (const std::exception& exc) {
+    throw server::handlers::ClientError(server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kInvalidIssueId
+    )});
+}
+
 }  // namespace utils

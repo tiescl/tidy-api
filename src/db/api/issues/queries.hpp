@@ -14,4 +14,11 @@ dto::issues::CreateIssueResult CreateIssue(
     const dto::issues::Issue& issue
 );
 
+dto::issues::GetIssueResult GetIssue(
+    const db::PgCtx& pg,
+    const boost::uuids::uuid& user_id,
+    const boost::uuids::uuid& queue_id,
+    const boost::uuids::uuid& issue_id
+);
+
 }  // namespace db::api::issues

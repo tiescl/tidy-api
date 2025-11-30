@@ -1,7 +1,10 @@
 BasedOnStyle: Google
 DerivePointerAlignment: false
 IncludeBlocks: Preserve
-AttributeMacros: ["noexcept"]
+
+AttributeMacros:
+  - noexcept
+
 IndentRequires: false
 ColumnLimit: 120
 IndentWidth: 4

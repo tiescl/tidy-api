@@ -11,11 +11,13 @@ components:
               - EMAIL_NOT_FOUND
               - EMAIL_ALREADY_EXISTS
               - FORBIDDEN
+              - INVALID_ISSUE_ID
               - INVALID_PASSWORD
               - INVALID_QUERY_PARAMS
               - INVALID_QUEUE_ID
               - INVALID_TOKEN
               - INVALID_USER_ID
+              - ISSUE_NOT_FOUND
               - MISSING_ROLE_PERMISSION
               - MISSING_USER_PERMISSION
               - QUEUE_ALREADY_EXISTS

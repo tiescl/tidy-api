@@ -15,6 +15,8 @@ struct CreateIssueResult {
     std::optional<defs::issues::Issue> issue;
 };
 
+using GetIssueResult = CreateIssueResult;
+
 using Issue = defs::queues::V1QueuesQueueIssuesPostRequest;
 
 }  // namespace db::dto::issues

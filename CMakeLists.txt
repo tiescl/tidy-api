@@ -69,6 +69,7 @@ add_library(
     src/views/v1/queues/post/view.cpp
     src/views/v1/queues/queue/del/view.cpp
     src/views/v1/queues/queue/get/view.cpp
+    src/views/v1/queues/queue/issues/issue/get/view.cpp
     src/views/v1/queues/queue/issues/post/view.cpp
     src/views/v1/queues/queue/permissions/del/view.cpp
     src/views/v1/queues/queue/permissions/post/view.cpp

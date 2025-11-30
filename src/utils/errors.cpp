@@ -42,6 +42,11 @@ void HandleIssueQueryErrors(const defs::errors::ErrorCode& code) {
                 server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kForbidden)}
             );
             break;
+        case defs::errors::ErrorCode::kIssueNotFound:
+            throw server::handlers::ResourceNotFound(
+                server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kIssueNotFound)}
+            );
+            break;
         default:
             throw server::handlers::InternalServerError();
     }

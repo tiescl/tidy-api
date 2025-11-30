@@ -44,4 +44,20 @@ dto::issues::CreateIssueResult CreateIssue(
     };
 }
 
+dto::issues::GetIssueResult GetIssue(
+    const db::PgCtx& pg,
+    const boost::uuids::uuid& user_id,
+    const boost::uuids::uuid& queue_id,
+    const boost::uuids::uuid& issue_id
+) {
+    const auto pg_result = pg.MakeRoRequest(tidy_api::sql::kSelectIssue, user_id, queue_id, issue_id);
+
+    return dto::issues::GetIssueResult{
+        .code = FromString(
+            pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+        ),
+        .issue = pg_result.Front()[utils::constants::kIssue].As<std::optional<defs::issues::Issue>>()
+    };
+}
+
 }  // namespace db::api::issues

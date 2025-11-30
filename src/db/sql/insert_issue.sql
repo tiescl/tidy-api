@@ -89,20 +89,19 @@ insert_attempt AS (
 )
 
 SELECT
-    COALESCE(
-        (SELECT 'OK' FROM insert_attempt LIMIT 1),
-        CASE
-            WHEN NOT EXISTS (SELECT 1 FROM queue_check)
-                THEN 'QUEUE_NOT_FOUND'
-            WHEN NOT EXISTS (SELECT 1 FROM author_check)
-                THEN 'USER_NOT_FOUND'
-            WHEN $3 IS NOT NULL
-                 AND NOT EXISTS (SELECT 1 FROM assignee_check)
-                THEN 'USER_NOT_FOUND'
-            WHEN NOT EXISTS (SELECT 1 FROM permission_check)
-                THEN 'FORBIDDEN'
-        END
-    ) AS code,
+    CASE
+        WHEN NOT EXISTS (SELECT 1 FROM queue_check)
+            THEN 'QUEUE_NOT_FOUND'
+        WHEN NOT EXISTS (SELECT 1 FROM author_check)
+            THEN 'USER_NOT_FOUND'
+        WHEN $3 IS NOT NULL
+             AND NOT EXISTS (SELECT 1 FROM assignee_check)
+            THEN 'USER_NOT_FOUND'
+        WHEN NOT EXISTS (SELECT 1 FROM permission_check)
+            THEN 'FORBIDDEN'
+        WHEN EXISTS (SELECT 1 FROM insert_attempt)
+            THEN 'OK'
+    END AS code,
     (
         -- order MUST match issues.yaml#/components/schemas/Issue
         SELECT ROW (
@@ -124,7 +123,7 @@ SELECT
                 author.username
             ),
             CASE
-                WHEN assignee.id IS NULL
+                WHEN assignee.id IS NULL OR assignee.username IS NULL
                     THEN NULL
                 ELSE ROW (
                     assignee.id,

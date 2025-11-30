@@ -1,0 +1,18 @@
+{
+    "author": {
+        "id": "a9f70642-6e70-4c86-97ff-455d659bede0",
+        "username": "whoami"
+    },
+    "created_at": 1764460800,
+    "id": "fb18e7f4-2cfd-4cf8-bbf0-ab575f2a1e6c",
+    "number": 3,
+    "priority": "normal",
+    "queue": {
+        "id": "1e6fd243-6239-4d76-8f0d-2bcdbc194f18",
+        "key": "TIDYTOP"
+    },
+    "status": "description",
+    "title": "Some tidy top task",
+    "type": "task",
+    "updated_at": 1764460800
+}

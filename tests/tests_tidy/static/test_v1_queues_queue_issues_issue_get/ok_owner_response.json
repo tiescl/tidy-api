@@ -1,0 +1,18 @@
+{
+    "author": {
+        "id": "774cc050-2542-4c05-9027-f4919112fc81",
+        "username": "demon_slayer"
+    },
+    "created_at": 1764460800,
+    "id": "264c7fc0-6020-48ae-b10c-d0d1479d9355",
+    "number": 1,
+    "priority": "normal",
+    "queue": {
+        "id": "5d854c28-c6eb-4ed4-b429-aaf006cea6b5",
+        "key": "TIDYBACK"
+    },
+    "status": "description",
+    "title": "Some backend task",
+    "type": "task",
+    "updated_at": 1764460800
+}

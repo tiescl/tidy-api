@@ -31,7 +31,7 @@ std::optional<db::dto::users::UpdatedUser> UpdateUserData(
     const std::optional<std::string> email,
     const std::optional<std::string> username
 ) {
-    const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kUpsertUserData, user_id, full_name, email, username);
+    const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kUpdateUserData, user_id, full_name, email, username);
 
     return pg_result.AsOptionalSingleRow<db::dto::users::UpdatedUser>(storages::postgres::kRowTag);
 }

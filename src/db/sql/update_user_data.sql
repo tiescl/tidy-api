@@ -8,7 +8,7 @@ SET
     full_name = COALESCE($2, full_name),
     email = COALESCE($3, email),
     username = COALESCE($4, username)
-WHERE 
+WHERE
     id = $1
     AND NOT removed
 RETURNING

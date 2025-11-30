@@ -11,7 +11,15 @@ dto::issues::CreateIssueResult CreateIssue(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const boost::uuids::uuid& author_id,
-    const dto::issues::Issue& issue
+    const dto::issues::CreateIssueData& issue
+);
+
+dto::issues::UpdateIssueResult UpdateIssue(
+    const db::PgCtx& pg,
+    const boost::uuids::uuid& user_id,
+    const boost::uuids::uuid& queue_id,
+    const boost::uuids::uuid& issue_id,
+    const dto::issues::UpdateIssueData& issue
 );
 
 dto::issues::GetIssueResult GetIssue(

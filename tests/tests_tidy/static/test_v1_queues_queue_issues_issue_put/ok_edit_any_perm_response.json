@@ -1,0 +1,15 @@
+{
+    "author": {
+        "id": "a9f70642-6e70-4c86-97ff-455d659bede0",
+        "username": "whoami"
+    },
+    "number": 1,
+    "priority": "normal",
+    "queue": {
+        "id": "5bf11df6-3c74-4962-a272-aed7c9e35f22",
+        "key": "TIDYFRONT"
+    },
+    "status": "description",
+    "title": "shiny new title",
+    "type": "task"
+}

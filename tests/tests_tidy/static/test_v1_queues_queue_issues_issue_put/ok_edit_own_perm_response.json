@@ -1,0 +1,15 @@
+{
+    "author": {
+        "id": "774cc050-2542-4c05-9027-f4919112fc81",
+        "username": "demon_slayer"
+    },
+    "number": 1,
+    "priority": "normal",
+    "queue": {
+        "id": "57996a05-fb8c-454d-910e-8b53d313741e",
+        "key": "TIDYARCHREVIEW"
+    },
+    "status": "description",
+    "title": "shiny new title",
+    "type": "task"
+}

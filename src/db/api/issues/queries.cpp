@@ -20,7 +20,7 @@ dto::issues::CreateIssueResult CreateIssue(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const boost::uuids::uuid& author_id,
-    const dto::issues::Issue& issue
+    const dto::issues::CreateIssueData& issue
 ) {
     const auto pg_result = pg.MakeRwRequest(
         tidy_api::sql::kInsertIssue,
@@ -37,6 +37,36 @@ dto::issues::CreateIssueResult CreateIssue(
     );
 
     return dto::issues::CreateIssueResult{
+        .code = FromString(
+            pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+        ),
+        .issue = pg_result.Front()[utils::constants::kIssue].As<std::optional<defs::issues::Issue>>()
+    };
+}
+
+dto::issues::UpdateIssueResult UpdateIssue(
+    const db::PgCtx& pg,
+    const boost::uuids::uuid& user_id,
+    const boost::uuids::uuid& queue_id,
+    const boost::uuids::uuid& issue_id,
+    const dto::issues::UpdateIssueData& issue
+) {
+    const auto pg_result = pg.MakeRwRequest(
+        tidy_api::sql::kUpdateIssue,
+        user_id,
+        queue_id,
+        issue_id,
+        issue.title,
+        issue.description,
+        issue.type,
+        issue.status,
+        issue.priority,
+        issue.component,
+        issue.story_points,
+        issue.assignee_id
+    );
+
+    return dto::issues::UpdateIssueResult{
         .code = FromString(
             pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
         ),

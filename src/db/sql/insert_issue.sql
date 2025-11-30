@@ -34,9 +34,9 @@ assignee_check AS (
 ),
 
 permission_check AS (
-    SELECT queue.id AS queue_id
+    SELECT TRUE AS has_permission
     FROM queue_check queue
-    JOIN author_check author ON TRUE
+    CROSS JOIN author_check author
 
     LEFT JOIN tidy.queue_user_permissions u
         ON u.queue_id = queue.id AND u.user_id = $2
@@ -65,24 +65,25 @@ insert_attempt AS (
         story_points
     )
     SELECT
-        permission.queue_id,
+        queue.id,
         COALESCE(MAX(issues.number), 0) + 1,
         author.id,
         assignee.id,
-        $4,  -- title
-        $5,  -- description
-        $6,  -- type
-        $7,  -- status
-        $8,  -- priority
-        $9,  -- component
-        $10  -- story_points
-    FROM permission_check permission
+        $4,                          -- title
+        $5,                          -- description
+        COALESCE($6, 'task'),        -- type
+        COALESCE($7, 'description'), -- status
+        COALESCE($8, 'normal'),      -- priority
+        $9,                          -- component
+        $10                          -- story_points
+    FROM queue_check queue
     CROSS JOIN author_check author
     LEFT JOIN assignee_check assignee ON TRUE
     LEFT JOIN tidy.issues
-        ON issues.queue_id = permission.queue_id
+        ON issues.queue_id = queue.id
+    WHERE EXISTS (SELECT 1 FROM permission_check)
     GROUP BY
-        permission.queue_id,
+        queue.id,
         author.id,
         assignee.id
     RETURNING *
@@ -134,10 +135,8 @@ SELECT
             EXTRACT(EPOCH FROM issue.updated_at)::BIGINT
         )
         FROM insert_attempt issue
-        LEFT JOIN queue_check queue
-            ON queue.id = issue.queue_id
-        LEFT JOIN author_check author
-            ON author.id = issue.author_id
+        CROSS JOIN queue_check queue
+        CROSS JOIN author_check author
         LEFT JOIN assignee_check assignee
             ON assignee.id = issue.assignee_id
         LIMIT 1

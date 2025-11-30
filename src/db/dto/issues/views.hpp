@@ -17,8 +17,12 @@ struct IssueResult {
 
 using CreateIssueResult = IssueResult;
 
+using UpdateIssueResult = IssueResult;
+
 using GetIssueResult = IssueResult;
 
-using Issue = defs::queues::V1QueuesQueueIssuesPostRequest;
+using CreateIssueData = defs::queues::V1QueuesQueueIssuesPostRequest;
+
+using UpdateIssueData = defs::queues::V1QueuesQueueIssuesIssuePutRequest;
 
 }  // namespace db::dto::issues

@@ -1,0 +1,22 @@
+{
+    "queue": {
+        "id": "5d854c28-c6eb-4ed4-b429-aaf006cea6b5",
+        "key": "TIDYBACK"
+    },
+    "number": 1,
+    "title": "Test task in TIDYBACKEND",
+    "description": "Test description for TIDYBACKEND-1",
+    "type": "epic",
+    "status": "in_progress",
+    "priority": "critical",
+    "component": "tidy_development_team",
+    "story_points": 10,
+    "author": {
+        "id": "774cc050-2542-4c05-9027-f4919112fc81",
+        "username": "demon_slayer"
+    },
+    "assignee": {
+        "id": "a9f70642-6e70-4c86-97ff-455d659bede0",
+        "username": "whoami"
+    }
+}

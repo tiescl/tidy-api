@@ -131,9 +131,6 @@ components:
             additionalProperties: false
             required:
               - title
-              - type
-              - status
-              - priority
             properties:
                 title:
                     type: string
@@ -179,3 +176,37 @@ components:
         V1QueuesQueueIssuesIssueDeleteResponse:
             type: object
             additionalProperties: false
+
+        V1QueuesQueueIssuesIssuePutRequest:
+            type: object
+            additionalProperties: false
+            properties:
+                title:
+                    type: string
+                    minLength: 4
+                    maxLength: 256
+                description:
+                    type: string
+                    minLength: 4
+                    maxLength: 6000
+                type:
+                    $ref: issues.yaml#/components/schemas/IssueType
+                status:
+                    $ref: issues.yaml#/components/schemas/IssueStatus
+                priority:
+                    $ref: issues.yaml#/components/schemas/IssuePriority
+                component:
+                    type: string
+                    minLength: 4
+                    maxLength: 64
+                    pattern: ^[a-z0-9_-]+$
+                story_points:
+                    type: integer
+                    minimum: 1
+                    maximum: 100
+                assignee_id:
+                    type: string
+                    format: uuid
+
+        V1QueuesQueueIssuesIssuePutResponse:
+            $ref: issues.yaml#/components/schemas/Issue

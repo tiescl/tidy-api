@@ -75,7 +75,6 @@ components:
               - pull_request
               - merged
               - closed
-            default: description
 
         IssuePriority:
             type: string
@@ -84,7 +83,6 @@ components:
               - normal
               - critical
               - blocker
-            default: normal
 
         IssueType:
             type: string
@@ -93,4 +91,3 @@ components:
               - bug
               - linker
               - epic
-            default: task

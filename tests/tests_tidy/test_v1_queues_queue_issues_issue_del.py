@@ -92,7 +92,7 @@ def select_removed_status(pgsql: typing.Dict[str, PgDatabaseWrapper], issue_id: 
         )
     ],
 )
-async def test_get_issue(
+async def test_delete_issue(
     service_client: Client,
     pgsql,
     queue_id,

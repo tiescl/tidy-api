@@ -1,0 +1,9 @@
+[Unit]
+Description=Logrotate for tidy-api
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/logrotate -s /var/lib/logrotate/tidy-api.status /etc/logrotate.tidy-api
+
+[Install]
+WantedBy=multi-user.target

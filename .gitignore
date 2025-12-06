@@ -1,7 +1,7 @@
 __pycache__
-scripts/
 build*/
 compile_commands.json
+*.md
 .env
 .clangd
 .cache/
@@ -12,7 +12,9 @@ compile_commands.json
 !.vscode/cmake-variants.yaml
 !.vscode/README.md
 .cores/
+cookie.txt
 cmake-build-*
+ssl/
 Testing/
 .DS_Store
 Makefile.local

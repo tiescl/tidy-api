@@ -1,0 +1,9 @@
+/var/log/tidy-api/server.log {
+    hourly
+    missingok
+    maxsize 1G
+    nocompress
+    rotate 1
+    notifempty
+    copytruncate
+}

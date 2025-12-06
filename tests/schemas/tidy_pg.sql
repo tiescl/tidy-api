@@ -175,6 +175,16 @@ CREATE TABLE IF NOT EXISTS tidy.issues (
     UNIQUE (queue_id, number)
 );
 
+CREATE INDEX IF NOT EXISTS idx_issues_queue_id ON tidy.issues (queue_id);
+CREATE INDEX IF NOT EXISTS idx_issues_author_id ON tidy.issues (author_id);
+CREATE INDEX IF NOT EXISTS idx_issues_assignee_id ON tidy.issues (assignee_id);
+CREATE INDEX IF NOT EXISTS idx_issues_queue_id_removed ON tidy.issues (queue_id, removed);
+
+CREATE INDEX idx_issues_title_trgm
+    ON tidy.issues USING gin (title gin_trgm_ops);
+CREATE INDEX idx_issues_description_trgm
+    ON tidy.issues USING gin (description gin_trgm_ops);
+
 DROP TYPE IF EXISTS tidy.issue_link_type CASCADE;
 CREATE TYPE tidy.issue_link_type AS ENUM (
     'parent',

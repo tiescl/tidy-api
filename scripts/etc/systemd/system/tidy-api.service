@@ -1,0 +1,18 @@
+[Unit]
+Description=tidy-api service
+After=network.target postgresql.service
+Wants=network.target
+Requires=postgresql.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=tiescl
+EnvironmentFile=/etc/tidy-api/secrets.env
+ExecStart=/usr/local/bin/tidy-api --config /usr/local/etc/tidy-api/static_config.yaml --config_vars /usr/local/etc/tidy-api/config_vars.yaml
+Restart=always
+RestartSec=5
+LogsDirectory=tidy-api
+
+[Install]
+WantedBy=multi-user.target

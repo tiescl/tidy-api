@@ -9,7 +9,7 @@
 
 #include <utils/typed_json_handler.hpp>
 
-#include <defs/auth.hpp>
+#include <docs/auth.hpp>
 
 namespace handlers::v1_auth_register::post {
 

@@ -7,7 +7,7 @@
 #include <userver/server/auth/user_auth_info.hpp>
 #include <userver/storages/postgres/io/chrono.hpp>
 
-#include <defs/users.hpp>
+#include <docs/users.hpp>
 
 namespace db::dto::auth {
 

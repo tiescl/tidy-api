@@ -17,7 +17,7 @@
 
 #include <utils/constants.hpp>
 
-#include <defs/errors.hpp>
+#include <docs/common.hpp>
 
 namespace auth {
 
@@ -30,7 +30,7 @@ AuthCheckerCookieRequired::AuthCheckResult AuthCheckerCookieRequired::CheckAuth(
         return AuthCheckResult{
             AuthCheckResult::Status::kTokenNotFound,
             {},
-            ToString(defs::errors::ErrorCode::kTokenNotFound),
+            ToString(defs::common::ErrorCode::kTokenNotFound),
             server::handlers::HandlerErrorCode::kUnauthorized
         };
     }
@@ -48,7 +48,7 @@ AuthCheckerCookieRequired::AuthCheckResult AuthCheckerCookieRequired::CheckAuth(
         return AuthCheckResult{
             AuthCheckResult::Status::kInvalidToken,
             {},
-            ToString(defs::errors::ErrorCode::kInvalidToken),
+            ToString(defs::common::ErrorCode::kInvalidToken),
             server::handlers::HandlerErrorCode::kUnauthorized
         };
     }
@@ -59,7 +59,7 @@ AuthCheckerCookieRequired::AuthCheckResult AuthCheckerCookieRequired::CheckAuth(
         return AuthCheckResult{
             AuthCheckResult::Status::kForbidden,
             {},
-            ToString(defs::errors::ErrorCode::kForbidden),
+            ToString(defs::common::ErrorCode::kForbidden),
             server::handlers::HandlerErrorCode::kForbidden
         };
     }

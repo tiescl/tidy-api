@@ -12,7 +12,7 @@
 #include <utils/constants.hpp>
 #include <utils/text.hpp>
 
-#include <defs/errors.hpp>
+#include <docs/common.hpp>
 
 namespace handlers::admin_v1_users::get {
 
@@ -37,7 +37,7 @@ Response View::Handle(
 } catch (const std::out_of_range& exc) {
     LOG_ERROR("invalid query params received from client: {}", exc.what());
     throw server::handlers::ClientError(
-        server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kInvalidQueryParams)}
+        server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kInvalidQueryParams)}
     );
 }
 

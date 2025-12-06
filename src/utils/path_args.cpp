@@ -5,28 +5,28 @@
 
 #include <utils/constants.hpp>
 
-#include <defs/errors.hpp>
+#include <docs/common.hpp>
 
 namespace utils {
 
 boost::uuids::uuid GetUserPathArg(const server::http::HttpRequest& http_request) try {
     return utils::BoostUuidFromString(http_request.GetPathArg(utils::constants::kUser));
 } catch (const std::exception& exc) {
-    throw server::handlers::ClientError(server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kInvalidUserId)
+    throw server::handlers::ClientError(server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kInvalidUserId)
     });
 }
 
 boost::uuids::uuid GetQueuePathArg(const server::http::HttpRequest& http_request) try {
     return utils::BoostUuidFromString(http_request.GetPathArg(utils::constants::kQueue));
 } catch (const std::exception& exc) {
-    throw server::handlers::ClientError(server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kInvalidQueueId
+    throw server::handlers::ClientError(server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kInvalidQueueId
     )});
 }
 
 boost::uuids::uuid GetIssuePathArg(const server::http::HttpRequest& http_request) try {
     return utils::BoostUuidFromString(http_request.GetPathArg(utils::constants::kIssue));
 } catch (const std::exception& exc) {
-    throw server::handlers::ClientError(server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kInvalidIssueId
+    throw server::handlers::ClientError(server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kInvalidIssueId
     )});
 }
 

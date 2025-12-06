@@ -10,7 +10,7 @@
 #include <utils/errors.hpp>
 #include <utils/path_args.hpp>
 
-#include <defs/users.hpp>
+#include <docs/users.hpp>
 
 namespace handlers::v1_queues_queue_issues::post {
 

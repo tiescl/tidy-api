@@ -11,8 +11,8 @@
 
 #include <utils/constants.hpp>
 
-#include <defs/errors.hpp>
-#include <defs/issues.hpp>
+#include <docs/common.hpp>
+#include <docs/issues.hpp>
 
 namespace db::api::issues {
 
@@ -38,7 +38,7 @@ dto::issues::CreateIssueResult CreateIssue(
 
     return dto::issues::CreateIssueResult{
         .code = FromString(
-            pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+            pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::common::ErrorCode>()
         ),
         .issue = pg_result.Front()[utils::constants::kIssue].As<std::optional<defs::issues::Issue>>()
     };
@@ -68,7 +68,7 @@ dto::issues::UpdateIssueResult UpdateIssue(
 
     return dto::issues::UpdateIssueResult{
         .code = FromString(
-            pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+            pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::common::ErrorCode>()
         ),
         .issue = pg_result.Front()[utils::constants::kIssue].As<std::optional<defs::issues::Issue>>()
     };
@@ -84,13 +84,13 @@ dto::issues::GetIssueResult GetIssue(
 
     return dto::issues::GetIssueResult{
         .code = FromString(
-            pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+            pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::common::ErrorCode>()
         ),
         .issue = pg_result.Front()[utils::constants::kIssue].As<std::optional<defs::issues::Issue>>()
     };
 }
 
-defs::errors::ErrorCode DeleteIssue(
+defs::common::ErrorCode DeleteIssue(
     const db::PgCtx& pg,
     const boost::uuids::uuid& user_id,
     const boost::uuids::uuid& queue_id,
@@ -98,7 +98,7 @@ defs::errors::ErrorCode DeleteIssue(
 ) {
     const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteIssue, user_id, queue_id, issue_id);
 
-    return FromString(pg_result.AsSingleRow<std::string>(), formats::parse::To<defs::errors::ErrorCode>());
+    return FromString(pg_result.AsSingleRow<std::string>(), formats::parse::To<defs::common::ErrorCode>());
 }
 
 }  // namespace db::api::issues

@@ -4,14 +4,14 @@
 
 #include <boost/uuid/uuid.hpp>
 
-#include <defs/errors.hpp>
-#include <defs/issues.hpp>
-#include <defs/queues.hpp>
+#include <docs/common.hpp>
+#include <docs/issues.hpp>
+#include <docs/queues.hpp>
 
 namespace db::dto::issues {
 
 struct IssueResult {
-    defs::errors::ErrorCode code;
+    defs::common::ErrorCode code;
     std::optional<defs::issues::Issue> issue;
 };
 

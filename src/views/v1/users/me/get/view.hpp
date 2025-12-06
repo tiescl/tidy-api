@@ -7,7 +7,7 @@
 
 #include <utils/typed_json_handler.hpp>
 
-#include <defs/users.hpp>
+#include <docs/users.hpp>
 
 namespace handlers::v1_users_me::get {
 

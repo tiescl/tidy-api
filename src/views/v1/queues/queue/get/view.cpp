@@ -9,7 +9,7 @@
 #include <utils/constants.hpp>
 #include <utils/path_args.hpp>
 
-#include <defs/errors.hpp>
+#include <docs/common.hpp>
 
 namespace handlers::v1_queues_queue::get {
 
@@ -23,7 +23,7 @@ Response View::Handle(
     auto queue = db::api::queues::GetQueue(pg_, user_id, utils::GetQueuePathArg(http_request));
     if (!queue.has_value()) {
         throw server::handlers::ResourceNotFound(
-            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kQueueNotFound)}
+            server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kQueueNotFound)}
         );
     }
 

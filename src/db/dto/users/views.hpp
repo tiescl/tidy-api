@@ -1,6 +1,6 @@
 #pragma once
 
-#include <defs/users.hpp>
+#include <docs/users.hpp>
 
 namespace db::dto::users {
 

@@ -9,7 +9,7 @@
 #include <utils/constants.hpp>
 #include <utils/path_args.hpp>
 
-#include <defs/errors.hpp>
+#include <docs/common.hpp>
 
 namespace handlers::admin_v1_users_user_role::post {
 
@@ -20,7 +20,7 @@ Response View::Handle(
 ) const {
     if (!db::api::admin::UpdateUserRole(pg_, utils::GetUserPathArg(http_request), request.role)) {
         throw server::handlers::ResourceNotFound(
-            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUserNotFound)}
+            server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kUserNotFound)}
         );
     }
 

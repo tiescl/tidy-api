@@ -10,8 +10,8 @@
 #include <utils/errors.hpp>
 #include <utils/path_args.hpp>
 
-#include <defs/errors.hpp>
-#include <defs/queues.hpp>
+#include <docs/common.hpp>
+#include <docs/queues.hpp>
 
 namespace handlers::v1_queues_queue_permissions_delete::post {
 
@@ -23,12 +23,12 @@ Response View::Handle(
     const auto owner_id = request_context.GetData<boost::uuids::uuid>(utils::constants::kUserId);
     const auto queue_id = utils::GetQueuePathArg(http_request);
 
-    defs::errors::ErrorCode result;
+    defs::common::ErrorCode result;
     switch (request.permission_type) {
         case defs::queues::PermissionType::kRole:
             if (!request.role.has_value()) {
                 throw server::handlers::ClientError(
-                    server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kMissingRolePermission)}
+                    server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kMissingRolePermission)}
                 );
             }
 
@@ -38,7 +38,7 @@ Response View::Handle(
         case defs::queues::PermissionType::kUser:
             if (!request.user_id.has_value()) {
                 throw server::handlers::ClientError(
-                    server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kMissingUserPermission)}
+                    server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kMissingUserPermission)}
                 );
             }
 

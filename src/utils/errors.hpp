@@ -2,7 +2,7 @@
 
 #include <userver/server/handlers/exceptions.hpp>
 
-#include <defs/errors.hpp>
+#include <docs/common.hpp>
 
 namespace server::handlers {
 
@@ -15,8 +15,8 @@ public:
 
 namespace utils {
 
-void HandleQueueQueryErrors(const defs::errors::ErrorCode& code);
+void HandleQueueQueryErrors(const defs::common::ErrorCode& code);
 
-void HandleIssueQueryErrors(const defs::errors::ErrorCode& code);
+void HandleIssueQueryErrors(const defs::common::ErrorCode& code);
 
 }  // namespace utils

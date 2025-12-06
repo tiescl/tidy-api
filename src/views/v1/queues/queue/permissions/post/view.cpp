@@ -10,9 +10,9 @@
 #include <utils/errors.hpp>
 #include <utils/path_args.hpp>
 
-#include <defs/errors.hpp>
-#include <defs/issues.hpp>
-#include <defs/queues.hpp>
+#include <docs/common.hpp>
+#include <docs/issues.hpp>
+#include <docs/queues.hpp>
 
 namespace handlers::v1_queues_queue_permissions::post {
 
@@ -26,12 +26,12 @@ Response View::Handle(
 
     request.actions.insert(defs::issues::IssueAction::kView);  // any action other than view also implies view
 
-    defs::errors::ErrorCode result;
+    defs::common::ErrorCode result;
     switch (request.permission_type) {
         case defs::queues::PermissionType::kRole:
             if (!request.role.has_value()) {
                 throw server::handlers::ClientError(
-                    server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kMissingRolePermission)}
+                    server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kMissingRolePermission)}
                 );
             }
 
@@ -43,7 +43,7 @@ Response View::Handle(
         case defs::queues::PermissionType::kUser:
             if (!request.user_id.has_value()) {
                 throw server::handlers::ClientError(
-                    server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kMissingUserPermission)}
+                    server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kMissingUserPermission)}
                 );
             }
 

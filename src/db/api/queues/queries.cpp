@@ -36,16 +36,16 @@ std::optional<defs::queues::Queue> CreateQueue(const db::PgCtx& pg, const dto::q
     return pg_result.AsOptionalSingleRow<defs::queues::Queue>(storages::postgres::kRowTag);
 }
 
-defs::errors::ErrorCode
+defs::common::ErrorCode
 DeleteQueue(const db::PgCtx& pg, const boost::uuids::uuid& queue_id, const boost::uuids::uuid& owner_id) {
     const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteQueue, queue_id, owner_id);
 
     return FromString(
-        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::common::ErrorCode>()
     );
 }
 
-defs::errors::ErrorCode CreateQueueRolePermission(
+defs::common::ErrorCode CreateQueueRolePermission(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const defs::users::UserRole role,
@@ -56,11 +56,11 @@ defs::errors::ErrorCode CreateQueueRolePermission(
         pg.MakeRwRequest(tidy_api::sql::kInsertQueueRolePermission, queue_id, role, actions, owner_id);
 
     return FromString(
-        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::common::ErrorCode>()
     );
 }
 
-defs::errors::ErrorCode CreateQueueUserPermission(
+defs::common::ErrorCode CreateQueueUserPermission(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const boost::uuids::uuid& user_id,
@@ -71,11 +71,11 @@ defs::errors::ErrorCode CreateQueueUserPermission(
         pg.MakeRwRequest(tidy_api::sql::kInsertQueueUserPermission, queue_id, user_id, actions, owner_id);
 
     return FromString(
-        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::common::ErrorCode>()
     );
 }
 
-defs::errors::ErrorCode DeleteQueueRolePermission(
+defs::common::ErrorCode DeleteQueueRolePermission(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const defs::users::UserRole role,
@@ -84,11 +84,11 @@ defs::errors::ErrorCode DeleteQueueRolePermission(
     const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteQueueRolePermission, queue_id, role, owner_id);
 
     return FromString(
-        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::common::ErrorCode>()
     );
 }
 
-defs::errors::ErrorCode DeleteQueueUserPermission(
+defs::common::ErrorCode DeleteQueueUserPermission(
     const db::PgCtx& pg,
     const boost::uuids::uuid& queue_id,
     const boost::uuids::uuid& user_id,
@@ -97,7 +97,7 @@ defs::errors::ErrorCode DeleteQueueUserPermission(
     const auto pg_result = pg.MakeRwRequest(tidy_api::sql::kDeleteQueueUserPermission, queue_id, user_id, owner_id);
 
     return FromString(
-        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::errors::ErrorCode>()
+        pg_result.Front()[utils::constants::kCode].As<std::string>(), formats::parse::To<defs::common::ErrorCode>()
     );
 }
 

@@ -12,7 +12,7 @@
 
 #include <db/dto/auth/views.hpp>
 
-#include <defs/users.hpp>
+#include <docs/users.hpp>
 
 namespace caches::models::user_tokens {
 

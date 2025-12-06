@@ -7,7 +7,7 @@
 
 #include <utils/typed_json_handler.hpp>
 
-#include <defs/admin.hpp>
+#include <docs/admin.hpp>
 
 namespace handlers::v1_users_me_delete::post {
 

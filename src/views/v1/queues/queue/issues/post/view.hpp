@@ -7,8 +7,8 @@
 
 #include <utils/typed_json_handler.hpp>
 
-#include <defs/issues.hpp>
-#include <defs/queues.hpp>
+#include <docs/issues.hpp>
+#include <docs/queues.hpp>
 
 namespace handlers::v1_queues_queue_issues::post {
 

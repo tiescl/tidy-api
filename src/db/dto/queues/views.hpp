@@ -1,6 +1,6 @@
 #pragma once
 
-#include <defs/queues.hpp>
+#include <docs/queues.hpp>
 
 namespace db::dto::queues {
 

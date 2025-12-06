@@ -8,7 +8,7 @@
 
 #include <utils/constants.hpp>
 
-#include <defs/errors.hpp>
+#include <docs/common.hpp>
 
 namespace handlers::v1_users_me::put {
 
@@ -25,19 +25,19 @@ Response View::Handle(
     } catch (const storages::postgres::UniqueViolation& exc) {
         if (exc.GetConstraint() == utils::constants::kUsersUniqueEmailConstraint) {
             throw server::handlers::ClientError(
-                server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kEmailAlreadyExists)}
+                server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kEmailAlreadyExists)}
             );
         }
         if (exc.GetConstraint() == utils::constants::kUsersUniqueUsernameConstraint) {
             throw server::handlers::ClientError(
-                server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUsernameAlreadyExists)}
+                server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kUsernameAlreadyExists)}
             );
         }
     }
 
     if (!updated_data.has_value()) {
         throw server::handlers::ResourceNotFound(
-            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUserNotFound)}
+            server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kUserNotFound)}
         );
     }
 

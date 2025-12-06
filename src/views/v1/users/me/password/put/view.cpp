@@ -10,7 +10,7 @@
 #include <auth/password_hasher.hpp>
 #include <utils/constants.hpp>
 
-#include <defs/errors.hpp>
+#include <docs/common.hpp>
 
 namespace handlers::v1_users_me_password::put {
 
@@ -26,7 +26,7 @@ Response View::Handle(
 
     if (!auth::PasswordHasher::Verify(request.old_password, stored_hash.value())) {
         throw server::handlers::ClientError(
-            server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kInvalidPassword)}
+            server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kInvalidPassword)}
         );
     }
 

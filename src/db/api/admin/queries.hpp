@@ -8,8 +8,8 @@
 
 #include <db/pg_ctx.hpp>
 
-#include <defs/admin.hpp>
-#include <defs/users.hpp>
+#include <docs/admin.hpp>
+#include <docs/users.hpp>
 
 namespace db::api::admin {
 

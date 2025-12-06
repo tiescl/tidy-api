@@ -8,7 +8,7 @@
 #include <utils/errors.hpp>
 #include <utils/path_args.hpp>
 
-#include <defs/errors.hpp>
+#include <docs/common.hpp>
 
 namespace handlers::v1_queues_queue_delete::post {
 

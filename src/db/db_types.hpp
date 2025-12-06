@@ -2,8 +2,8 @@
 
 #include <userver/storages/postgres/io/enum_types.hpp>
 
-#include <defs/issues.hpp>
-#include <defs/users.hpp>
+#include <docs/issues.hpp>
+#include <docs/users.hpp>
 
 namespace storages::postgres::io {
 

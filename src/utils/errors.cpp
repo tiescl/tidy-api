@@ -4,18 +4,18 @@
 
 namespace utils {
 
-void HandleQueueQueryErrors(const defs::errors::ErrorCode& code) {
+void HandleQueueQueryErrors(const defs::common::ErrorCode& code) {
     switch (code) {
-        case defs::errors::ErrorCode::kOk:
+        case defs::common::ErrorCode::kOk:
             break;
-        case defs::errors::ErrorCode::kQueueNotFound:
+        case defs::common::ErrorCode::kQueueNotFound:
             throw server::handlers::ResourceNotFound(
-                server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kQueueNotFound)}
+                server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kQueueNotFound)}
             );
             break;
-        case defs::errors::ErrorCode::kQueueOwnerMismatch:
+        case defs::common::ErrorCode::kQueueOwnerMismatch:
             throw server::handlers::ClientError(
-                server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kQueueOwnerMismatch)}
+                server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kQueueOwnerMismatch)}
             );
             break;
         default:
@@ -23,28 +23,28 @@ void HandleQueueQueryErrors(const defs::errors::ErrorCode& code) {
     }
 }
 
-void HandleIssueQueryErrors(const defs::errors::ErrorCode& code) {
+void HandleIssueQueryErrors(const defs::common::ErrorCode& code) {
     switch (code) {
-        case defs::errors::ErrorCode::kOk:
+        case defs::common::ErrorCode::kOk:
             break;
-        case defs::errors::ErrorCode::kUserNotFound:
+        case defs::common::ErrorCode::kUserNotFound:
             throw server::handlers::ResourceNotFound(
-                server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kUserNotFound)}
+                server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kUserNotFound)}
             );
             break;
-        case defs::errors::ErrorCode::kQueueNotFound:
+        case defs::common::ErrorCode::kQueueNotFound:
             throw server::handlers::ResourceNotFound(
-                server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kQueueNotFound)}
+                server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kQueueNotFound)}
             );
             break;
-        case defs::errors::ErrorCode::kForbidden:
+        case defs::common::ErrorCode::kForbidden:
             throw server::handlers::Forbidden(
-                server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kForbidden)}
+                server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kForbidden)}
             );
             break;
-        case defs::errors::ErrorCode::kIssueNotFound:
+        case defs::common::ErrorCode::kIssueNotFound:
             throw server::handlers::ResourceNotFound(
-                server::handlers::ExternalBody{ToString(defs::errors::ErrorCode::kIssueNotFound)}
+                server::handlers::ExternalBody{ToString(defs::common::ErrorCode::kIssueNotFound)}
             );
             break;
         default:

@@ -62,5 +62,4 @@ async def test_admin_get_issues(
 
     issues = response.json()['issues']
     assert len(issues) == response_len
-    print(issues)
     assert issues == load_json(response_json)

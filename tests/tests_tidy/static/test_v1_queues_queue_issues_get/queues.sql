@@ -20,13 +20,6 @@ VALUES (
     '774cc050-2542-4c05-9027-f4919112fc81',
     '2025-10-10T05:00:00+00',
     FALSE
-), (
-    'c7838595-1516-4d86-a22a-6bac8cc46961',
-    'TEST',
-    'Another noname guy''s queue',
-    '774cc050-2542-4c05-9027-f4919112fc81',
-    '2025-10-10T06:00:00+00',
-    FALSE
 );
 
 INSERT INTO tidy.queue_user_permissions (
@@ -46,7 +39,7 @@ INSERT INTO tidy.queue_role_permissions (
     actions
 )
 VALUES (
-    'c7838595-1516-4d86-a22a-6bac8cc46961',
+    '5d854c28-c6eb-4ed4-b429-aaf006cea6b5',
     'pending',
     '{"view", "create"}'
 );

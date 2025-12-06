@@ -146,5 +146,4 @@ async def test_create_issue(
     if should_fail:
         assert response == error_response_json
     else:
-        print(response)
         assert response == load_json(response_json)

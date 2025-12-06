@@ -13,7 +13,8 @@
         "removed": false,
         "author": {
             "id": "5c4b6cc6-10f9-4663-b473-3ffd8cc225f5",
-            "username": "potato@gmail.com"
+            "username": "potato@gmail.com",
+            "removed": true
         },
         "created_at": 1764478800,
         "updated_at": 1764478800

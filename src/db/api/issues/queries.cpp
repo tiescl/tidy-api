@@ -74,6 +74,20 @@ dto::issues::UpdateIssueResult UpdateIssue(
     };
 }
 
+std::optional<dto::issues::GetQueueIssuesResult> GetQueueIssues(
+    const db::PgCtx& pg,
+    const boost::uuids::uuid& user_id,
+    const boost::uuids::uuid& queue_id,
+    const std::string& search,
+    int64_t limit,
+    int64_t offset
+) {
+    const auto pg_result =
+        pg.MakeRoRequest(tidy_api::sql::kSelectQueueIssues, user_id, queue_id, search, limit, offset);
+
+    return pg_result.AsOptionalSingleRow<dto::issues::GetQueueIssuesResult>(storages::postgres::kRowTag);
+}
+
 dto::issues::GetIssueResult GetIssue(
     const db::PgCtx& pg,
     const boost::uuids::uuid& user_id,

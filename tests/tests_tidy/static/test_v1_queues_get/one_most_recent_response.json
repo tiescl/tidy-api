@@ -3,8 +3,9 @@
         "created_at": 1760076000,
         "key": "TEST",
         "owner": {
+            "id": "a9f70642-6e70-4c86-97ff-455d659bede0",
             "username": "whoami",
-            "id": "a9f70642-6e70-4c86-97ff-455d659bede0"
+            "removed": false
         },
         "name": "Another noname guy's queue",
         "id": "c7838595-1516-4d86-a22a-6bac8cc46961"

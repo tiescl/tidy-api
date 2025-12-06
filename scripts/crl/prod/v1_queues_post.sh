@@ -14,9 +14,9 @@ res=$(
     --cookie 'cookie.txt' \
     --cookie-jar 'cookie.txt' \
     --data-raw '{
-        "key": "TIDYDUTY",
-        "name": "привет",
-        "owner_id": "1f34180c-929d-4641-8d67-54dd11d25ec4"
+        "key": "TIDYTEST",
+        "name": "Just a test queue",
+        "owner_id": "ca003bb9-dcce-4b87-98dc-4969fed92354"
     }' \
 )
 

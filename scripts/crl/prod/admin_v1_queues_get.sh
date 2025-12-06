@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 url="https://api.tidyapp.uz"
-route=""
+route="/admin/v1/queues"
 
 res=$(
-    curl -s --location "$url$route" \
+    curl -s --location "$url$route?limit=5" \
     --include \
     --verbose \
     --request GET \
@@ -13,9 +13,6 @@ res=$(
     --header 'Accept-Language: en' \
     --cookie 'cookie.txt' \
     --cookie-jar 'cookie.txt' \
-    --data-raw '{
-        "hello": "world",
-    }' \
 )
 
 echo "$res" | sed '/^{/,$d' | sed -n p

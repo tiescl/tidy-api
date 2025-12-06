@@ -15,7 +15,7 @@ res=$(
     --cookie-jar 'cookie.txt' \
     --data-raw '{
         "username": "demon_slayer",
-        "email": "slayy@gmail.com",
+        "email": "slayer@gmail.com",
         "password": "12345678"
     }' \
 )

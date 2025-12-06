@@ -1,21 +1,18 @@
 #!/usr/bin/env bash
 
 url="https://api.tidyapp.uz"
-route=""
+route="/v1/users/me/delete"
 
 res=$(
     curl -s --location "$url$route" \
     --include \
     --verbose \
-    --request GET \
+    --request POST \
     --header 'Content-Type: application/json' \
     --header 'Cache-Control: no-cache' \
     --header 'Accept-Language: en' \
     --cookie 'cookie.txt' \
     --cookie-jar 'cookie.txt' \
-    --data-raw '{
-        "hello": "world",
-    }' \
 )
 
 echo "$res" | sed '/^{/,$d' | sed -n p

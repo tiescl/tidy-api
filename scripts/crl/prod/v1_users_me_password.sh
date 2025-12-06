@@ -14,7 +14,7 @@ res=$(
     --cookie 'cookie.txt' \
     --cookie-jar 'cookie.txt' \
     --data-raw '{
-        "old_password": "12345678",
+        "old_password": "demon_slayer",
         "new_password": "12345678910"
     }'
 )

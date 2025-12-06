@@ -139,12 +139,15 @@ components:
             required:
               - id
               - username
+              - removed
             properties:
                 id:
                     type: string
                     format: uuid
                 username:
                     type: string
+                removed:
+                    type: boolean
 
         V1UsersMeRequest:
             type: object

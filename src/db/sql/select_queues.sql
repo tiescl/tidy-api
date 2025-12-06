@@ -14,10 +14,13 @@ SELECT DISTINCT
     q.name,
     ROW (
         q.owner_id,
-        (SELECT username FROM tidy.users WHERE id = q.owner_id)
+        users.username,
+        users.removed
     ) AS owner,
     EXTRACT(epoch FROM q.created_at)::BIGINT
 FROM tidy.queues q
+LEFT JOIN tidy.users
+    ON users.id = q.owner_id
 LEFT JOIN tidy.queue_user_permissions u
     ON u.queue_id = q.id
        AND u.user_id = $1

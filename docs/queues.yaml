@@ -68,33 +68,6 @@ paths:
                             schema:
                                 $ref: errors.yaml#/components/schemas/ErrorResponse
 
-    /v1/queues/{queue}:
-        get:
-            tags:
-              - queues
-            parameters:
-              - $ref: common.yaml#/components/parameters/SessionIdCookieRequired
-              - $ref: common.yaml#/components/parameters/QueueArg
-            responses:
-                200:
-                    description: requested queue
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/V1QueuesQueueResponse'
-                400:
-                    description: invalid queue id
-                    content:
-                        application/json:
-                            schema:
-                                $ref: errors.yaml#/components/schemas/ErrorResponse
-                404:
-                    description: queue not found
-                    content:
-                        application/json:
-                            schema:
-                                $ref: errors.yaml#/components/schemas/ErrorResponse
-
     /v1/queues/{queue}/delete:
         post:
             tags:
@@ -202,6 +175,34 @@ paths:
                                 $ref: errors.yaml#/components/schemas/ErrorResponse
 
     /v1/queues/{queue}/issues:
+        get:
+            tags:
+              - queues
+            parameters:
+              - $ref: common.yaml#/components/parameters/SessionIdCookieRequired
+              - $ref: common.yaml#/components/parameters/QueueArg
+              - $ref: common.yaml#/components/parameters/SearchQuery
+              - $ref: common.yaml#/components/parameters/PageQuery
+              - $ref: common.yaml#/components/parameters/LimitQuery
+            responses:
+                200:
+                    description: requested queue and its issues
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/V1QueuesQueueIssuesResponse'
+                400:
+                    description: invalid queue id
+                    content:
+                        application/json:
+                            schema:
+                                $ref: errors.yaml#/components/schemas/ErrorResponse
+                404:
+                    description: queue not found
+                    content:
+                        application/json:
+                            schema:
+                                $ref: errors.yaml#/components/schemas/ErrorResponse
         post:
             tags:
               - issues
@@ -466,12 +467,23 @@ components:
         V1QueuesPostResponse:
             $ref: '#/components/schemas/Queue'
 
-        V1QueuesQueueRequest:
+        V1QueuesQueueIssuesRequest:
             type: object
             additionalProperties: false
 
-        V1QueuesQueueResponse:
-            $ref: '#/components/schemas/Queue'
+        V1QueuesQueueIssuesResponse:
+            type: object
+            additionalProperties: false
+            required:
+                - queue
+                - issues
+            properties:
+                queue:
+                    $ref: '#/components/schemas/Queue'
+                issues:
+                    type: array
+                    items:
+                        $ref: issues.yaml#/components/schemas/Issue
 
         V1QueuesQueueDeleteRequest:
             type: object

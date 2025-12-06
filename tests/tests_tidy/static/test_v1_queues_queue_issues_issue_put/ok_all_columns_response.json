@@ -13,10 +13,12 @@
     "story_points": 10,
     "author": {
         "id": "774cc050-2542-4c05-9027-f4919112fc81",
-        "username": "demon_slayer"
+        "username": "demon_slayer",
+        "removed": false
     },
     "assignee": {
         "id": "a9f70642-6e70-4c86-97ff-455d659bede0",
-        "username": "whoami"
+        "username": "whoami",
+        "removed": false
     }
 }

@@ -21,6 +21,8 @@ using UpdateIssueResult = IssueResult;
 
 using GetIssueResult = IssueResult;
 
+using GetQueueIssuesResult = defs::queues::V1QueuesQueueIssuesResponse;
+
 using CreateIssueData = defs::queues::V1QueuesQueueIssuesPostRequest;
 
 using UpdateIssueData = defs::queues::V1QueuesQueueIssuesIssuePutRequest;

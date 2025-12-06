@@ -14,10 +14,12 @@ res=$(
     --cookie 'cookie.txt' \
     --cookie-jar 'cookie.txt' \
     --data-raw '{
-        "email": "slayy@gmail.com",
-        "password": "12345678"
+        "email": "tiescl.to@gmail.com",
+        "password": "12345678910"
     }' \
 )
+    # "email": "slayer@gmail.com",
+    # "password": "12345678"
 
 echo "$res" | sed '/^{/,$d' | sed -n p
 echo "$res" | sed -n '/^{/,$p' | jq .

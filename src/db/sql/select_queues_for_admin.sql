@@ -3,22 +3,25 @@
 -- $3 - offset
 
 SELECT
-    id,
-    key,
-    name,
+    q.id,
+    q.key,
+    q.name,
     ROW (
-        owner_id,
-        (SELECT username FROM tidy.users WHERE id = owner_id)
+        q.owner_id,
+        u.username,
+        u.removed
     ) AS owner,
-    removed,
-    EXTRACT(epoch FROM created_at)::BIGINT,
-    EXTRACT(epoch FROM updated_at)::BIGINT
-FROM tidy.queues
+    q.removed,
+    EXTRACT(epoch FROM q.created_at)::BIGINT,
+    EXTRACT(epoch FROM q.updated_at)::BIGINT
+FROM tidy.queues q
+LEFT JOIN tidy.users u
+    ON q.owner_id = u.id
 WHERE
     CASE
         WHEN $1 = '' THEN TRUE
-        ELSE key ILIKE $1 OR name ILIKE $1
+        ELSE q.key ILIKE $1 OR q.name ILIKE $1
     END
-ORDER BY created_at DESC
+ORDER BY q.created_at DESC
 LIMIT $2
 OFFSET $3;

@@ -18,7 +18,11 @@ WITH queue_check AS (
 ),
 
 author_check AS (
-    SELECT id, username, role
+    SELECT
+        id,
+        username,
+        role,
+        removed
     FROM tidy.users
     WHERE
         id = $2
@@ -26,7 +30,10 @@ author_check AS (
 ),
 
 assignee_check AS (
-    SELECT id, username
+    SELECT
+        id,
+        username,
+        removed
     FROM tidy.users
     WHERE
         id = $3
@@ -121,14 +128,16 @@ SELECT
             issue.story_points,
             ROW (
                 author.id,
-                author.username
+                author.username,
+                author.removed
             ),
             CASE
                 WHEN assignee.id IS NULL OR assignee.username IS NULL
                     THEN NULL
                 ELSE ROW (
                     assignee.id,
-                    assignee.username
+                    assignee.username,
+                    assignee.removed
                 )
             END,
             EXTRACT(EPOCH FROM issue.created_at)::BIGINT,

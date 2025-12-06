@@ -19,13 +19,15 @@ SELECT
     issue.removed,
     ROW (
         author.id,
-        author.username
+        author.username,
+        author.removed
     ),
     CASE
         WHEN assignee.id IS NULL THEN NULL
         ELSE ROW (
             assignee.id,
-            assignee.username
+            assignee.username,
+            assignee.removed
         )
     END AS assignee,
     EXTRACT(EPOCH FROM issue.created_at)::BIGINT AS created_at,

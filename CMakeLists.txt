@@ -70,7 +70,7 @@ add_library(
     src/views/v1/queues/get/view.cpp
     src/views/v1/queues/post/view.cpp
     src/views/v1/queues/queue/delete/post/view.cpp
-    src/views/v1/queues/queue/get/view.cpp
+    src/views/v1/queues/queue/issues/get/view.cpp
     src/views/v1/queues/queue/issues/issue/delete/post/view.cpp
     src/views/v1/queues/queue/issues/issue/get/view.cpp
     src/views/v1/queues/queue/issues/issue/put/view.cpp

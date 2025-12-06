@@ -27,7 +27,7 @@
 #include <views/v1/queues/get/view.hpp>
 #include <views/v1/queues/post/view.hpp>
 #include <views/v1/queues/queue/delete/post/view.hpp>
-#include <views/v1/queues/queue/get/view.hpp>
+#include <views/v1/queues/queue/issues/get/view.hpp>
 #include <views/v1/queues/queue/issues/issue/delete/post/view.hpp>
 #include <views/v1/queues/queue/issues/issue/get/view.hpp>
 #include <views/v1/queues/queue/issues/issue/put/view.hpp>
@@ -56,7 +56,7 @@ components::ComponentList GenerateServiceHandlersList() {
         .Append<handlers::v1_queues::get::View>()
         .Append<handlers::v1_queues::post::View>()
         .Append<handlers::v1_queues_queue_delete::post::View>()
-        .Append<handlers::v1_queues_queue::get::View>()
+        .Append<handlers::v1_queues_queue_issues::get::View>()
         .Append<handlers::v1_queues_queue_issues_issue_delete::post::View>()
         .Append<handlers::v1_queues_queue_issues_issue::get::View>()
         .Append<handlers::v1_queues_queue_issues_issue::put::View>()

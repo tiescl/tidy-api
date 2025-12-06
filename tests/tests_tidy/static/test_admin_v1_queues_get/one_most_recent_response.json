@@ -5,7 +5,8 @@
         "name": "Queue for useless tickets (purged)",
         "owner": {
             "id": "774cc050-2542-4c05-9027-f4919112fc81",
-            "username": "demon_slayer"
+            "username": "demon_slayer",
+            "removed": false
         },
         "removed": true,
         "created_at": 1760083200,

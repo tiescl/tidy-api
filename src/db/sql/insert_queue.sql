@@ -3,7 +3,10 @@
 -- $3 - owner_id
 
 WITH owner AS (
-    SELECT id, username
+    SELECT 
+        id,
+        username,
+        removed
     FROM tidy.users
     WHERE
         id = $3
@@ -30,7 +33,8 @@ SELECT
     i.name,
     ROW (
         i.owner_id,
-        o.username
+        o.username,
+        o.removed
     ) AS owner,
     EXTRACT(epoch FROM i.created_at)::BIGINT
 FROM insert_attempt i

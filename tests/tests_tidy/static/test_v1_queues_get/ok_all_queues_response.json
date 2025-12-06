@@ -5,7 +5,8 @@
         "name": "Another noname guy's queue",
         "owner": {
             "id": "a9f70642-6e70-4c86-97ff-455d659bede0",
-            "username": "whoami"
+            "username": "whoami",
+            "removed": false
         },
         "created_at": 1760076000
     },
@@ -15,7 +16,8 @@
         "name": "Some noname guy's queue",
         "owner": {
             "id": "a9f70642-6e70-4c86-97ff-455d659bede0",
-            "username": "whoami"
+            "username": "whoami",
+            "removed": false
         },
         "created_at": 1760072400
     },
@@ -25,7 +27,8 @@
         "name": "Queue for tracking tickets for architecture reviews",
         "owner": {
             "id": "774cc050-2542-4c05-9027-f4919112fc81",
-            "username": "demon_slayer"
+            "username": "demon_slayer",
+            "removed": false
         },
         "created_at": 1760068800
     },
@@ -35,7 +38,8 @@
         "name": "Queue for tracking tickets from QA testers",
         "owner": {
             "id": "774cc050-2542-4c05-9027-f4919112fc81",
-            "username": "demon_slayer"
+            "username": "demon_slayer",
+            "removed": false
         },
         "created_at": 1760065200
     },
@@ -45,7 +49,8 @@
         "name": "Queue for tracking tickets from bughunters",
         "owner": {
             "id": "774cc050-2542-4c05-9027-f4919112fc81",
-            "username": "demon_slayer"
+            "username": "demon_slayer",
+            "removed": false
         },
         "created_at": 1760061600
     },
@@ -55,7 +60,8 @@
         "name": "Queue for tracking frontend related tickets for tidy",
         "owner": {
             "id": "774cc050-2542-4c05-9027-f4919112fc81",
-            "username": "demon_slayer"
+            "username": "demon_slayer",
+            "removed": false
         },
         "created_at": 1760058000
     },
@@ -65,7 +71,8 @@
         "name": "Queue for tracking backend related tickets for tidy",
         "owner": {
             "id": "774cc050-2542-4c05-9027-f4919112fc81",
-            "username": "demon_slayer"
+            "username": "demon_slayer",
+            "removed": false
         },
         "created_at": 1760054400
     }

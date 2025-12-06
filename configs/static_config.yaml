@@ -212,14 +212,6 @@ components_manager:
                 types:
                   - cookie-required
 
-        handler-v1_queues_queue-get:
-            path: /v1/queues/{queue}
-            method: GET
-            task_processor: main-task-processor
-            auth:
-                types:
-                  - cookie-required
-
         handler-v1_queues_queue_delete-post:
             path: /v1/queues/{queue}/delete
             method: POST
@@ -247,6 +239,14 @@ components_manager:
         handler-v1_queues_queue_issues-post:
             path: /v1/queues/{queue}/issues
             method: POST
+            task_processor: main-task-processor
+            auth:
+                types:
+                  - cookie-required
+
+        handler-v1_queues_queue_issues-get:
+            path: /v1/queues/{queue}/issues
+            method: GET
             task_processor: main-task-processor
             auth:
                 types:

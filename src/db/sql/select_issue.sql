@@ -87,14 +87,16 @@ SELECT
             issue.story_points,
             ROW (
                 author.id,
-                author.username
+                author.username,
+                author.removed
             ),
             CASE
                 WHEN issue.assignee_id IS NULL OR assignee.username IS NULL
                     THEN NULL
                 ELSE ROW (
                     assignee.id,
-                    assignee.username
+                    assignee.username,
+                    assignee.removed
                 )
             END,
             EXTRACT(EPOCH FROM issue.created_at)::BIGINT,

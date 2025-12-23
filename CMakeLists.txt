@@ -12,7 +12,7 @@ find_package(
     QUIET
 )
 if(NOT userver_FOUND)
-    download_userver()
+    download_userver(GIT_TAG v2.13)
 endif()
 
 userver_setup_environment()

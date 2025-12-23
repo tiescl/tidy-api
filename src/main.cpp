@@ -77,7 +77,6 @@ int main(int argc, char* argv[]) {
 
     auto component_list = components::MinimalServerComponentList()
                               .Append<server::handlers::Ping>()
-                              .Append<components::HttpClientCore>()
                               .Append<components::HttpClient>()
                               .Append<clients::dns::Component>()
                               .Append<components::TestsuiteSupport>()

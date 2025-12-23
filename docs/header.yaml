@@ -1,0 +1,11 @@
+openapi: 3.0.0
+
+info:
+    title: Tidy Service
+    version: '1.0'
+
+servers:
+  - url: https://api.tidyapp.uz
+    description: production
+  - url: http://127.0.0.1:8080
+    description: testing

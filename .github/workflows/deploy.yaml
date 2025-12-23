@@ -20,6 +20,44 @@ jobs:
             with:
                 submodules: true
 
+          - name: setup python
+            uses: actions/setup-python@v6
+            with:
+                python-version: 3.12
+
+          - name: bundle openAPI schemas
+            run: |
+                pip install pyyaml
+                python ./scripts/openapi/bundle.py
+
+          - name: download Swagger
+            run: |
+                SWAGGER_VERSION='5.31.0'
+                wget https://github.com/swagger-api/swagger-ui/archive/refs/tags/v${SWAGGER_VERSION}.tar.gz
+                tar -xzf v${SWAGGER_VERSION}.tar.gz
+
+                mkdir -p swagger-ui-dist
+                cp -r swagger-ui-${SWAGGER_VERSION}/dist/* swagger-ui-dist/
+                cp openapi.yaml swagger-ui-dist/
+
+                cat > swagger-ui-dist/swagger-initializer.js << 'EOF'
+                window.onload = function() {
+                  window.ui = SwaggerUIBundle({
+                    url: "/openapi.yaml",
+                    dom_id: '#swagger-ui',
+                    deepLinking: true,
+                    presets: [
+                      SwaggerUIBundle.presets.apis,
+                      SwaggerUIStandalonePreset
+                    ],
+                    plugins: [
+                      SwaggerUIBundle.plugins.DownloadUrl
+                    ],
+                    layout: "StandaloneLayout"
+                  });
+                };
+                EOF
+
           - name: install packages
             run: |
                 DEPS_FILE="https://raw.githubusercontent.com/userver-framework/userver/refs/heads/develop/scripts/docs/en/deps/$OS_VERSION.md"
@@ -32,7 +70,7 @@ jobs:
                 sudo ./llvm.sh 19
 
           - name: reuse ccache directory
-            uses: actions/cache@v4
+            uses: actions/cache@v5
             with:
                 path: ~/.cache/ccache
                 key: $OS_VERSION-ccache-dir-${{github.ref}}-run-${{github.run_number}}
@@ -74,4 +112,10 @@ jobs:
                   ./postgresql/ \
                   ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/opt/
 
-                ssh -i ~/.ssh/deploy_key ${{ secrets.USERNAME }}@${{ secrets.HOST }} "sudo systemctl restart tidy-api"
+                rsync -avz -e "ssh -i ~/.ssh/deploy_key" \
+                  --rsync-path="sudo rsync" \
+                  ./swagger-ui-dist/* \
+                  ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/usr/share/nginx/swagger/
+
+                ssh -i ~/.ssh/deploy_key ${{ secrets.USERNAME }}@${{ secrets.HOST }} \
+                  "sudo nginx -t && sudo nginx -s reload && sudo systemctl restart tidy-api"

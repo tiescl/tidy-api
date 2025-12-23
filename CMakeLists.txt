@@ -33,6 +33,8 @@ userver_add_sql_library(
 )
 
 file(GLOB_RECURSE SCHEMAS ${CMAKE_CURRENT_SOURCE_DIR}/docs/*.yaml)
+file(GLOB HEADER_FILE ${CMAKE_CURRENT_SOURCE_DIR}/docs/header.yaml)
+list(REMOVE_ITEM SCHEMAS ${HEADER_FILE})
 userver_target_generate_chaotic(
     ${PROJECT_NAME}_gen
     GENERATE_SERIALIZERS

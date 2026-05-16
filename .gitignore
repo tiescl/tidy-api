@@ -1,7 +1,6 @@
 __pycache__
 build*/
 compile_commands.json
-*.md
 .env
 .clangd
 .cache/
